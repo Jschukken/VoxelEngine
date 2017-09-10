@@ -56,7 +56,8 @@ public class DisplayManager {
 	
 	public static void closeDisplay(){
 		MainGameLoop.loader1.cleanUp();
-Display.destroy();
+		MainGameLoop.sh.cleanUp();
+		Display.destroy();
 		System.exit(0);
 	}
 }

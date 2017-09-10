@@ -1,5 +1,6 @@
 package RenderEngine;
 
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 import Models.RawModel;
 
@@ -17,11 +20,19 @@ public class Loader {
 	
 	static List<Integer> vaos = new ArrayList<Integer>();
 	static List<Integer> vbos = new ArrayList<Integer>();
+	static List<Integer> textures = new ArrayList<Integer>();
 
-		public RawModel loadToVao(float[] vertices, int[] indices){
+	/**
+	 * loads the model itself to the vertex array object
+	 * @param vertices the vertices
+	 * @param indices the indices of the vertices
+	 * @return the raw model
+	 */
+		public RawModel loadToVao(float[] vertices, int[] indices, float[] uv){
 			
 			int vaoID = createVao();
 			storeDataInAttributeList(vertices, 0, 3);
+			storeDataInAttributeList(uv, 1, 2);
 			bindIndicesBuffer(indices);
 			GL30.glBindVertexArray(0);
 			return new RawModel(vaoID, indices.length);
@@ -37,6 +48,22 @@ public class Loader {
 			
 		}
 		
+		
+		public int loadTexture(String file){
+			Texture texture = null;
+			try {
+				texture = TextureLoader.getTexture("PNG", Class.class.getResourceAsStream("/res/" + file + ".PNG"));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("missing texture");
+				System.exit(-1);
+			}
+			
+			int textureID = texture.getTextureID();
+			textures.add(textureID);
+			return textureID;
+			
+		}
 		private void storeDataInAttributeList(float[] data, int attributeNumber, int dimentions){
 			
 			int vboID = GL15.glGenBuffers();
@@ -80,6 +107,9 @@ public class Loader {
 			}
 			for(int vbo: vbos){
 				GL15.glDeleteBuffers(vbo);
+			}
+			for(int texture: textures){
+				GL11.glDeleteTextures(texture);
 			}
 			
 		}
