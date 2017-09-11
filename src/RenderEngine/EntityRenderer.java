@@ -10,14 +10,24 @@ import Entitys.Entity;
 import Shaders.StaticShader;
 import ToolBox.MatrixMath;
 
+/**
+ * renders entities
+ * @author Jelle Schukken
+ *
+ */
 public class EntityRenderer {
 
+	/**
+	 * renders entities to the screen using a specific shader
+	 * @param entity the entitiy to render
+	 * @param shader the shader with which to render
+	 */
 	public static void render(Entity entity, StaticShader shader) {
 		GL30.glBindVertexArray(entity.getModel().getModel().getVaoID());
 		GL20.glEnableVertexAttribArray(0);// enable position array
 		GL20.glEnableVertexAttribArray(1);// enable texture array
 		
-		//make transform matrix and applie
+		//make transform matrix and apply
 		Matrix4f transformationMatrix = MatrixMath.createTransMatrix(entity.getPosition(),entity.getRotX(),entity.getRotY(),entity.getRotZ(),entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
 		

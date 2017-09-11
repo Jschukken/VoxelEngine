@@ -16,6 +16,11 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import Models.RawModel;
 
+/**
+ * Loads data from cpu to gpu for rendering
+ * @author Jelle Schukken
+ *
+ */
 public class Loader {
 	
 	static List<Integer> vaos = new ArrayList<Integer>();
@@ -23,7 +28,7 @@ public class Loader {
 	static List<Integer> textures = new ArrayList<Integer>();
 
 	/**
-	 * loads the model itself to the vertex array object
+	 * loads the model itself to the vertex array object in the gpu
 	 * @param vertices the vertices
 	 * @param indices the indices of the vertices
 	 * @return the raw model
@@ -39,6 +44,10 @@ public class Loader {
 			
 		}
 		
+		/**
+		 * creates the vao on the gpu
+		 * @return the vao ID
+		 */
 		public int createVao(){
 			int vaoID = GL30.glGenVertexArrays();
 			vaos.add(vaoID);
@@ -48,7 +57,11 @@ public class Loader {
 			
 		}
 		
-		
+		/**
+		 * loads texture from file and returns the texture id
+		 * @param file the texture file, must be square and a .PNG (in all caps)
+		 * @return
+		 */
 		public int loadTexture(String file){
 			Texture texture = null;
 			try {
@@ -64,6 +77,7 @@ public class Loader {
 			return textureID;
 			
 		}
+		
 		private void storeDataInAttributeList(float[] data, int attributeNumber, int dimentions){
 			
 			int vboID = GL15.glGenBuffers();
@@ -100,6 +114,9 @@ public class Loader {
 			return buffer;
 		}
 		
+		/**
+		 * deletes all the created objects to prevent memory leaks
+		 */
 		public void cleanUp(){
 			
 			for(int vao : vaos){

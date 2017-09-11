@@ -4,6 +4,11 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * The camera object TODO: turn into player
+ * @author Jelle Schukken
+ *
+ */
 public class Camera {
 	
 	private Vector3f position;
@@ -23,6 +28,9 @@ public class Camera {
 		this.rotZ = rotZ;
 	}
 	
+	/**
+	 * takes user input to move the position and rotation of camera
+	 */
 	public void move(){
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){

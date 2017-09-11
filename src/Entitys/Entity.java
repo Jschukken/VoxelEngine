@@ -4,6 +4,11 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Models.TexturedModel;
 
+/**
+ * Models a complete entity
+ * @author Jelle Schukken
+ *
+ */
 public class Entity {
 
 	private TexturedModel model;

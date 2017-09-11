@@ -2,6 +2,11 @@ package Models;
 
 import Textures.ModelTexture;
 
+/**
+ * models a textured model, and entity without position or transformations
+ * @author Jelle Schukken
+ *
+ */
 public class TexturedModel {
 	
 	private RawModel model;

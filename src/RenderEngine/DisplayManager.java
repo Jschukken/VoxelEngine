@@ -11,12 +11,20 @@ import org.lwjgl.opengl.PixelFormat;
 
 import Flashlight.MainGameLoop;
 
+/**
+ * manages the display
+ * @author Jelle Schukken
+ *
+ */
 public class DisplayManager {
 
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int FPS_CAP = 60;
 	
+	/**
+	 * creates a display
+	 */
 	public static void createDisplay(){
 		
 		ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
@@ -34,6 +42,9 @@ public class DisplayManager {
 		Mouse.setGrabbed(true);
 	}
 	
+	/**
+	 * updates the display
+	 */
 	public static void updateDisplay(){
 		Display.sync(FPS_CAP);
 		Display.update();
@@ -54,6 +65,9 @@ public class DisplayManager {
 		}
 	}
 	
+	/**
+	 * closes the display and cleans up loose memory
+	 */
 	public static void closeDisplay(){
 		MainGameLoop.loader1.cleanUp();
 		MainGameLoop.sh.cleanUp();

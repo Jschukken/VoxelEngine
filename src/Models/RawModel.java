@@ -1,5 +1,10 @@
 package Models;
 
+/**
+ * models a rawModel, the shade of an entity
+ * @author Jelle Schukken
+ *
+ */
 public class RawModel {
 
 	int vaoID;
