@@ -26,6 +26,7 @@ public class MainGameLoop {
 	
 	public static Loader loader1 = null;
 	public static StaticShader  sh = null;
+	public static int[][][] map = new int[50][50][10];
 	
 	private static List<Entity> entities = new ArrayList<Entity>();
 
@@ -51,7 +52,7 @@ public class MainGameLoop {
 					state = "loadmap";
 					break;
 				case "loadmap":
-					camera = new Camera(new Vector3f(0,0,-10),0,0,0);
+					camera = new Camera(new Vector3f(0,20,10),0,0,0);
 					loader = new Loader();
 					loader1 = loader;
 					shader = new StaticShader(); // temporary
@@ -164,9 +165,15 @@ public class MainGameLoop {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("duck"));
 		TexturedModel tMod = new TexturedModel(model, texture);
 		
-		for(int x = -10; x<11; x++){
-			for(int y = -10; y<11; y++){
-				entities.add(new Entity(tMod,new Vector3f(x,0,y),0,0,0,new Vector3f(1,1,1)));
+		for(int x = 0; x<map.length; x++){
+			for(int z = 0; z< map[0].length; z++){
+				for(int y = 0; y < map[0][0].length; y++){
+					if(map[x][z][y] == 0){
+						entities.add(new Entity(tMod,new Vector3f(x,y,z),0,0,0,new Vector3f(1,1,1)));
+					}else if(map[x][y][z] == 1){
+						//do other stuff
+					}
+				}
 			}
 		}
 		//Entity entity = new Entity(tMod,new Vector3f(0,0,-10),0,0,0,new Vector3f(1,1,1));
