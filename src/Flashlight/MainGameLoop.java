@@ -17,6 +17,11 @@ import Shaders.ShaderProgram;
 import Shaders.StaticShader;
 import Textures.ModelTexture;
 
+/**
+ * The main game manager
+ * @author Jelle Schukken
+ *
+ */
 public class MainGameLoop {
 	
 	public static Loader loader1 = null;
@@ -26,14 +31,58 @@ public class MainGameLoop {
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
+		Camera camera = null;;
+		Loader loader = null;;
+		StaticShader shader = null;;
+		MasterRenderer renderer = null;;
+		
+	
+		String state = "startup";
 		
 		
-		Loader loader = new Loader();
-		loader1 = loader;
+		while (!Display.isCloseRequested()){
+			
+			switch (state){
+				case "startup":
+
+					state = "menu";
+					break;
+				case "menu":
+					state = "loadmap";
+					break;
+				case "loadmap":
+					camera = new Camera(new Vector3f(0,0,-10),0,0,0);
+					loader = new Loader();
+					loader1 = loader;
+					shader = new StaticShader(); // temporary
+					sh = shader;
+					renderer = new MasterRenderer(shader);
+					loadMap(loader);
+					state = "game";
+					break;
+				case "game":
+					updateGame(camera);
+					renderGame(renderer,shader,camera);
+					break;
+				case "gameover":
+					break;
+				default:
+					System.out.println("state error: " + state + " is an invalid state");
+					System.exit(-1);
+					break;
+					
+			}
+		}
 		
-		StaticShader shader = new StaticShader(); // temporary
-		sh = shader;
-		MasterRenderer renderer = new MasterRenderer(shader);
+		DisplayManager.closeDisplay();
+	}
+	
+	/**
+	 * Creates cube entities in locations according to a map and adds them to the entity list, TODO: take map parameter and load to map
+	 * @param loader used to load models to the gpu
+	 */
+	private static void loadMap(Loader loader){
+
 		
 		float[] vertices = {			
 				-0.5f,0.5f,-0.5f,	
@@ -121,25 +170,25 @@ public class MainGameLoop {
 			}
 		}
 		//Entity entity = new Entity(tMod,new Vector3f(0,0,-10),0,0,0,new Vector3f(1,1,1));
-		
-		Camera camera = new Camera(new Vector3f(0,0,-10),0,0,0);
-		
-		
-		while (!Display.isCloseRequested()){
-			
-			update(camera);
-			render(renderer,shader,camera);
-		}
-		
-		DisplayManager.closeDisplay();
+	
 	}
 	
-	private static void update(Camera camera){
+	/**
+	 * updates all necessary entities, currently only camera
+	 * @param camera object to update TODO: will like make a global camera variable
+	 */
+	private static void updateGame(Camera camera){
 		camera.move();
 		
 	}
 	
-	private static void render(MasterRenderer renderer, StaticShader shader, Camera camera){
+	/**
+	 * renders all entities to the screen
+	 * @param renderer the renderer that will be used
+	 * @param shader shader used for rendering TODO: like change this as well
+	 * @param camera the camera it will render to
+	 */
+	private static void renderGame(MasterRenderer renderer, StaticShader shader, Camera camera){
 		
 		
 		renderer.prepare();

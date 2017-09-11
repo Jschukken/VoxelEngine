@@ -7,14 +7,19 @@ import org.lwjgl.util.vector.Matrix4f;
 import Entitys.Entity;
 import Shaders.StaticShader;
 
+/**
+ * work in progress, the master renderer
+ * @author Jelle Schukken
+ *
+ */
 public class MasterRenderer {
 
 
 	private Matrix4f projectionMatrix;
 
-	private static final float FOV = 70;// 70 degrees
-	private static final float NEAR_PLANE = 0.1f;// closest rendered object
-	private static final float FAR_PLANE = 10000f;// furthest rendered object
+	private static final float FOV = 30;// 70 degrees
+	private static final float NEAR_PLANE = 0.01f;// closest rendered object
+	private static final float FAR_PLANE = 100f;// farthest rendered object
 	
 	public MasterRenderer(StaticShader shader){
 		createProjectionMatrix();
@@ -23,6 +28,9 @@ public class MasterRenderer {
 		shader.stop();
 	}
 
+	/**
+	 * standard startup things, clear color, clear buffer, enable depth test
+	 */
 	public void prepare() {
 
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -30,6 +38,9 @@ public class MasterRenderer {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 
+	/**
+	 * creates projection matrix to convert models to camera view
+	 */
 	public void createProjectionMatrix() {
 
 		projectionMatrix = new Matrix4f();
@@ -47,6 +58,11 @@ public class MasterRenderer {
 		projectionMatrix.m32 = -(2 * FAR_PLANE * NEAR_PLANE) / zm;
 	}
 
+	/**
+	 * render an entity with a shader
+	 * @param entity the entity to render
+	 * @param shader the shader that will be used
+	 */
 	public void render(Entity entity, StaticShader shader) {
 		EntityRenderer.render(entity, shader);
 	}
