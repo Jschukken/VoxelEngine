@@ -1,5 +1,6 @@
 package Flashlight;
 
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Entitys.Camera;
 import Entitys.Entity;
+import GameEngine.AudioHandler;
 import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
@@ -26,18 +28,22 @@ public class MainGameLoop {
 	
 	public static Loader loader1 = null;
 	public static StaticShader  sh = null;
+	public static AudioHandler audH = null;
 	public static int[][][] map = new int[50][50][10];
 	
 	private static String state = "startup";
+	
+	private static IntBuffer[] songID = null;
 	
 	private static List<Entity> entities = new ArrayList<Entity>();
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
-		Camera camera = null;;
-		Loader loader = null;;
-		StaticShader shader = null;;
-		MasterRenderer renderer = null;;
+		Camera camera = null;
+		Loader loader = null;
+		StaticShader shader = null;
+		MasterRenderer renderer = null;
+		AudioHandler ah = null;
 		
 	
 
@@ -50,6 +56,7 @@ public class MainGameLoop {
 					try{
 						loader1.cleanUp();
 						sh.cleanUp();
+						ah.cleanUp();
 					} catch(NullPointerException e){
 						
 					}
@@ -61,6 +68,11 @@ public class MainGameLoop {
 					break;
 					
 				case "loadmap":
+					ah = new AudioHandler();
+					audH = ah;
+					songID = ah.createSound("song");
+					ah.startSong(songID);
+					playMusic();
 					camera = new Camera(new Vector3f(0,20,10),0,0,0);
 					loader = new Loader();
 					loader1 = loader;
@@ -230,6 +242,14 @@ public class MainGameLoop {
 		
 		DisplayManager.updateDisplay();
 	}
+	
+	
+	private static void playMusic(){
+		if(Keyboard.isKeyDown(Keyboard.KEY_M)){
+			audH.endSong(songID);
+		}
+	}
+	
 	
 	public static void setState(String newState){
 		state = newState;

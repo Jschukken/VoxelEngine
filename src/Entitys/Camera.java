@@ -1,5 +1,7 @@
 package Entitys;
 
+import java.nio.IntBuffer;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
@@ -25,6 +27,8 @@ public class Camera {
 	private float currSpeed;
 	private float strafe;
 	
+	private IntBuffer[] jumpSFX;
+	
 	
 	public Camera(Vector3f position, float rotX, float rotY, float rotZ) {
 		super();
@@ -32,6 +36,7 @@ public class Camera {
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
+		jumpSFX = MainGameLoop.audH.createSound("jump");
 	}
 	
 	/**
@@ -64,6 +69,7 @@ public class Camera {
 			
 			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && CollisionHandler.checkPlayerCollision(new Vector3f (position.x,position.y+dy,position.z))){
 				dy = jumpHeight;
+				MainGameLoop.audH.playAudio(jumpSFX, position, position);
 			}
 			
 			
