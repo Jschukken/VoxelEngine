@@ -181,10 +181,11 @@ public class MainGameLoop {
 		for(int x = 0; x<map.length; x++){
 			for(int z = 0; z< map[0].length; z++){
 				for(int y = 0; y < map[0][0].length; y++){
-					if(map[x][z][y] == 0){
+					if(map[x][z][y] == 1){
 						entities.add(new Entity(tMod,new Vector3f(x,y,z),0,0,0,new Vector3f(1,1,1)));
-					}else if(map[x][y][z] == 1){
-						//do other stuff
+					}else if(x == 0 || y==0 || z==0 || z== 49 || x == 49){
+						entities.add(new Entity(tMod,new Vector3f(x,y,z),0,0,0,new Vector3f(1,1,1)));
+						map[x][z][y] = 1;
 					}
 				}
 			}

@@ -62,7 +62,7 @@ public class Camera {
 				strafe = 0;
 			}
 			
-			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && CollisionHandler.checkCollision(new Vector3f (position.x,position.y+dy,position.z))){
+			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && CollisionHandler.checkPlayerCollision(new Vector3f (position.x,position.y+dy,position.z))){
 				dy = jumpHeight;
 			}
 			
@@ -70,6 +70,12 @@ public class Camera {
 			
 			rotX += -Mouse.getDY() * turnSpeed;
 			rotY += Mouse.getDX() * turnSpeed;
+			
+			if(rotX > 80){
+				rotX = 80;
+			}else if(rotX<-80){
+				rotX=-80;
+			}
 			
 			//dy = (float)(currSpeed*Math.sin(Math.toRadians(rotX)));
 			dx += (float)-(currSpeed*Math.sin(Math.toRadians(rotY)));
@@ -92,14 +98,14 @@ public class Camera {
 			
 			//collision handeling
 			position.x += dx;
-			if(CollisionHandler.checkCollision(position)){
+			if(CollisionHandler.checkPlayerCollision(position)){
 				
 				position.x -= dx;
 				//dx = 0;
 
 			}
 			position.z += dz;
-			if(CollisionHandler.checkCollision(position)){
+			if(CollisionHandler.checkPlayerCollision(position)){
 				
 
 				position.z -= dz;
@@ -107,7 +113,7 @@ public class Camera {
 
 			}
 			position.y += dy;
-			if(CollisionHandler.checkCollision(position)){
+			if(CollisionHandler.checkPlayerCollision(position)){
 				
 				position.y -= dy;
 				if(dy<0 && currSpeed == 0 && strafe == 0){
@@ -126,13 +132,15 @@ public class Camera {
 				MainGameLoop.setState("gameover");
 			}
 			
+			//System.out.println("\f ("  + position.x + ", " + position.z + ", "+ position.y + ") ");
+			
 		}
 		
 	}
 
 
 	public Vector3f getPosition() {
-		return new Vector3f(position.x,position.y+1,position.z);
+		return new Vector3f(position.x,position.y+1f,position.z);
 	}
 
 

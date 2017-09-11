@@ -17,8 +17,8 @@ public class MasterRenderer {
 
 	private Matrix4f projectionMatrix;
 
-	private static final float FOV = 30;// 70 degrees
-	private static final float NEAR_PLANE = 0.01f;// closest rendered object
+	private static final float FOV = 70;// 70 degrees
+	private static final float NEAR_PLANE = -.25f;// closest rendered object
 	private static final float FAR_PLANE = 100f;// farthest rendered object
 	
 	public MasterRenderer(StaticShader shader){
@@ -49,13 +49,13 @@ public class MasterRenderer {
 		float yScale = 1f / (float) Math.tan(Math.toRadians(FOV / 2f));
 		float xScale = yScale / aspect;
 		float zp = NEAR_PLANE + FAR_PLANE;
-		float zm = FAR_PLANE - NEAR_PLANE;
+		float zm = NEAR_PLANE - FAR_PLANE;
 
 		projectionMatrix.m00 = xScale;
 		projectionMatrix.m11 = yScale;
-		projectionMatrix.m22 = -zp / zm;
+		projectionMatrix.m22 = zp / zm;
 		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = -(2 * FAR_PLANE * NEAR_PLANE) / zm;
+		projectionMatrix.m32 = (2 * FAR_PLANE * NEAR_PLANE) / zm;
 	}
 
 	/**
