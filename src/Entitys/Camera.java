@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
+import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
 
 /**
@@ -118,6 +119,12 @@ public class Camera {
 			}
 			
 			dy -= 0.01f;
+			
+			//if you fall out of the map, game over
+			
+			if(position.y < -10){
+				MainGameLoop.setState("gameover");
+			}
 			
 		}
 		

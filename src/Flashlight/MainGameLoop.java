@@ -41,11 +41,10 @@ public class MainGameLoop {
 		
 	
 
-		
-		
 		while (!Display.isCloseRequested()){
-			
+
 			switch (state){
+			
 				case "startup":
 					entities.clear();
 					try{
@@ -56,9 +55,11 @@ public class MainGameLoop {
 					}
 					state = "menu";
 					break;
+					
 				case "menu":
 					state = "loadmap";
 					break;
+					
 				case "loadmap":
 					camera = new Camera(new Vector3f(0,20,10),0,0,0);
 					loader = new Loader();
@@ -69,12 +70,16 @@ public class MainGameLoop {
 					loadMap(loader);
 					state = "game";
 					break;
+					
 				case "game":
 					updateGame(camera);
 					renderGame(renderer,shader,camera);
 					break;
+					
 				case "gameover":
+					state = "startup";
 					break;
+					
 				default:
 					System.out.println("state error: " + state + " is an invalid state");
 					System.exit(-1);
@@ -223,6 +228,10 @@ public class MainGameLoop {
 		shader.stop();
 		
 		DisplayManager.updateDisplay();
+	}
+	
+	public static void setState(String newState){
+		state = newState;
 	}
 
 }

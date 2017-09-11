@@ -18,8 +18,8 @@ import Flashlight.MainGameLoop;
  */
 public class DisplayManager {
 
-	private static final int WIDTH = 1280;
-	private static final int HEIGHT = 720;
+	private static final int WIDTH = 1920;
+	private static final int HEIGHT = 1080;
 	private static final int FPS_CAP = 60;
 	
 	/**
@@ -31,6 +31,7 @@ public class DisplayManager {
 		
 		try {
 			//Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT)); //uncomment for windowed version
+			Display.setVSyncEnabled(true);
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("Flashlight");
 			Display.setFullscreen(true);
