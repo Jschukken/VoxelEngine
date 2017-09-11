@@ -66,6 +66,8 @@ public class Loader {
 			Texture texture = null;
 			try {
 				texture = TextureLoader.getTexture("PNG", Class.class.getResourceAsStream("/res/" + file + ".PNG"));
+				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("missing texture");

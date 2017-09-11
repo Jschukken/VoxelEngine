@@ -3,6 +3,7 @@ package Flashlight;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -13,7 +14,6 @@ import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
-import Shaders.ShaderProgram;
 import Shaders.StaticShader;
 import Textures.ModelTexture;
 
@@ -28,6 +28,8 @@ public class MainGameLoop {
 	public static StaticShader  sh = null;
 	public static int[][][] map = new int[50][50][10];
 	
+	private static String state = "startup";
+	
 	private static List<Entity> entities = new ArrayList<Entity>();
 
 	public static void main(String[] args) {
@@ -38,14 +40,20 @@ public class MainGameLoop {
 		MasterRenderer renderer = null;;
 		
 	
-		String state = "startup";
+
 		
 		
 		while (!Display.isCloseRequested()){
 			
 			switch (state){
 				case "startup":
-
+					entities.clear();
+					try{
+						loader1.cleanUp();
+						sh.cleanUp();
+					} catch(NullPointerException e){
+						
+					}
 					state = "menu";
 					break;
 				case "menu":
@@ -162,7 +170,7 @@ public class MainGameLoop {
 		};
 		
 		RawModel model = loader.loadToVao(vertices,indices,uv);
-		ModelTexture texture = new ModelTexture(loader.loadTexture("duck"));
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		TexturedModel tMod = new TexturedModel(model, texture);
 		
 		for(int x = 0; x<map.length; x++){
@@ -186,6 +194,9 @@ public class MainGameLoop {
 	 */
 	private static void updateGame(Camera camera){
 		camera.move();
+		if(Keyboard.isKeyDown(Keyboard.KEY_R)){
+			state = "startup";
+		}
 		
 	}
 	

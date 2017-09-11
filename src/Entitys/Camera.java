@@ -17,8 +17,8 @@ public class Camera {
 	private float rotX, rotY, rotZ;
 	private float dx = 0,dy= 0,dz= 0;
 	
-	private float acceleration = 0.01f;
-	private float maxSpeed = 0.1f;
+	private float acceleration = 0.02f;
+	private float maxSpeed = 0.2f;
 	private float jumpHeight = 0.15f;
 	private float turnSpeed = 0.1f;
 	private float currSpeed;
