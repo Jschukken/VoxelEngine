@@ -19,6 +19,7 @@ public class Camera {
 	
 	private float acceleration = 0.01f;
 	private float maxSpeed = 0.1f;
+	private float jumpHeight = 0.15f;
 	private float turnSpeed = 0.1f;
 	private float currSpeed;
 	private float strafe;
@@ -60,8 +61,8 @@ public class Camera {
 				strafe = 0;
 			}
 			
-			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
-				dy = Math.min(maxSpeed, dy+0.1f);
+			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && CollisionHandler.checkCollision(new Vector3f (position.x,position.y+dy,position.z))){
+				dy = jumpHeight;
 			}
 			
 			
@@ -76,6 +77,7 @@ public class Camera {
 			dx += (float)(strafe*Math.sin(Math.toRadians(rotY + 90)));
 			dz += (float)-(strafe*Math.cos(Math.toRadians(rotY + 90)));
 			
+			//maths to make sure the hypotinus of movement is at most max speed this was a massive pain in the ass btw
 			double dx2 = Math.pow(dx,2);
 			double dz2 = Math.pow(dz,2);
 			double o = dx2+dz2-Math.pow(maxSpeed,2);
@@ -87,7 +89,7 @@ public class Camera {
 			
 
 			
-			
+			//collision handeling
 			position.x += dx;
 			if(CollisionHandler.checkCollision(position)){
 				
