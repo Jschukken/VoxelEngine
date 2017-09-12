@@ -84,6 +84,7 @@ public class MainGameLoop {
 					break;
 					
 				case "game":
+					playMusic();
 					updateGame(camera);
 					renderGame(renderer,shader,camera);
 					break;
