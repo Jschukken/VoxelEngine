@@ -132,11 +132,7 @@ public class Camera {
 			
 			dy -= 0.01f;
 			
-			//if you fall out of the map, game over
-			
-			if(position.y < -50){
-				MainGameLoop.setState("gameover");
-			}
+			fallCheck();
 			
 			//System.out.println("\f ("  + position.x + ", " + position.z + ", "+ position.y + ") ");
 			
@@ -145,6 +141,15 @@ public class Camera {
 	}
 
 
+	private void fallCheck(){
+		//if you fall out of the map, game over
+		
+		if(position.y < -50){
+			MainGameLoop.setState("gameover");
+		}
+	}
+	
+	
 	public Vector3f getPosition() {
 		return new Vector3f(position.x,position.y+1f,position.z);
 	}

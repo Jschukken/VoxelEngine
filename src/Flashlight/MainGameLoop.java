@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entitys.Camera;
@@ -19,7 +18,6 @@ import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
 import Shaders.StaticShader;
 import Textures.ModelTexture;
-import ToolBox.MatrixMath;
 
 /**
  * The main game manager
@@ -30,7 +28,6 @@ import ToolBox.MatrixMath;
 public class MainGameLoop {
 
 	private static final int RENDER_DISTANCE = 50;
-	private static final int MIN_RENDER_DISTANCE = 5;
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
@@ -186,7 +183,7 @@ public class MainGameLoop {
 	}
 
 	/**
-	 * renders all entities to the screen
+	 * renders all entities within the render distance and visible to the camera to the screen
 	 * 
 	 * @param renderer
 	 *            the renderer that will be used
@@ -202,7 +199,7 @@ public class MainGameLoop {
 		shader.start();
 		shader.loadViewMatrix(camera);
 		
-		
+		//vector the camera is looking at
 		Vector3f lookAt = new Vector3f(
 				(float) (Math.cos(Math.toRadians(camera.getRotY()+90)) * Math.cos(Math.toRadians(camera.getRotX()))),
 				(float) (Math.sin(Math.toRadians(camera.getRotX()))),
@@ -215,6 +212,7 @@ public class MainGameLoop {
 		
 		for (Entity entity : entities) {
 			
+			//vectore from the entity to the camera
 			Vector3f toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
 					camera.getPosition().z - entity.getPosition().z + 0.01f);
 			
@@ -228,7 +226,7 @@ public class MainGameLoop {
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 			
 			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(75))// || dist < MIN_RENDER_DISTANCE)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(75))
 					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}
@@ -240,12 +238,18 @@ public class MainGameLoop {
 		DisplayManager.updateDisplay();
 	}
 
+	/**
+	 * mutes the music
+	 */
 	private static void manageMusic() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
 			audH.endSong(songID);
 		}
 	}
 
+	/**
+	 * manages pause state
+	 */
 	private static void pause() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
 			pauseCheck = true;
@@ -255,6 +259,10 @@ public class MainGameLoop {
 		}
 	}
 
+	/**
+	 * sets the state of the game
+	 * @param newState the new state
+	 */
 	public static void setState(String newState) {
 		state = newState;
 	}
