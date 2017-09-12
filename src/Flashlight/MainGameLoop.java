@@ -32,7 +32,7 @@ public class MainGameLoop {
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[100][100][20];
+	public static int[][][] map = new int[100][100][15];
 
 	private static String state = "startup";
 
@@ -59,7 +59,7 @@ public class MainGameLoop {
 				try {
 					loader1.cleanUp();
 					sh.cleanUp();
-					ah.cleanUp();
+					audH.cleanUp();
 				} catch (NullPointerException e) {
 
 				}
@@ -75,7 +75,7 @@ public class MainGameLoop {
 				audH = ah;
 				songID = ah.createSound("song");
 				ah.startSong(songID);
-				camera = new Camera(new Vector3f(0, 20, 10), 0, 0, 0);
+				camera = new Camera(new Vector3f(0, 200, 10), 0, 0, 0);
 				loader = new Loader();
 				loader1 = loader;
 				shader = new StaticShader(); // temporary
@@ -221,11 +221,12 @@ public class MainGameLoop {
 		
 		lookAt.normalise();
 		
+		Vector3f toCamera;
 		
 		for (Entity entity : entities) {
 			
-			//vectore from the entity to the camera
-			Vector3f toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
+			//vector from the entity to the camera
+			toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
 					camera.getPosition().z - entity.getPosition().z + 0.01f);
 			
 			// Vector3f toCamera = new

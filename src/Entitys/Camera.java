@@ -22,8 +22,8 @@ public class Camera {
 	private float rotX, rotY, rotZ;
 	private float dx = 0,dy= 0,dz= 0;
 	
-	private float acceleration = 0.01f;
-	private float maxSpeed = 0.1f;
+	private float acceleration = 0.005f;
+	private float maxSpeed = 0.09f;
 	private float jumpHeight = 0.15f;
 	private float turnSpeed = 0.1f;
 	private float currSpeed;
@@ -127,7 +127,7 @@ public class Camera {
 
 			}
 			
-			dy -= 0.01f;
+			dy = Math.max(dy-0.01f,-maxSpeed*4);
 			
 			fallCheck();
 			
