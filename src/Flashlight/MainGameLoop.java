@@ -31,7 +31,7 @@ public class MainGameLoop {
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[50][50][10];
+	public static int[][][] map = new int[50][50][2];
 
 	private static String state = "startup";
 
@@ -145,12 +145,12 @@ public class MainGameLoop {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		TexturedModel tMod = new TexturedModel(model, texture);
 
-		for (int x = 0; x < map.length; x++) {
+		for (int x = 0; x < map.length ; x++) {
 			for (int z = 0; z < map[0].length; z++) {
 				for (int y = 0; y < map[0][0].length; y++) {
 					if (map[x][z][y] == 1) {
 						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
-					} else if (x == 0 || y == 0 || z == 0 || z == 49 || x == 49) {
+					} else if (x == 0 || y == 0 || z == 0 || z == map[0].length-1 || x == map.length-1) {
 						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 						map[x][z][y] = 1;
 					}
