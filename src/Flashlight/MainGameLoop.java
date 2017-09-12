@@ -27,7 +27,8 @@ import Textures.ModelTexture;
  */
 public class MainGameLoop {
 
-	private static final int RENDER_DISTANCE = 50;
+	private static final int RENDER_DISTANCE = 30;
+	private static final int MIN_RENDER_DISTANCE = 3;
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
@@ -80,6 +81,7 @@ public class MainGameLoop {
 				shader = new StaticShader(); // temporary
 				sh = shader;
 				renderer = new MasterRenderer(shader);
+				tempMapCreator();
 				loadMap(loader);
 				state = "game";
 				break;
@@ -182,6 +184,16 @@ public class MainGameLoop {
 
 	}
 
+	private static void tempMapCreator(){
+		for (int x = 0; x < map.length; x++) {
+			for (int z = 0; z < map[0].length; z++) {
+				for (int y = 0; y < map[0][0].length; y++) {
+					if((int)(Math.random()*10) == 1)
+						map[x][z][y] = 1;
+				}
+			}
+		}
+	}
 	/**
 	 * renders all entities within the render distance and visible to the camera to the screen
 	 * 
@@ -226,7 +238,7 @@ public class MainGameLoop {
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 			
 			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(75))
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV) || dist<MIN_RENDER_DISTANCE)
 					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}

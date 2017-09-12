@@ -17,7 +17,7 @@ public class MasterRenderer {
 
 	private Matrix4f projectionMatrix;
 
-	private static final float FOV = 70;// 70 degrees
+	public static final float FOV = 70;// 70 degrees
 	private static final float NEAR_PLANE = -.25f;// closest rendered object
 	private static final float FAR_PLANE = 100f;// farthest rendered object
 	

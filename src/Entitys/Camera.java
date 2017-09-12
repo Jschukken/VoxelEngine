@@ -16,12 +16,14 @@ import GameEngine.CollisionHandler;
  */
 public class Camera {
 	
+	private static float FRICTION = 5;
+	
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
 	private float dx = 0,dy= 0,dz= 0;
 	
-	private float acceleration = 0.02f;
-	private float maxSpeed = 0.2f;
+	private float acceleration = 0.01f;
+	private float maxSpeed = 0.1f;
 	private float jumpHeight = 0.15f;
 	private float turnSpeed = 0.1f;
 	private float currSpeed;
@@ -104,18 +106,13 @@ public class Camera {
 			
 			//collision handeling
 			position.x += dx;
-			if(CollisionHandler.checkPlayerCollision(position)){
-				
-				position.x -= dx;
-				//dx = 0;
+			for(int i = 0; i < 4 && CollisionHandler.checkPlayerCollision(position); i++){
+				position.x -= dx/4;
 
 			}
 			position.z += dz;
-			if(CollisionHandler.checkPlayerCollision(position)){
-				
-
-				position.z -= dz;
-				//dz = 0;
+			for(int i = 0; i < 4 && CollisionHandler.checkPlayerCollision(position); i++){
+				position.z -= dz/4;
 
 			}
 			position.y += dy;
@@ -123,8 +120,8 @@ public class Camera {
 				
 				position.y -= dy;
 				if(dy<0 && currSpeed == 0 && strafe == 0){
-					dx -= dx/10;
-					dz -= dz/10;
+					dx -= dx/FRICTION;
+					dz -= dz/FRICTION;
 				}
 				dy = 0;
 
