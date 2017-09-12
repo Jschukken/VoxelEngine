@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entitys.Camera;
@@ -18,6 +19,7 @@ import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
 import Shaders.StaticShader;
 import Textures.ModelTexture;
+import ToolBox.MatrixMath;
 
 /**
  * The main game manager
@@ -27,18 +29,19 @@ import Textures.ModelTexture;
  */
 public class MainGameLoop {
 
-	private static final int RENDER_DISTANCE = 20;
+	private static final int RENDER_DISTANCE = 50;
+	private static final int MIN_RENDER_DISTANCE = 5;
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[50][50][2];
+	public static int[][][] map = new int[100][100][20];
 
 	private static String state = "startup";
 
 	private static IntBuffer[] songID = null;
 
 	private static List<Entity> entities = new ArrayList<Entity>();
-	
+
 	private static boolean pauseCheck = false;
 
 	public static void main(String[] args) {
@@ -145,12 +148,12 @@ public class MainGameLoop {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		TexturedModel tMod = new TexturedModel(model, texture);
 
-		for (int x = 0; x < map.length ; x++) {
+		for (int x = 0; x < map.length; x++) {
 			for (int z = 0; z < map[0].length; z++) {
 				for (int y = 0; y < map[0][0].length; y++) {
 					if (map[x][z][y] == 1) {
 						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
-					} else if (x == 0 || y == 0 || z == 0 || z == map[0].length-1 || x == map.length-1) {
+					} else if (x == 0 || y == 0 || z == 0 || z == map[0].length - 1 || x == map.length - 1) {
 						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 						map[x][z][y] = 1;
 					}
@@ -172,7 +175,7 @@ public class MainGameLoop {
 		camera.move();
 		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
 			pauseCheck = true;
-		}else if(!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck){
+		} else if (!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck) {
 			state = "pause";
 			pauseCheck = false;
 		}
@@ -198,11 +201,35 @@ public class MainGameLoop {
 
 		shader.start();
 		shader.loadViewMatrix(camera);
-
+		
+		
+		Vector3f lookAt = new Vector3f(
+				(float) (Math.cos(Math.toRadians(camera.getRotY()+90)) * Math.cos(Math.toRadians(camera.getRotX()))),
+				(float) (Math.sin(Math.toRadians(camera.getRotX()))),
+				(float) Math.sin(Math.toRadians(camera.getRotY()+90)));
+		
+		// Vector3f lookAt = new Vector3f(1,0,1);
+		
+		lookAt.normalise();
+		
+		
 		for (Entity entity : entities) {
-			if (Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
+			
+			Vector3f toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
+					camera.getPosition().z - entity.getPosition().z + 0.01f);
+			
+			// Vector3f toCamera = new
+			// Vector3f(entity.getPosition().x-25,entity.getPosition().y-1,entity.getPosition().z-25f);
+			
+			toCamera.normalise();
+			
+			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
-					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2)) < RENDER_DISTANCE) {
+					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
+			
+			
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(75))// || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}
 
@@ -222,7 +249,7 @@ public class MainGameLoop {
 	private static void pause() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
 			pauseCheck = true;
-		}else if(!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck){
+		} else if (!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck) {
 			state = "game";
 			pauseCheck = false;
 		}

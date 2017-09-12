@@ -27,6 +27,7 @@ public class AudioHandler {
 	        AL.create();
 	      } catch (LWJGLException le) {
 	        le.printStackTrace();
+	        System.exit(-1);
 	        return;
 	      }
 	}

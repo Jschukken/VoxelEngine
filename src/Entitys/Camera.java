@@ -134,7 +134,7 @@ public class Camera {
 			
 			//if you fall out of the map, game over
 			
-			if(position.y < -30){
+			if(position.y < -50){
 				MainGameLoop.setState("gameover");
 			}
 			
