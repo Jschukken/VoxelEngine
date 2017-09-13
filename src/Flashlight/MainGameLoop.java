@@ -32,7 +32,7 @@ public class MainGameLoop {
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[100][100][15];
+	public static int[][][] map = new int[100][100][5];
 	
 
 	private static String state = "startup";
