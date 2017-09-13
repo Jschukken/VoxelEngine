@@ -1,4 +1,4 @@
-package Entitys;
+package Entities;
 
 import java.nio.IntBuffer;
 

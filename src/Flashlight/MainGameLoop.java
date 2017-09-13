@@ -8,8 +8,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
-import Entitys.Camera;
-import Entitys.Entity;
+import Entities.Camera;
+import Entities.Entity;
 import GameEngine.AudioHandler;
 import Models.RawModel;
 import Models.TexturedModel;
@@ -33,6 +33,7 @@ public class MainGameLoop {
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
 	public static int[][][] map = new int[100][100][15];
+	
 
 	private static String state = "startup";
 
@@ -63,24 +64,26 @@ public class MainGameLoop {
 				} catch (NullPointerException e) {
 
 				}
-				state = "menu";
-				break;
-
-			case "menu":
-				state = "loadmap";
-				break;
-
-			case "loadmap":
 				ah = new AudioHandler();
 				audH = ah;
 				songID = ah.createSound("song");
 				ah.startSong(songID);
-				camera = new Camera(new Vector3f(0, 200, 10), 0, 0, 0);
 				loader = new Loader();
 				loader1 = loader;
-				shader = new StaticShader(); // temporary
+				shader = new StaticShader();
 				sh = shader;
 				renderer = new MasterRenderer(shader);
+				state = "menu";
+				break;
+
+			case "menu":		
+				if (Keyboard.isKeyDown(Keyboard.KEY_L)) {
+				state = "loadmap";
+			}
+				break;
+
+			case "loadmap":
+				camera = new Camera(new Vector3f(0, 50, 10), 0, 0, 0);
 				tempMapCreator();
 				loadMap(loader);
 				state = "game";
@@ -278,6 +281,24 @@ public class MainGameLoop {
 	 */
 	public static void setState(String newState) {
 		state = newState;
+	}
+	
+	
+	public static void renderMenu(Loader loader) {
+		float[] vertices = { -0.5f, 0.5f, 0f, -0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f, 0.5f, 0.5f, 0f};
+
+		int[] indices = { 0, 1, 3, 3, 1, 0};
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0};
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
+		TexturedModel tMod = new TexturedModel(model, texture);
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_L)) {
+			state = "loadmap";
+		}
+		
 	}
 
 }

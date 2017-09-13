@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
-import Entitys.Entity;
+import Entities.Entity;
 import Shaders.StaticShader;
 import ToolBox.MatrixMath;
 

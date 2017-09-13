@@ -3,7 +3,7 @@ package ToolBox;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import Entitys.Camera;
+import Entities.Camera;
 
 /**
  * helper class for math functions

@@ -4,7 +4,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
-import Entitys.Entity;
+import Entities.Entity;
+import Models.TexturedModel;
 import Shaders.StaticShader;
 
 /**
@@ -65,5 +66,9 @@ public class MasterRenderer {
 	 */
 	public void render(Entity entity, StaticShader shader) {
 		EntityRenderer.render(entity, shader);
+	}
+	
+	public void render(TexturedModel tex, StaticShader shader) {
+		TexturedModelRenderer.render(tex, shader);
 	}
 }
