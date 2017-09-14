@@ -5,33 +5,31 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Map {
     public static final int SIZE = 20;       //x and y size of the map
     public static final int HEIGHT = 5;      //z size of the map
-    public static final int THRESHOLD = 80;  //threshold for randomly turning 0's into 1's after initial path generation
-    
-    public void lee (int[][] map, int dx, int dy, int sx, int sy){
-        
-    }
+    public static final int THRESHOLD = 30;  //z size of the map
     
     /*
      * Add in the initial paths
      */
     public int[][] initial (int[][] map) {
-        int dx = 0;  //destination x coordinate
-        int dy = 0;  //destination y coordinate
-        int sx = 0;
-        int sy = 0;
+        int dx = 0;  	//destination x coordinate
+        int dy = 0;  	//destination y coordinate
+        int sx = 0;		//current spawn x coordinate
+        int sy = 0;		//current spawn y coordinate
         
+        //save destination
         for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==-2){
             dx = i;
             dy = j;
         }
+        //save and build path for each spawn
         for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==-3){
             sx = i;
             sy = j;
-            map = extras(map, THRESHOLD);
-            
-            lee(map, dx, dy,  sx, sy);
+            if (dx - sx > 0) for(int k = 1; k < dx - sx; k++) map[sx+k][sy] = -1;
+            else for(int k = 1; k < sx - dx; k++) map[sx-k][sy] = -1;
+            if (dy - sy > 0) for(int k = 0; k < dy - sy; k++) map[dx][sy+k] = -1;
+            else for(int k = 0; k < sy - dy; k++) map[dx][sy-k] = -1;
         }
-        //stuff missing here
         return map;
     }
     
@@ -44,7 +42,6 @@ public class Map {
         for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)lmap[i+1][j+1]=map[i][j];
         
         //remove everything that has at most one neighbour, if something is found, repeat
-        //does not remove blocks not adjacent to anything
         boolean removed = true;
         while(removed){
             removed = false;
@@ -125,6 +122,7 @@ public class Map {
         //fill map
         map = removal(extras(initial(map), THRESHOLD));
         for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j] < 0) map[i][j] = Math.abs(map[i][j]);
+        print2D(map);
         
         //turn to 3D (height map not applied
         int[][][] map3D = new int[SIZE][SIZE][HEIGHT];
