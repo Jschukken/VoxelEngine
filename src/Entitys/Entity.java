@@ -13,11 +13,11 @@ public class Entity {
 
 	private TexturedModel model;
 
-	private Vector3f position;
-	private float rotX;
-	private float rotY;
-	private float rotZ;
-	private Vector3f scale;
+	protected Vector3f position;
+	protected float rotX;
+	protected float rotY;
+	protected float rotZ;
+	protected Vector3f scale;
 
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale) {
 		super();
@@ -76,6 +76,10 @@ public class Entity {
 
 	public Vector3f getScale() {
 		return scale;
+	}
+	
+	public void update(){
+		
 	}
 
 }

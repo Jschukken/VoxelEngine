@@ -6,44 +6,88 @@ import Flashlight.MainGameLoop;
 
 public class CollisionHandler {
 
-	
-	public static boolean checkPlayerCollision(Vector3f position){
-		
-		try{
-			//lower square
-			if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y)][(int)(position.z+.1)] == 1){
+	public static boolean checkPlayerCollision(Vector3f position) {
+
+		try {
+			// lower square
+			if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z + .1)] == 1) {
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y)][(int)(position.z+.9)] == 1){
+			} else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
+					+ .9)] == 1) {
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y)][(int)(position.z+.9)] == 1){
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .1)][(int) (position.z
+					+ .9)] == 1) {
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y)][(int)(position.z + .1)] == 1){
-				return true;
-			}
-			//middle square
-			else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+.9)][(int)(position.z+.1)] == 1){
-				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+.9)][(int)(position.z+.9)] == 1){
-				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+.9)][(int)(position.z+.9)] == 1){
-				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+.9)][(int)(position.z+.1)] == 1){
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .1)][(int) (position.z
+					+ .1)] == 1) {
 				return true;
 			}
-			//top square
-			else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+1.8)][(int)(position.z+.1)] == 1){
+			// middle square
+			else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z + .1)] == 1) {
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+1.8)][(int)(position.z+.9)] == 1){
+			} else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
+					+ .9)] == 1) {
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+1.8)][(int)(position.z+.9)] == 1){
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .9)][(int) (position.z
+					+ .9)] == 1) {
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+1.8)][(int)(position.z+.1)] == 1){
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .9)][(int) (position.z
+					+ .1)] == 1) {
 				return true;
 			}
-			else{
+			// top square
+			else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + 1.8)][(int) (position.z
+					+ .1)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + 1.8)][(int) (position.z
+					+ .9)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + 1.8)][(int) (position.z
+					+ .9)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + 1.8)][(int) (position.z
+					+ .1)] == 1) {
+				return true;
+			} else {
 				return false;
 			}
-		}catch(ArrayIndexOutOfBoundsException e){
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return false;
+		}
+	}
+
+	public static boolean checkEnemyCollision(Vector3f position) {
+
+		try {
+			// lower square
+			if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z + .1)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
+					+ .9)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .1)][(int) (position.z
+					+ .9)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .1)][(int) (position.z
+					+ .1)] == 1) {
+				return true;
+			}
+			// middle square
+			else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z + .1)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
+					+ .9)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .9)][(int) (position.z
+					+ .9)] == 1) {
+				return true;
+			} else if (MainGameLoop.map[(int) (position.x + .9)][(int) (position.y + .9)][(int) (position.z
+					+ .1)] == 1) {
+				return true;
+			}else {
+				return false;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
 			return false;
 		}
 	}
