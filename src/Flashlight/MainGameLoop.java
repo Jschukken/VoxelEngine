@@ -9,16 +9,16 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entitys.Camera;
+import Entitys.EnemyEntity;
 import Entitys.Entity;
-import Entitys.TexturedModelMaker;
+import Entitys.SpawnPointEntity;
 import GameEngine.AudioHandler;
-import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
 import Shaders.StaticShader;
-import Textures.ModelTexture;
+import ToolBox.TexturedModelMaker;
 
 /**
  * The main game manager
@@ -33,13 +33,14 @@ public class MainGameLoop {
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[100][15][100];
+	public static int[][][] map = new int[50][15][50];
 
 	private static String state = "startup";
 
 	private static IntBuffer[] songID = null;
 
-	private static List<Entity> entities = new ArrayList<Entity>();
+	private static List<Entity> mapEntities = new ArrayList<Entity>();
+	private static List<Entity> activeEntities = new ArrayList<Entity>();
 
 	private static boolean pauseCheck = false;
 
@@ -50,13 +51,16 @@ public class MainGameLoop {
 		StaticShader shader = null;
 		MasterRenderer renderer = null;
 		AudioHandler ah = null;
+		tempMapCreator();
 
 		while (!Display.isCloseRequested()) {
 
 			switch (state) {
 
 			case "startup":
-				entities.clear();
+				mapEntities.clear();
+				activeEntities.clear();
+
 				try {
 					loader1.cleanUp();
 					sh.cleanUp();
@@ -82,7 +86,6 @@ public class MainGameLoop {
 				shader = new StaticShader(); // temporary
 				sh = shader;
 				renderer = new MasterRenderer(shader);
-				tempMapCreator();
 				loadMap(loader);
 				state = "game";
 				break;
@@ -128,9 +131,14 @@ public class MainGameLoop {
 			for (int y = 0; y < map[0].length; y++) {
 				for (int z = 0; z < map[0][0].length; z++) {
 					if (map[x][y][z] == 1) {
-						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
+						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
+					} else if(map[x][y][z] == 2){
+						
+							int[] arr = {1,map[0].length,map[0][0].length-2,map.length-2,map[0].length,map[0][0].length-2,map.length-2,map[0].length,1,1,map[0].length,1};
+							activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1), tMod, arr));
+						
 					} else if (x == 0 || y == 0 || z == 0 || z == map[0][0].length - 1 || x == map.length - 1) {
-						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
+						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 						map[x][y][z] = 1;
 					}
 				}
@@ -149,6 +157,10 @@ public class MainGameLoop {
 	 */
 	private static void updateGame(Camera camera) {
 		camera.move();
+		for(int i = 0; i < activeEntities.size();i++){
+			activeEntities.get(i).update();
+		}
+		
 		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
 			pauseCheck = true;
 		} else if (!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck) {
@@ -170,6 +182,7 @@ public class MainGameLoop {
 				}
 			}
 		}
+		map[1][1][1] = 2;
 	}
 	/**
 	 * renders all entities within the render distance and visible to the camera to the screen
@@ -198,7 +211,26 @@ public class MainGameLoop {
 		
 		Vector3f toCamera;
 		
-		for (Entity entity : entities) {
+		for (Entity entity : mapEntities) {
+			
+			//vector from the entity to the camera
+			toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
+					camera.getPosition().z - entity.getPosition().z + 0.01f);
+			
+			toCamera.normalise();
+			
+			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
+					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
+					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
+			
+			
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
+				renderer.render(entity, shader);
+			}
+
+		}
+		for (Entity entity : activeEntities) {
 			
 			//vector from the entity to the camera
 			toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
@@ -250,6 +282,17 @@ public class MainGameLoop {
 	 */
 	public static void setState(String newState) {
 		state = newState;
+	}
+	
+	public static void addActiveEntity(TexturedModel entity, Vector3f position, int[] path){
+		Entity enemy = new EnemyEntity(entity, position, 0, 0, 0, new Vector3f(1, 1, 1),path);
+		activeEntities.add(enemy);
+		
+	}
+	
+	public static void removeActiveEntity(Entity entity){
+
+		activeEntities.remove(entity);
 	}
 
 }
