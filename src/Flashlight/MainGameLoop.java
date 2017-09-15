@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Entitys.Camera;
 import Entitys.Entity;
+import Entitys.TexturedModelMaker;
 import GameEngine.AudioHandler;
 import Models.RawModel;
 import Models.TexturedModel;
@@ -32,7 +33,7 @@ public class MainGameLoop {
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[100][100][15];
+	public static int[][][] map = new int[100][15][100];
 
 	private static String state = "startup";
 
@@ -75,7 +76,7 @@ public class MainGameLoop {
 				audH = ah;
 				songID = ah.createSound("song");
 				ah.startSong(songID);
-				camera = new Camera(new Vector3f(0, 200, 10), 0, 0, 0);
+				camera = new Camera(new Vector3f(0, 20, 10), 0, 0, 0);
 				loader = new Loader();
 				loader1 = loader;
 				shader = new StaticShader(); // temporary
@@ -121,40 +122,16 @@ public class MainGameLoop {
 	 */
 	private static void loadMap(Loader loader) {
 
-		float[] vertices = { -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-
-				-0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-
-				0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-
-				-0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-
-				-0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
-
-				-0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f
-
-		};
-
-		int[] indices = { 0, 1, 3, 3, 1, 2, 4, 5, 7, 7, 5, 6, 8, 9, 11, 11, 9, 10, 12, 13, 15, 15, 13, 14, 16, 17, 19,
-				19, 17, 18, 20, 21, 23, 23, 21, 22 };
-
-		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0,
-				0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0
-
-		};
-
-		RawModel model = loader.loadToVao(vertices, indices, uv);
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
-		TexturedModel tMod = new TexturedModel(model, texture);
+		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
 
 		for (int x = 0; x < map.length; x++) {
-			for (int z = 0; z < map[0].length; z++) {
-				for (int y = 0; y < map[0][0].length; y++) {
-					if (map[x][z][y] == 1) {
+			for (int y = 0; y < map[0].length; y++) {
+				for (int z = 0; z < map[0][0].length; z++) {
+					if (map[x][y][z] == 1) {
 						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
-					} else if (x == 0 || y == 0 || z == 0 || z == map[0].length - 1 || x == map.length - 1) {
+					} else if (x == 0 || y == 0 || z == 0 || z == map[0][0].length - 1 || x == map.length - 1) {
 						entities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
-						map[x][z][y] = 1;
+						map[x][y][z] = 1;
 					}
 				}
 			}
@@ -217,8 +194,6 @@ public class MainGameLoop {
 				(float) (Math.sin(Math.toRadians(camera.getRotX()))),
 				(float) Math.sin(Math.toRadians(camera.getRotY()+90)));
 		
-		// Vector3f lookAt = new Vector3f(1,0,1);
-		
 		lookAt.normalise();
 		
 		Vector3f toCamera;
@@ -229,9 +204,6 @@ public class MainGameLoop {
 			toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
 					camera.getPosition().z - entity.getPosition().z + 0.01f);
 			
-			// Vector3f toCamera = new
-			// Vector3f(entity.getPosition().x-25,entity.getPosition().y-1,entity.getPosition().z-25f);
-			
 			toCamera.normalise();
 			
 			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
@@ -239,7 +211,7 @@ public class MainGameLoop {
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 			
 			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV) || dist<MIN_RENDER_DISTANCE)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
 					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}

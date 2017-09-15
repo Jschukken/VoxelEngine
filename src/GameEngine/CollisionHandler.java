@@ -11,33 +11,33 @@ public class CollisionHandler {
 		
 		try{
 			//lower square
-			if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.z+.1)][(int)position.y] == 1){
+			if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y)][(int)(position.z+.1)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.z+.9)][(int)position.y] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y)][(int)(position.z+.9)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.z+.9)][(int)(position.y)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y)][(int)(position.z+.9)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.z+.1)][(int)(position.y)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y)][(int)(position.z + .1)] == 1){
 				return true;
 			}
 			//middle square
-			else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.z+.1)][(int)(position.y+.9)] == 1){
+			else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+.9)][(int)(position.z+.1)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.z+.9)][(int)(position.y+.9)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+.9)][(int)(position.z+.9)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.z+.9)][(int)(position.y+.9)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+.9)][(int)(position.z+.9)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.z+.1)][(int)(position.y+.9)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+.9)][(int)(position.z+.1)] == 1){
 				return true;
 			}
 			//top square
-			else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.z+.1)][(int)(position.y+1.8)] == 1){
+			else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+1.8)][(int)(position.z+.1)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.z+.9)][(int)(position.y+1.8)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.1)][(int)(position.y+1.8)][(int)(position.z+.9)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.z+.9)][(int)(position.y+1.8)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+1.8)][(int)(position.z+.9)] == 1){
 				return true;
-			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.z+.1)][(int)(position.y+1.8)] == 1){
+			}else if(MainGameLoop.map[(int)(position.x+.9)][(int)(position.y+1.8)][(int)(position.z+.1)] == 1){
 				return true;
 			}
 			else{
