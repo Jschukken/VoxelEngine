@@ -65,27 +65,38 @@ public class MainGameLoop {
 					loader1.cleanUp();
 					sh.cleanUp();
 					audH.cleanUp();
+					menush.cleanUp();
 				} catch (NullPointerException e) {
 
 				}
-				state = "menu";
-				break;
-
-			case "menu":
-				state = "loadmap";
-				break;
-
-			case "loadmap":
 				ah = new AudioHandler();
 				audH = ah;
 				songID = ah.createSound("song");
 				ah.startSong(songID);
-				camera = new Camera(new Vector3f(0, 20, 10), 0, 0, 0);
 				loader = new Loader();
 				loader1 = loader;
-				shader = new StaticShader(); // temporary
+				shader = new StaticShader();
 				sh = shader;
+				menuShader = new StaticShaderMenu();
+				menush = menuShader;
 				renderer = new MasterRenderer(shader);
+				createButtons(loader);
+				state = "menu";
+				break;
+
+			case "menu":
+				Mouse.setGrabbed(false);
+				renderMenu(menuShader);
+				
+				if (Mouse.isButtonDown(0) && mouseInButton()) {
+					state = "loadmap";
+					Mouse.setGrabbed(true);
+				}
+				break;
+
+			case "loadmap":
+				camera = new Camera(new Vector3f(0, 50, 10), 0, 0, 0);
+				tempMapCreator();
 				loadMap(loader);
 				state = "game";
 				break;
@@ -307,6 +318,49 @@ public class MainGameLoop {
 	public static void removeActiveEntity(Entity entity){
 
 		activeEntities.remove(entity);
+	}
+	
+	/**
+	 * Creates buttons for the main menu. Currently only the start button.
+	 * TODO: Create new button object for genericity
+	 * @param loader loader required to load the models.
+	 */
+	public static void createButtons(Loader loader) {
+		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f};
+
+		int[] indices = { 0, 1, 3, 3, 2, 1};
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0};
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+		
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
+		TexturedModel tMod = new TexturedModel(model, texture);
+		button1 = tMod;
+	}
+	
+	/**
+	 * Renders the menu
+	 * @param shader the shader required to give textures to the model
+	 */
+	public static void renderMenu(StaticShaderMenu shader) {
+		shader.start();
+		TexturedModelRenderer.render(button1, shader);
+		shader.stop();
+		DisplayManager.updateDisplay();
+	}
+	
+	/**
+	 * Checks whether the mouse is inside the boundaries of the button
+	 * TODO: Change to work with new Button object
+	 * @return whether the mouse is inside the button
+	 */
+	public static boolean mouseInButton() {
+		
+		if (Mouse.getX() > 540 && Mouse.getX() < 1380 && Mouse.getY() > 304  && Mouse.getY() < 776) {
+			return true;
+		}
+		return false;
 	}
 
 }
