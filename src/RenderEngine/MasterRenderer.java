@@ -67,8 +67,4 @@ public class MasterRenderer {
 	public void render(Entity entity, StaticShader shader) {
 		EntityRenderer.render(entity, shader);
 	}
-	
-	public void render(TexturedModel tex, StaticShader shader) {
-		TexturedModelRenderer.render(tex, shader);
-	}
 }

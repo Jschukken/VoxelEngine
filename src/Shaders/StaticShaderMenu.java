@@ -8,7 +8,7 @@ import ToolBox.MatrixMath;
 public class StaticShaderMenu extends ShaderProgram {
 
 	
-	private static final String vertexFile = "/Shaders/vertexShader.txt";
+	private static final String vertexFile = "/Shaders/vertexShaderMenu.txt";
 	private static final String fragmentFile = "/Shaders/fragmentShader.txt";
 	
 	private int locationTransformationMatrix;

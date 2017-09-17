@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entities.Camera;
@@ -16,7 +18,9 @@ import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
+import RenderEngine.TexturedModelRenderer;
 import Shaders.StaticShader;
+import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
 
 /**
@@ -31,6 +35,8 @@ public class MainGameLoop {
 	private static final int MIN_RENDER_DISTANCE = 3;
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
+	public static StaticShaderMenu menush = null;
+	public static TexturedModel button1 = null;
 	public static AudioHandler audH = null;
 	public static int[][][] map = new int[100][100][5];
 	
@@ -47,8 +53,10 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		Camera camera = null;
 		Loader loader = null;
+		StaticShaderMenu menuShader = null;
 		StaticShader shader = null;
 		MasterRenderer renderer = null;
+		TexturedModelRenderer menuRenderer = null;
 		AudioHandler ah = null;
 
 		while (!Display.isCloseRequested()) {
@@ -60,6 +68,7 @@ public class MainGameLoop {
 				try {
 					loader1.cleanUp();
 					sh.cleanUp();
+					menush.cleanUp();
 					audH.cleanUp();
 				} catch (NullPointerException e) {
 
@@ -72,14 +81,21 @@ public class MainGameLoop {
 				loader1 = loader;
 				shader = new StaticShader();
 				sh = shader;
+				menuShader = new StaticShaderMenu();
+				menush = menuShader;
 				renderer = new MasterRenderer(shader);
+				createButtons(loader);
 				state = "menu";
 				break;
 
-			case "menu":		
-				if (Keyboard.isKeyDown(Keyboard.KEY_L)) {
-				state = "loadmap";
-			}
+			case "menu":
+				Mouse.setGrabbed(false);
+				renderMenu(menuShader);
+				
+				if (Mouse.isButtonDown(0) && mouseInButton()) {
+					state = "loadmap";
+					Mouse.setGrabbed(true);
+				}
 				break;
 
 			case "loadmap":
@@ -242,7 +258,7 @@ public class MainGameLoop {
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 			
 			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV) || dist<MIN_RENDER_DISTANCE)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
 					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}
@@ -283,22 +299,49 @@ public class MainGameLoop {
 		state = newState;
 	}
 	
-	
-	public static void renderMenu(Loader loader) {
-		float[] vertices = { -0.5f, 0.5f, 0f, -0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f, 0.5f, 0.5f, 0f};
+	/**
+	 * Creates buttons for the main menu. Currently only the start button.
+	 * TODO: Create new button object for genericity
+	 * @param loader
+	 */
+	public static void createButtons(Loader loader) {
+		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f};
 
-		int[] indices = { 0, 1, 3, 3, 1, 0};
+		int[] indices = { 0, 1, 3, 3, 2, 1};
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0};
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
+		
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		TexturedModel tMod = new TexturedModel(model, texture);
+		button1 = tMod;
+	}
+	
+	/**
+	 * Renders the menu
+	 * @param shader
+	 */
+	public static void renderMenu(StaticShaderMenu shader) {
+		shader.start();
+		TexturedModelRenderer.render(button1, shader);
+		shader.stop();
+		DisplayManager.updateDisplay();
+	}
+	
+	/**
+	 * Checks whether the mouse is inside the boundaries of the button
+	 * TODO: Change to work with new Button object
+	 * @return
+	 */
+	public static boolean mouseInButton() {
+		int width = DisplayManager.getWidth();
+		int height = DisplayManager.getHeight();
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_L)) {
-			state = "loadmap";
+		if (Mouse.getX() > ((-0.5f + 1) * width/2) && Mouse.getX() < (0.5f + 1) * width/2 && Mouse.getY() > (-0.5f + 1) * height/2  && Mouse.getY() < (0.5f * height/2)) {
+			return true;
 		}
-		
+		return false;
 	}
 
 }
