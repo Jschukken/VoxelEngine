@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -13,11 +14,15 @@ import Entities.EnemyEntity;
 import Entities.Entity;
 import Entities.SpawnPointEntity;
 import GameEngine.AudioHandler;
+import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
+import RenderEngine.TexturedModelRenderer;
 import Shaders.StaticShader;
+import Shaders.StaticShaderMenu;
+import Textures.ModelTexture;
 import ToolBox.TexturedModelMaker;
 
 /**
@@ -30,6 +35,8 @@ public class MainGameLoop {
 
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
+	public static StaticShaderMenu menush = null;
+	public static TexturedModel button1 = null;
 	public static Loader loader1 = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
@@ -49,7 +56,9 @@ public class MainGameLoop {
 		Camera camera = null;
 		Loader loader = null;
 		StaticShader shader = null;
+		StaticShaderMenu menuShader = null;
 		MasterRenderer renderer = null;
+		TexturedModelRenderer menuRenderer = null;
 		AudioHandler ah = null;
 		tempMapCreator();
 
