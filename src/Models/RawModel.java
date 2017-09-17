@@ -1,7 +1,7 @@
 package Models;
 
 /**
- * models a rawModel, the shade of an entity
+ * models a rawModel, the shape of an entity
  * @author Jelle Schukken
  *
  */

@@ -138,6 +138,9 @@ public class Camera {
 	}
 
 
+	/**
+	 * checks to see if the camera is below the map
+	 */
 	private void fallCheck(){
 		//if you fall out of the map, game over
 		

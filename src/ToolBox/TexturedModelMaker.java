@@ -5,8 +5,19 @@ import Models.TexturedModel;
 import RenderEngine.Loader;
 import Textures.ModelTexture;
 
+/**
+ * helper class designed for static function that create models
+ * @author Jelle Schukken
+ *
+ */
 public class TexturedModelMaker {
 	
+	// note: may want to remove the texturing here and do that in the map loading, so the cube becomes more general
+	/**
+	 * creates a basic 1 by 1 cube
+	 * @param loader the loader with which to load the cube
+	 * @return the cube textured model
+	 */
 	public static TexturedModel cubeTexturedModel(Loader loader){
 
 		float[] vertices = { -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,

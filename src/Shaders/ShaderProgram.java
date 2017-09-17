@@ -128,7 +128,12 @@ public abstract class ShaderProgram {
 		GL20.glDeleteProgram(programID);
 	}
 
-	
+	/**
+	 * loads shader from txt file into gpu
+	 * @param file the file to load
+	 * @param type the type of shader (vertex of fragment)
+	 * @return the id of the shader in the gpu
+	 */
 	private int loadShader(String file, int type){
 		
 		//take text file and turn it into a line of text

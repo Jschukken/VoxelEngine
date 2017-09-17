@@ -19,6 +19,9 @@ public class EnemyEntity extends Entity {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * updates the enemies position and moves it to the next point on its path
+	 */
 	public void update() {
 		boolean check = false;
 
@@ -78,11 +81,24 @@ public class EnemyEntity extends Entity {
 		roundPosition();
 	}
 
+	/**
+	 * simulates getting hit
+	 */
+	public void getHit(){
+		destroy();
+	}
+	
+	/**
+	 * removes enemy from the game
+	 */
 	private void destroy() {
 		MainGameLoop.removeActiveEntity(this);
 
 	}
 	
+	/**
+	 * rounds the position to the 1nd decimal place
+	 */
 	private void roundPosition(){
 		position.x =  ((int)(position.x*10+0.5))/10.0f;
 		position.y =  ((int)(position.y*10+0.5))/10.0f;
@@ -90,6 +106,10 @@ public class EnemyEntity extends Entity {
 		
 	}
 	
+	/**
+	 * checks if the enemy has arrived at the next spot on their path
+	 * @return
+	 */
 	private boolean checkPath(){
 		roundPosition();
 		return position.x == path[pathPosition] && position.y == path[pathPosition+1] && position.z == path[pathPosition+2]; 

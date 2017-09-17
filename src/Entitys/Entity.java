@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import Models.TexturedModel;
 
 /**
- * Models a complete entity
+ * Models a complete entity (shape texture location)
  * @author Jelle Schukken
  *
  */
@@ -79,6 +79,10 @@ public class Entity {
 	}
 	
 	public void update(){
+		
+	}
+	
+	public void getHit(){
 		
 	}
 

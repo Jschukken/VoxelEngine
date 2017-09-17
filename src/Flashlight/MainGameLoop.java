@@ -39,8 +39,8 @@ public class MainGameLoop {
 
 	private static IntBuffer[] songID = null;
 
-	private static List<Entity> mapEntities = new ArrayList<Entity>();
-	private static List<Entity> activeEntities = new ArrayList<Entity>();
+	public static List<Entity> mapEntities = new ArrayList<Entity>();
+	public static List<Entity> activeEntities = new ArrayList<Entity>();
 
 	private static boolean pauseCheck = false;
 
@@ -134,7 +134,7 @@ public class MainGameLoop {
 						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if(map[x][y][z] == 2){
 						
-							int[] arr = {1,map[0].length,map[0][0].length-2,map.length-2,map[0].length,map[0][0].length-2,map.length-2,map[0].length,1,1,map[0].length,1};
+							int[] arr = {1,2,map[0][0].length-2,map.length-2,map[0].length,map[0][0].length-2,map.length-2,map[0].length,1,1,map[0].length,1};
 							activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1), tMod, arr));
 						
 					} else if (x == 0 || y == 0 || z == 0 || z == map[0][0].length - 1 || x == map.length - 1) {
@@ -173,16 +173,20 @@ public class MainGameLoop {
 
 	}
 
+	/**
+	 * TEMPORARY, creates a simple map while the map generator is in progress, can be used for debugging
+	 */
 	private static void tempMapCreator(){
-		for (int x = 0; x < map.length; x++) {
-			for (int z = 0; z < map[0].length; z++) {
-				for (int y = 0; y < map[0][0].length; y++) {
-					if((int)(Math.random()*10) == 1)
-						map[x][z][y] = 1;
-				}
-			}
-		}
+//		for (int x = 0; x < map.length; x++) {
+//			for (int z = 0; z < map[0].length; z++) {
+//				for (int y = 0; y < map[0][0].length; y++) {
+//					if((int)(Math.random()*10) == 1)
+//						map[x][z][y] = 1;
+//				}
+//			}
+//		}
 		map[1][1][1] = 2;
+		map[1][1][48] = 1;
 	}
 	/**
 	 * renders all entities within the render distance and visible to the camera to the screen
@@ -284,12 +288,22 @@ public class MainGameLoop {
 		state = newState;
 	}
 	
+	/**
+	 * adds an active entity to the game 
+	 * @param entity the entity to add
+	 * @param position the position of the entity
+	 * @param path the path the entity follows :TODO, make this better. it is silly
+	 */
 	public static void addActiveEntity(TexturedModel entity, Vector3f position, int[] path){
 		Entity enemy = new EnemyEntity(entity, position, 0, 0, 0, new Vector3f(1, 1, 1),path);
 		activeEntities.add(enemy);
 		
 	}
 	
+	/**
+	 * removes the given entity from the game
+	 * @param entity the entity to remove
+	 */
 	public static void removeActiveEntity(Entity entity){
 
 		activeEntities.remove(entity);

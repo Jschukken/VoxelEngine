@@ -2,10 +2,16 @@ package GameEngine;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import Entitys.Entity;
 import Flashlight.MainGameLoop;
 
 public class CollisionHandler {
 
+	/**
+	 * checks to see if the player collides with anything given the players position in the vector map
+	 * @param position the position of the player
+	 * @return return true if the player collides with anything, return false otherwise
+	 */
 	public static boolean checkPlayerCollision(Vector3f position) {
 
 		try {
@@ -56,6 +62,11 @@ public class CollisionHandler {
 		}
 	}
 
+	/**
+	 * checks to see if the enemy collides with anything given the enemy position in the map
+	 * @param position the position of the enemy
+	 * @return true if there is a collision, false otherwise
+	 */
 	public static boolean checkEnemyCollision(Vector3f position) {
 
 		try {
@@ -90,5 +101,16 @@ public class CollisionHandler {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			return false;
 		}
+	}
+	
+	public static boolean hitDetectionSingleEnemy(Vector3f position){
+		for(Entity entity : MainGameLoop.activeEntities){
+			if((int)position.x == (int)entity.getPosition().x && (int)position.z == (int)entity.getPosition().z && (int)position.y == (int)entity.getPosition().y){
+				entity.getHit();
+				return true;
+			}
+		}
+		return false;
+		
 	}
 }
