@@ -77,11 +77,4 @@ public class DisplayManager {
 		System.exit(0);
 	}
 	
-	public static int getWidth() {
-		return WIDTH;
-	}
-	
-	public static int getHeight() {
-		return HEIGHT;
-	}
 }

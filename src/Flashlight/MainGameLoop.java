@@ -7,7 +7,6 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entities.Camera;
@@ -302,7 +301,7 @@ public class MainGameLoop {
 	/**
 	 * Creates buttons for the main menu. Currently only the start button.
 	 * TODO: Create new button object for genericity
-	 * @param loader
+	 * @param loader loader required to load the models.
 	 */
 	public static void createButtons(Loader loader) {
 		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f};
@@ -320,7 +319,7 @@ public class MainGameLoop {
 	
 	/**
 	 * Renders the menu
-	 * @param shader
+	 * @param shader the shader required to give textures to the model
 	 */
 	public static void renderMenu(StaticShaderMenu shader) {
 		shader.start();
@@ -332,13 +331,11 @@ public class MainGameLoop {
 	/**
 	 * Checks whether the mouse is inside the boundaries of the button
 	 * TODO: Change to work with new Button object
-	 * @return
+	 * @return whether the mouse is inside the button
 	 */
 	public static boolean mouseInButton() {
-		int width = DisplayManager.getWidth();
-		int height = DisplayManager.getHeight();
 		
-		if (Mouse.getX() > ((-0.5f + 1) * width/2) && Mouse.getX() < (0.5f + 1) * width/2 && Mouse.getY() > (-0.5f + 1) * height/2  && Mouse.getY() < (0.5f * height/2)) {
+		if (Mouse.getX() > 540 && Mouse.getX() < 1380 && Mouse.getY() > 304  && Mouse.getY() < 776) {
 			return true;
 		}
 		return false;
