@@ -2,7 +2,7 @@ package GameEngine;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import Entitys.Entity;
+import Entities.Entity;
 import Flashlight.MainGameLoop;
 
 public class CollisionHandler {

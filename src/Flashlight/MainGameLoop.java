@@ -8,10 +8,10 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
-import Entitys.Camera;
-import Entitys.EnemyEntity;
-import Entitys.Entity;
-import Entitys.SpawnPointEntity;
+import Entities.Camera;
+import Entities.EnemyEntity;
+import Entities.Entity;
+import Entities.SpawnPointEntity;
 import GameEngine.AudioHandler;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
