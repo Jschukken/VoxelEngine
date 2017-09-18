@@ -1,18 +1,18 @@
 package RenderEngine;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
-import Entities.Entity;
+import Models.TexturedModel;
 import Shaders.StaticShader;
+import Shaders.StaticShaderMenu;
 
 /**
  * work in progress, the master renderer
  * @author Jelle Schukken
  *
  */
-public class MasterRenderer {
+public class MasterMenuRenderer {
 
 
 	private Matrix4f projectionMatrix;
@@ -21,11 +21,8 @@ public class MasterRenderer {
 	private static final float NEAR_PLANE = -.25f;// closest rendered object
 	private static final float FAR_PLANE = 100f;// farthest rendered object
 	
-	public MasterRenderer(StaticShader shader){
-		createProjectionMatrix();
-		shader.start();
-		shader.loadProjectionMatrix(projectionMatrix);
-		shader.stop();
+	public MasterMenuRenderer(){
+
 	}
 
 	/**
@@ -39,32 +36,12 @@ public class MasterRenderer {
 	}
 
 	/**
-	 * creates projection matrix to convert models to camera view
-	 */
-	public void createProjectionMatrix() {
-
-		projectionMatrix = new Matrix4f();
-
-		float aspect = (float) Display.getWidth() / (float) Display.getHeight();
-		float yScale = 1f / (float) Math.tan(Math.toRadians(FOV / 2f));
-		float xScale = yScale / aspect;
-		float zp = NEAR_PLANE + FAR_PLANE;
-		float zm = NEAR_PLANE - FAR_PLANE;
-
-		projectionMatrix.m00 = xScale;
-		projectionMatrix.m11 = yScale;
-		projectionMatrix.m22 = zp / zm;
-		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = (2 * FAR_PLANE * NEAR_PLANE) / zm;
-	}
-
-	/**
 	 * render an entity with a shader
 	 * @param entity the entity to render
 	 * @param shader the shader that will be used
 	 */
-	public void render(Entity entity, StaticShader shader) {
-		EntityRenderer.render(entity, shader);
+	public void render(TexturedModel entity, StaticShaderMenu shader) {
+		TexturedModelRenderer.render(entity, shader);
 	}
 	
 	public void cleanUp(){

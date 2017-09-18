@@ -19,7 +19,7 @@ public class EntityRenderer {
 
 	/**
 	 * renders entities to the screen using a specific shader
-	 * @param entity the entitiy to render
+	 * @param entity the entity to render
 	 * @param shader the shader with which to render
 	 */
 	public static void render(Entity entity, StaticShader shader) {
