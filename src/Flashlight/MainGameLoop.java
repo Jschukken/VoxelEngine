@@ -59,7 +59,6 @@ public class MainGameLoop {
 		StaticShader shader = null;
 		StaticShaderMenu menuShader = null;
 		MasterRenderer renderer = null;
-		TexturedModelRenderer menuRenderer = null;
 		AudioHandler ah = null;
 		tempMapCreator();
 
@@ -68,7 +67,6 @@ public class MainGameLoop {
 			switch (state) {
 
 			case "startup":
-				GL11.glClearColor(0.4f, 0.7f, 1.0f, 1);
 				camera = null;
 				mapEntities.clear();
 				activeEntities.clear();
@@ -78,8 +76,9 @@ public class MainGameLoop {
 					sh.cleanUp();
 					audH.cleanUp();
 					menush.cleanUp();
+					renderer.cleanUp();
 				} catch (NullPointerException e) {
-
+					System.out.println("shit");
 				}
 				ah = new AudioHandler();
 				audH = ah;
@@ -93,6 +92,7 @@ public class MainGameLoop {
 				menush = menuShader;
 				renderer = new MasterRenderer(shader);
 				createButtons(loader);
+				GL11.glClearColor(0.4f, 0.7f, 1.0f, 1);
 				state = "menu";
 				break;
 
@@ -236,7 +236,6 @@ public class MainGameLoop {
 		lookAt.normalise();
 		
 		Vector3f toCamera;
-		
 		for (Entity entity : mapEntities) {
 			
 			//vector from the entity to the camera

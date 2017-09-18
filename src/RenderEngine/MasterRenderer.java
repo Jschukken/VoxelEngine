@@ -66,4 +66,9 @@ public class MasterRenderer {
 	public void render(Entity entity, StaticShader shader) {
 		EntityRenderer.render(entity, shader);
 	}
+	
+	public void cleanUp(){
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glClearColor(0.4f, 0.7f, 1.0f, 1);
+	}
 }
