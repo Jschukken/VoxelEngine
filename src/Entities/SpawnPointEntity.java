@@ -7,21 +7,25 @@ import Models.TexturedModel;
 
 public class SpawnPointEntity extends Entity {
 
-	private static int spawnTimer = 0;
+	private int spawnTimer = 0;
+	public static int spawnRate = 240;
 	
+	private Vector3f position;
 	private TexturedModel enemy;
 	private int[] path;
 	
 	public SpawnPointEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale, TexturedModel enemy, int[] path) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.enemy = enemy;
-		this.path = path;
-		// TODO Auto-generated constructor stub
+		//this.path = path;
+		this.path = new int[]{(int)position.x,(int)position.y,(int)position.z,10,3,10};
+		this.position = position;
+		spawnTimer = (int)(Math.random()*spawnRate);
 	}
 	
 	public void update(){
 		spawnTimer++;
-		if(spawnTimer >= 60){
+		if(spawnTimer >= spawnRate){
 			spawnTimer = 0;
 			Vector3f p = new Vector3f(position.x,position.y,position.z);
 			MainGameLoop.addActiveEntity(enemy, p, path);

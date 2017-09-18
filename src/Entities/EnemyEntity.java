@@ -11,11 +11,13 @@ public class EnemyEntity extends Entity {
 	private int[] path;
 	private int pathPosition = 0;
 	private static final float ENEMY_SPEED = .1001f;
+	private Vector3f position;
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
 			int[] path) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.path = path;
+		this.position = position;
 		// TODO Auto-generated constructor stub
 	}
 

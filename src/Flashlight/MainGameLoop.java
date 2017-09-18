@@ -42,7 +42,7 @@ public class MainGameLoop {
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[50][15][50];
+	public static int[][][] map = new int[20][5][20];
 
 	private static String state = "startup";
 
@@ -110,7 +110,7 @@ public class MainGameLoop {
 				break;
 
 			case "loadmap":
-				camera = new Camera(new Vector3f(0, 50, 10), 0, 0, 0);
+				camera = new Camera(new Vector3f(0, map[0].length, 10), 0, 0, 0);
 				loadMap(loader);
 				state = "game";
 				break;
@@ -202,16 +202,31 @@ public class MainGameLoop {
 	 * TEMPORARY, creates a simple map while the map generator is in progress, can be used for debugging
 	 */
 	private static void tempMapCreator(){
-		for (int x = 0; x < map.length; x++) {
-			for (int z = 0; z < map[0].length; z++) {
-				for (int y = 0; y < map[0][0].length; y++) {
-					if((int)(Math.random()*10) == 1)
-						map[x][z][y] = 1;
-				}
-			}
-		}
-		map[1][1][1] = 2;
-		map[1][1][48] = 1;
+//		for (int x = 0; x < map.length; x++) {
+//			for (int z = 0; z < map[0].length; z++) {
+//				for (int y = 0; y < map[0][0].length; y++) {
+//					if((int)(Math.random()*10) == 1)
+//						map[x][z][y] = 1;
+//				}
+//			}
+//		}
+		
+		//map[1][1][1] = 2;
+		map[10][1][2] = 2;
+		map[10][1][18] = 2;
+		map[18][1][10] = 2;
+		map[2][1][10] = 2;
+		
+		map[10][1][10] = 1;
+		map[9][1][10] = 1;
+		map[9][1][9] = 1;
+		map[10][1][9] = 1;
+		map[11][1][10] = 1;
+		map[11][1][11] = 1;
+		map[10][1][11] = 1;
+		map[9][1][11] = 1;
+		map[11][1][9] = 1;
+		map[10][2][10] = 1;
 	}
 	/**
 	 * renders all entities within the render distance and visible to the camera to the screen
