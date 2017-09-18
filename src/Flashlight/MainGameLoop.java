@@ -19,7 +19,8 @@ import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
-import RenderEngine.MasterRenderer;
+import RenderEngine.MasterGameRenderer;
+import RenderEngine.MasterMenuRenderer;
 import RenderEngine.TexturedModelRenderer;
 import Shaders.StaticShader;
 import Shaders.StaticShaderMenu;
@@ -38,7 +39,7 @@ public class MainGameLoop {
 	private static final int MIN_RENDER_DISTANCE = 3;
 	public static StaticShaderMenu menush = null;
 	public static TexturedModel button1 = null;
-	public static Loader loader1 = null;
+	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
 	public static int[][][] map = new int[50][15][50];
@@ -55,10 +56,10 @@ public class MainGameLoop {
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
 		Camera camera = null;
-		Loader loader = null;
 		StaticShader shader = null;
 		StaticShaderMenu menuShader = null;
-		MasterRenderer renderer = null;
+		MasterGameRenderer gameRenderer = null;
+		MasterMenuRenderer menuRenderer = null;
 		AudioHandler ah = null;
 		tempMapCreator();
 
@@ -72,33 +73,35 @@ public class MainGameLoop {
 				activeEntities.clear();
 
 				try {
-					loader1.cleanUp();
+					loader.cleanUp();
 					sh.cleanUp();
 					audH.cleanUp();
 					menush.cleanUp();
-					renderer.cleanUp();
+					gameRenderer.cleanUp();
+					menuRenderer.cleanUp();
 				} catch (NullPointerException e) {
 					System.out.println("shit");
 				}
+				
 				ah = new AudioHandler();
 				audH = ah;
 				songID = ah.createSound("song");
 				ah.startSong(songID);
 				loader = new Loader();
-				loader1 = loader;
 				shader = new StaticShader();
 				sh = shader;
 				menuShader = new StaticShaderMenu();
 				menush = menuShader;
-				renderer = new MasterRenderer(shader);
+				gameRenderer = new MasterGameRenderer(shader);
+				menuRenderer = new MasterMenuRenderer();
 				createButtons(loader);
-				GL11.glClearColor(0.4f, 0.7f, 1.0f, 1);
 				state = "menu";
+				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 				break;
 
 			case "menu":
 				Mouse.setGrabbed(false);
-				renderMenu(menuShader);
+				renderMenu(menuShader, menuRenderer);
 				
 				if (Mouse.isButtonDown(0) && mouseInButton()) {
 					state = "loadmap";
@@ -115,7 +118,7 @@ public class MainGameLoop {
 			case "game":
 				manageMusic();
 				updateGame(camera);
-				renderGame(renderer, shader, camera);
+				renderGame(gameRenderer, shader, camera);
 				break;
 
 			case "gameover":
@@ -125,7 +128,7 @@ public class MainGameLoop {
 			case "pause":
 				manageMusic();
 				pause();
-				renderGame(renderer, shader, camera);
+				renderGame(gameRenderer, shader, camera);
 				break;
 			default:
 				System.out.println("state error: " + state + " is an invalid state");
@@ -220,7 +223,7 @@ public class MainGameLoop {
 	 * @param camera
 	 *            the camera it will render to
 	 */
-	private static void renderGame(MasterRenderer renderer, StaticShader shader, Camera camera) {
+	private static void renderGame(MasterGameRenderer renderer, StaticShader shader, Camera camera) {
 
 		renderer.prepare();
 
@@ -249,7 +252,7 @@ public class MainGameLoop {
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 			
 			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
 					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}
@@ -268,7 +271,7 @@ public class MainGameLoop {
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 			
 			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
 					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}
@@ -353,7 +356,8 @@ public class MainGameLoop {
 	 * Renders the menu
 	 * @param shader the shader required to give textures to the model
 	 */
-	public static void renderMenu(StaticShaderMenu shader) {
+	public static void renderMenu(StaticShaderMenu shader, MasterMenuRenderer renderer) {
+		renderer.prepare();
 		shader.start();
 		TexturedModelRenderer.render(button1, shader);
 		shader.stop();
