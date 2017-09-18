@@ -16,13 +16,13 @@ import GameEngine.CollisionHandler;
  */
 public class Camera {
 	
-	private static float FRICTION = 5;
+	private static float FRICTION = 4;
 	
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
 	private float dx = 0,dy= 0,dz= 0;
 	
-	private float acceleration = 0.005f;
+	private float acceleration = 0.01f;
 	private float maxSpeed = 0.09f;
 	private float jumpHeight = 0.15f;
 	private float turnSpeed = 0.1f;
@@ -49,7 +49,7 @@ public class Camera {
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
 			maxSpeed = 0.4f;
 		}else{
-			maxSpeed = 0.1f;
+			maxSpeed = 0.09f;
 		}
 		
 		if(Mouse.isGrabbed()){
