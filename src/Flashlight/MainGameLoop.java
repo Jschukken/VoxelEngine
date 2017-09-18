@@ -7,6 +7,7 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entities.Camera;
@@ -67,6 +68,8 @@ public class MainGameLoop {
 			switch (state) {
 
 			case "startup":
+				GL11.glClearColor(0.4f, 0.7f, 1.0f, 1);
+				camera = null;
 				mapEntities.clear();
 				activeEntities.clear();
 
@@ -105,7 +108,6 @@ public class MainGameLoop {
 
 			case "loadmap":
 				camera = new Camera(new Vector3f(0, 50, 10), 0, 0, 0);
-				tempMapCreator();
 				loadMap(loader);
 				state = "game";
 				break;
@@ -197,14 +199,14 @@ public class MainGameLoop {
 	 * TEMPORARY, creates a simple map while the map generator is in progress, can be used for debugging
 	 */
 	private static void tempMapCreator(){
-//		for (int x = 0; x < map.length; x++) {
-//			for (int z = 0; z < map[0].length; z++) {
-//				for (int y = 0; y < map[0][0].length; y++) {
-//					if((int)(Math.random()*10) == 1)
-//						map[x][z][y] = 1;
-//				}
-//			}
-//		}
+		for (int x = 0; x < map.length; x++) {
+			for (int z = 0; z < map[0].length; z++) {
+				for (int y = 0; y < map[0][0].length; y++) {
+					if((int)(Math.random()*10) == 1)
+						map[x][z][y] = 1;
+				}
+			}
+		}
 		map[1][1][1] = 2;
 		map[1][1][48] = 1;
 	}
