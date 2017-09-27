@@ -103,14 +103,18 @@ public class CollisionHandler {
 		}
 	}
 	
-	public static boolean hitDetectionSingleEnemy(Vector3f position){
+	/**
+	 * check to see if the position collides with the enemy
+	 * @param position
+	 * @return
+	 */
+	public static Entity hitDetectionSingleEnemy(Vector3f position){
 		for(Entity entity : MainGameLoop.activeEntities){
 			if((int)position.x == (int)entity.getPosition().x && (int)position.z == (int)entity.getPosition().z && (int)position.y == (int)entity.getPosition().y){
-				entity.getHit();
-				return true;
+				return entity;
 			}
 		}
-		return false;
+		return null;
 		
 	}
 }

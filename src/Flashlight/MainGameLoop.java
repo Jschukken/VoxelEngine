@@ -13,6 +13,7 @@ import org.lwjgl.util.vector.Vector3f;
 import Entities.Camera;
 import Entities.EnemyEntity;
 import Entities.Entity;
+import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
 import GameEngine.AudioHandler;
 import Models.RawModel;
@@ -37,6 +38,7 @@ public class MainGameLoop {
 
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
+	private static final int PARTICLE_COUNT = 100;
 	public static StaticShaderMenu menush = null;
 	public static TexturedModel button1 = null;
 	public static Loader loader = null;
@@ -50,6 +52,7 @@ public class MainGameLoop {
 
 	public static List<Entity> mapEntities = new ArrayList<Entity>();
 	public static List<Entity> activeEntities = new ArrayList<Entity>();
+	public static List<Entity> particleEntities = new ArrayList<Entity>();
 
 	private static boolean pauseCheck = false;
 
@@ -185,6 +188,9 @@ public class MainGameLoop {
 		for(int i = 0; i < activeEntities.size();i++){
 			activeEntities.get(i).update();
 		}
+		for(Entity entity: particleEntities){
+			entity.update();
+		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
 			pauseCheck = true;
@@ -246,10 +252,7 @@ public class MainGameLoop {
 		shader.loadViewMatrix(camera);
 		
 		//vector the camera is looking at
-		Vector3f lookAt = new Vector3f(
-				(float) (Math.cos(Math.toRadians(camera.getRotY()+90)) * Math.cos(Math.toRadians(camera.getRotX()))),
-				(float) (Math.sin(Math.toRadians(camera.getRotX()))),
-				(float) Math.sin(Math.toRadians(camera.getRotY()+90)));
+		Vector3f lookAt = camera.getLookAt();
 		
 		lookAt.normalise();
 		
@@ -291,6 +294,9 @@ public class MainGameLoop {
 				renderer.render(entity, shader);
 			}
 
+		}
+		for(Entity entity: particleEntities){
+			renderer.render(entity,shader);
 		}
 
 		shader.stop();
@@ -337,6 +343,14 @@ public class MainGameLoop {
 		Entity enemy = new EnemyEntity(entity, position, 0, 0, 0, new Vector3f(1, 1, 1),path);
 		activeEntities.add(enemy);
 		
+	}
+	
+	public static void addPatricleEntity(TexturedModel entity, Vector3f position, Vector3f rot, Vector3f direction){
+		Entity particle = new PlayerAttack(entity, position, rot, direction, new Vector3f(.5f,.5f,.5f));
+		particleEntities.add(particle);
+		if(particleEntities.size()>PARTICLE_COUNT){
+			particleEntities.remove(0);
+		}
 	}
 	
 	/**
