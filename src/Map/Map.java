@@ -8,37 +8,128 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  */
 
-
 public class Map {
 	public static final int SIZE = 20;       //x and y size of the map
     public static final int HEIGHT = 5;      //z size of the map
     public static final int THRESHOLD = 80;  //threshold for randomly turning 0's into 1's after initial path generation
     
-    public void lee (int[][] map, int dx, int dy, int sx, int sy){
-        
+    public void lee (int[][] m, int k, int x, int y){
+    	//return once destination has been reached
+    	if(m[x][y] == -2) return;
+    	
+    	//Check for edge, go down
+    	if(x+1 < SIZE)
+        {
+            if(m[x+1][y] > k+1)
+            {
+                m[x+1][y] = k+1;
+                lee(m, k+1, x+1, y);
+            }
+        }
+         
+    	//Check for edge, go up
+        if(x-1 > 0)
+        {
+            if(m[x-1][y] > k+1)
+            {
+                m[x-1][y] = k+1;
+                lee(m, k+1, x-1, y);
+            }
+        }
+     
+        //Check for edge, go right
+        if(y+1 < SIZE)
+        {
+            if(m[x][y+1] > k+1)
+            {
+                m[x][y+1] = k+1;
+                lee(m, k+1, x, y+1);
+            }
+        }
+     
+        //Check for edge, go left
+        if(y-1 > 0)
+        {
+            if(m[x][y-1] > k+1)
+            {
+                m[x][y-1] = k+1;
+                lee(m, k+1, x, y-1);
+            }
+        }
+    }
+    
+    public void leeBack (int[][] m, int k, int x, int y){
+    	m[x][y] = -1;
+    	if(x+1 < SIZE)
+        {
+            if(m[x+1][y] == k-1)
+            {
+                leeBack(m, k-1, x+1, y);
+            }
+        }
+         
+    	//Check for edge, go up
+        if(x-1 > 0)
+        {
+            if(m[x-1][y] == k-1)
+            {
+                leeBack(m, k-1, x-1, y);
+            }
+        }
+     
+        //Check for edge, go right
+        if(y+1 < SIZE)
+        {
+            if(m[x][y+1] == k-1)
+            {
+                leeBack(m, k-1, x, y+1);
+            }
+        }
+     
+        //Check for edge, go left
+        if(y-1 > 0)
+        {
+            if(m[x][y-1] == k-1)
+            {
+                leeBack(m, k-1, x, y-1);
+            }
+        }
     }
     
     /*
      * Add in the initial paths
      */
     public int[][] initial (int[][] map) {
-        int dx = 0;  	//destination x coordinate
-        int dy = 0;  	//destination y coordinate
-        int sx = 0;		//current spawn x coordinate
-        int sy = 0;		//current spawn y coordinate
+        int dx = 0;
+        int dy = 0;
+        int d = 0;
+        int x = 0;
+        int y = 0;
+        int sx = 0;
+        int sy = 0;
         
         for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==-2){
             dx = i;
             dy = j;
         }
         for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==-3){
-            sx = i;
-            sy = j;
+        	sx = i;
+        	sy = j;
             map = extras(map, THRESHOLD);
-            
-            lee(map, dx, dy,  sx, sy);
+            for(int k = 0; k < map.length; k++)for(int l = 0; l < map[0].length; l++)if(map[k][l] == 0) map[k][l]=200;
+            lee(map, 0, sx, sy);
+            for(int k = 0; k < map.length; k++)for(int l = 0; l < map[0].length; l++)if(map[k][l] > d) {
+            	d=map[k][l];
+            	x = k;
+            	y = l;
+            }
+            leeBack(map, d, x, y);
+            for(int k = 0; k < map.length; k++)for(int l = 0; l < map[0].length; l++)if(map[k][l] > 0)
+            	map[k][l] = 0;
+            for(int k = 0; k < map.length; k++)for(int l = 0; l < map[0].length; l++)if(map[k][l] < 0)
+            	map[k][l] = Math.abs(map[k][l]);
+            print2D(map);
         }
-        //stuff missing here
         return map;
     }
     
@@ -129,7 +220,8 @@ public class Map {
         
         //fill map
         map = removal(extras(initial(map), THRESHOLD));
-        for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j] < 0) map[i][j] = Math.abs(map[i][j]);
+        for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j] < 0)
+        	map[i][j] = Math.abs(map[i][j]);
         
         //turn to 3D (height map not applied
         int[][][] map3D = new int[SIZE][SIZE][HEIGHT];
@@ -146,7 +238,6 @@ public class Map {
     		//good = kNearest(evaluation(map));
     		good = true;
     	}
-    	print3D(map);
     	return map;
     }
     
