@@ -9,8 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 public class Map {
-	public static final int SIZE = 20;       	//x and y size of the map
-    public static final int HEIGHT = 1;      	//z size of the map
+	public static final int SIZE = 10;       	//x and y size of the map
+    public static final int HEIGHT = 10;      	//z size of the map
     public static final int THRESHOLD = 80;  	//threshold for randomly turning 0's into 1's
     public static final int SCALE = 5;  		//size of 3D map compared to 2D map
     
@@ -37,7 +37,7 @@ public class Map {
         }
          
     	//Check for edge, go up
-        if(x-1 > 0)
+        if(x-1 >= 0)
         {
             if(m[x-1][y] > k+1)
             {
@@ -57,7 +57,7 @@ public class Map {
         }
      
         //Check for edge, go left
-        if(y-1 > 0)
+        if(y-1 >= 0)
         {
             if(m[x][y-1] > k+1)
             {
@@ -238,7 +238,8 @@ public class Map {
      */
     public int[][][] mapTo3D(){
     	//initialize the 3D map
-    	int[][][] map3D = new int[SIZE*SCALE][SIZE*SCALE][HEIGHT];
+    	//+2's are for the walls surrounding the map
+    	int[][][] map = new int[SIZE*SCALE+2][SIZE*SCALE+2][HEIGHT];
     	
     	//scaling
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++) {
@@ -246,7 +247,7 @@ public class Map {
         	if(m[i][j] == 1){
         		for(int k = 0; k < SCALE; k++) {
             		for(int l = 0; l < SCALE; l++) {
-            			map3D[i*SCALE+k][j*SCALE+l][0] = m[i][j];
+            			map[i*SCALE+k+1][j*SCALE+l+1][0] = m[i][j];
                 	}
             	}
         	}
@@ -254,27 +255,67 @@ public class Map {
         	else if(m[i][j] == 2) {
         		for(int k = 0; k < SCALE; k++) {
             		for(int l = 0; l < SCALE; l++) {
-            			map3D[i*SCALE+k][j*SCALE+l][0] = 1;
+            			map[i*SCALE+k+1][j*SCALE+l+1][0] = 1;
                 	}
             	}
-        		map3D[i*SCALE+SCALE/2][j*SCALE+SCALE/2][0] = 2;
+        		map[i*SCALE+SCALE/2+1][j*SCALE+SCALE/2+1][1] = 2;
         	}
         	//surround end points
         	else if(m[i][j] == 3) {
         		for(int k = 0; k < SCALE; k++) {
             		for(int l = 0; l < SCALE; l++) {
-            			map3D[i*SCALE+k][j*SCALE+l][0] = 1;
+            			map[i*SCALE+k+1][j*SCALE+l+1][0] = 1;
                 	}
             	}
-        		map3D[i*SCALE+SCALE/2][j*SCALE+SCALE/2][0] = 3;
+        		map[i*SCALE+SCALE/2+1][j*SCALE+SCALE/2+1][1] = 3;
         	}
         }
         
         //walls
+        for(int i = 0; i < map.length-1; i++)for(int j = 0; j < map[0].length-1; j++)if(map[i][j][0] == 1) {
+        	if(map[i+1][j][0] == 0) {
+        		for(int k = 1; k < 6; k++) {
+        			map[i+1][j][k] = 1;
+        		}
+        	}
+        	if(map[i-1][j][0] == 0) {
+        		for(int k = 1; k < 6; k++) {
+        			map[i-1][j][k] = 1;
+        		}
+        	}
+        	if(map[i][j+1][0] == 0) {
+        		for(int k = 1; k < 6; k++) {
+        			map[i][j+1][k] = 1;
+        		}
+        	}
+        	if(map[i][j-1][0] == 0) {
+        		for(int k = 1; k < 6; k++) {
+        			map[i][j-1][k] = 1;
+        		}
+        	}
+        }
         
         //height
+        for(int i =0; i < map.length-10; i += 10) {
+        	for(int j = 0; j < 4; j++) {
+        		for(int k = 0; k < map[0].length; k++) {
+        			if(map[i+j][k][1] == 2) {
+        				map[i+j][k][1] = 1;
+        				map[i+j][k][2] = 2;
+        			}
+        			else if(map[i+j][k][1] == 3) {
+        				map[i+j][k][1] = 1;
+        				map[i+j][k][2] = 3;
+        			}
+        			if(map[i+j][k][0] == 1) {
+            			map[i+j][k][1] = 1;        				
+        			}
+        		}
+        	}
+        }
         
-        return map3D;
+        //return
+        return map;
     }
     
     /*
@@ -299,6 +340,9 @@ public class Map {
         return mapTo3D();
     }
     
+    /*
+     * creates a good map
+     */
     public int[][][] createGoodMap(){
     	boolean good = false;
     	int[][][] map = new int[SIZE][SIZE][HEIGHT];
