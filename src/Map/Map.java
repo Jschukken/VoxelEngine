@@ -16,7 +16,7 @@ public class Map {
     
     public void lee (int k, int x, int y, boolean finished){
     	//return once destination has been reached
-    	if(m[x][y] == -2 || finished) {
+    	if(m[x][y] == -2 || m[x][y] == -5 || finished) {
     		finished = true;
     		return;
     	}
@@ -64,7 +64,7 @@ public class Map {
     
     public void leeBack (int k, int x, int y){
     	//set current point as part of the path
-    	m[x][y] = -1;
+    	m[x][y] = -5;
     	
     	//Check for edge, go down
     	if(x+1 < SIZE)
@@ -121,10 +121,8 @@ public class Map {
         	sx = i;
         	sy = j;
             extras(THRESHOLD);
-            
             for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] == 0) m[k][l]=200;
             lee(0, sx, sy, false);
-            print2D();
             for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] > d && m[k][l] != 200) {
             	d = m[k][l];
             	x = k;
@@ -133,12 +131,13 @@ public class Map {
             leeBack(d, x, y);
             for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] > 0)
             	m[k][l] = 0;
-            print2D();
         }
+        for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] == -5)
+        	m[k][l] = -1;
     }
     
     /*
-     * takes out the loose ends, at least a part
+     * takes out a part of the loose ends
      */
     public void removal () {
         //define a map with an extra 0 border
@@ -177,7 +176,7 @@ public class Map {
      * add in extra possible path
      */
     public void extras (int threshold) {
-        //all non-path get set to a random number
+        //all empty points get set to a random number
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++)if(m[i][j] >= 0)
             m[i][j] = ThreadLocalRandom.current().nextInt(0, 100);
         //if number above threshold set to path else to non-path
@@ -191,11 +190,9 @@ public class Map {
      * print the 2D map
      */
     public void print2D() {
-    	/*
     	//set everything to positive for readability
         for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] < 0)
         	m[k][l] = Math.abs(m[k][l]);
-        	*/
         
         //print
         for(int i = 0; i < m.length; i++){
