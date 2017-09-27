@@ -10,12 +10,17 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Map {
 	public static final int SIZE = 20;       	//x and y size of the map
-    public static final int HEIGHT = 5;      	//z size of the map
-    public static final int THRESHOLD = 80;  	//threshold for randomly turning 0's into 1's after initial path generation
+    public static final int HEIGHT = 1;      	//z size of the map
+    public static final int THRESHOLD = 80;  	//threshold for randomly turning 0's into 1's
+    public static final int SCALE = 5;  		//size of 3D map compared to 2D map
+    
     private int[][] m;							//map currently being worked on
     
+    /*
+     * fill the matrix using lee's algorithm
+     */
     public void lee (int k, int x, int y, boolean finished){
-    	//return once destination has been reached
+    	//return once destination or another path to it has been reached
     	if(m[x][y] == -2 || m[x][y] == -5 || finished) {
     		finished = true;
     		return;
@@ -62,6 +67,9 @@ public class Map {
         }
     }
     
+    /*
+     * Backtrack through the filled matrix to find the shortest path
+     */
     public void leeBack (int k, int x, int y){
     	//set current point as part of the path
     	m[x][y] = -5;
@@ -108,30 +116,33 @@ public class Map {
     }
     
     /*
-     * Add in the initial paths
+     * Add in the initial paths from spawns to the end point
      */
     public void initial () {
-        int d = 0;
-        int x = 0;
-        int y = 0;
-        int sx = 0;
-        int sy = 0;
+        int d = 0;	//current farthest point found by lee
+        int x = 0;	//x coordinate of farthest point
+        int y = 0;	//y coordinate of farthest point
         
+        //draw the path for each spawn points
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++)if(m[i][j]==-3){
-        	sx = i;
-        	sy = j;
+        	//fill matrix with random obstacles
             extras(THRESHOLD);
+            //set 0 to high number for lee to work
             for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] == 0) m[k][l]=200;
-            lee(0, sx, sy, false);
+            lee(0, i, j, false);
+            //find the starting point for the back track
             for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] > d && m[k][l] != 200) {
             	d = m[k][l];
             	x = k;
             	y = l;
             }
             leeBack(d, x, y);
+            //set matrix back to normal
             for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] > 0)
             	m[k][l] = 0;
         }
+        
+        //finalize all paths
         for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] == -5)
         	m[k][l] = -1;
     }
@@ -179,6 +190,7 @@ public class Map {
         //all empty points get set to a random number
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++)if(m[i][j] >= 0)
             m[i][j] = ThreadLocalRandom.current().nextInt(0, 100);
+        
         //if number above threshold set to path else to non-path
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++){
             if(m[i][j] >= threshold) m[i][j] = -1;
@@ -221,6 +233,51 @@ public class Map {
     }
     
     /*
+     * Turn the map into it's 3D form
+     * includes: scaling, walls and height map
+     */
+    public int[][][] mapTo3D(){
+    	//initialize the 3D map
+    	int[][][] map3D = new int[SIZE*SCALE][SIZE*SCALE][HEIGHT];
+    	
+    	//scaling
+        for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++) {
+        	//scale paths
+        	if(m[i][j] == 1){
+        		for(int k = 0; k < SCALE; k++) {
+            		for(int l = 0; l < SCALE; l++) {
+            			map3D[i*SCALE+k][j*SCALE+l][0] = m[i][j];
+                	}
+            	}
+        	}
+        	//surround spawn points
+        	else if(m[i][j] == 2) {
+        		for(int k = 0; k < SCALE; k++) {
+            		for(int l = 0; l < SCALE; l++) {
+            			map3D[i*SCALE+k][j*SCALE+l][0] = 1;
+                	}
+            	}
+        		map3D[i*SCALE+SCALE/2][j*SCALE+SCALE/2][0] = 2;
+        	}
+        	//surround end points
+        	else if(m[i][j] == 3) {
+        		for(int k = 0; k < SCALE; k++) {
+            		for(int l = 0; l < SCALE; l++) {
+            			map3D[i*SCALE+k][j*SCALE+l][0] = 1;
+                	}
+            	}
+        		map3D[i*SCALE+SCALE/2][j*SCALE+SCALE/2][0] = 3;
+        	}
+        }
+        
+        //walls
+        
+        //height
+        
+        return map3D;
+    }
+    
+    /*
      * creates a Map
      */
     public int[][][] createMap(){
@@ -239,9 +296,7 @@ public class Map {
         	m[i][j] = Math.abs(m[i][j]);
         
         //turn to 3D (no height map or walls)
-        int[][][] map3D = new int[SIZE][SIZE][HEIGHT];
-        for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++) map3D[i][j][0] = m[i][j];
-        return map3D;
+        return mapTo3D();
     }
     
     public int[][][] createGoodMap(){
