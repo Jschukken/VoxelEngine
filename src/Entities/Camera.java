@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
+import ToolBox.TexturedModelMaker;
 
 /**
  * The camera object TODO: turn into player
@@ -131,12 +132,19 @@ public class Camera {
 			
 			fallCheck();
 			
+			if(Mouse.isButtonDown(0)){
+				attack();
+			}
+			
 			//System.out.println("\f ("  + position.x + ", " + position.z + ", "+ position.y + ") ");
 			
 		}
 		
 	}
 
+	private void attack(){
+		MainGameLoop.addPatricleEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
+	}
 
 	/**
 	 * checks to see if the camera is below the map
@@ -149,6 +157,14 @@ public class Camera {
 		}
 	}
 	
+	public Vector3f getLookAt(){
+		return new Vector3f(
+				(float) (Math.cos(Math.toRadians(rotY+90)) * Math.cos(Math.toRadians(rotX))),
+				(float) (Math.sin(Math.toRadians(rotX))),
+				(float) (Math.sin(Math.toRadians(rotY+90)))
+				);
+
+	}
 	
 	public Vector3f getPosition() {
 		return new Vector3f(position.x,position.y+1f,position.z);
