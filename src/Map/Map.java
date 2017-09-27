@@ -14,12 +14,12 @@ public class Map {
     public static final int THRESHOLD = 80;  	//threshold for randomly turning 0's into 1's
     public static final int SCALE = 5;  		//size of 3D map compared to 2D map
     
-    private int[][] m;							//map currently being worked on
+    private static int[][] m;							//2D map currently being worked on
     
     /*
      * fill the matrix using lee's algorithm
      */
-    public void lee (int k, int x, int y, boolean finished){
+    public static void lee (int k, int x, int y, boolean finished){
     	//return once destination or another path to it has been reached
     	if(m[x][y] == -2 || m[x][y] == -5 || finished) {
     		finished = true;
@@ -35,7 +35,6 @@ public class Map {
                 lee(k+1, x+1, y, finished);
             }
         }
-         
     	//Check for edge, go up
         if(x-1 >= 0)
         {
@@ -45,7 +44,6 @@ public class Map {
                 lee(k+1, x-1, y, finished);
             }
         }
-     
         //Check for edge, go right
         if(y+1 < SIZE)
         {
@@ -55,7 +53,6 @@ public class Map {
                 lee(k+1, x, y+1, finished);
             }
         }
-     
         //Check for edge, go left
         if(y-1 >= 0)
         {
@@ -70,7 +67,7 @@ public class Map {
     /*
      * Backtrack through the filled matrix to find the shortest path
      */
-    public void leeBack (int k, int x, int y){
+    public static void leeBack (int k, int x, int y){
     	//set current point as part of the path
     	m[x][y] = -5;
     	
@@ -83,7 +80,6 @@ public class Map {
                 return;
             }
         }
-         
     	//Check for edge, go up
         if(x-1 > 0)
         {
@@ -93,7 +89,6 @@ public class Map {
                 return;
             }
         }
-     
         //Check for edge, go right
         if(y+1 < SIZE)
         {
@@ -103,7 +98,6 @@ public class Map {
                 return;
             }
         }
-     
         //Check for edge, go left
         if(y-1 > 0)
         {
@@ -118,7 +112,7 @@ public class Map {
     /*
      * Add in the initial paths from spawns to the end point
      */
-    public void initial () {
+    public static void initial () {
         int d = 0;	//current farthest point found by lee
         int x = 0;	//x coordinate of farthest point
         int y = 0;	//y coordinate of farthest point
@@ -150,7 +144,7 @@ public class Map {
     /*
      * takes out a part of the loose ends
      */
-    public void removal () {
+    public static void removal () {
         //define a map with an extra 0 border
         int[][] lmap = new int[SIZE+2][SIZE+2];
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++)lmap[i+1][j+1]=m[i][j];
@@ -186,7 +180,7 @@ public class Map {
     /*
      * add in extra possible path
      */
-    public void extras (int threshold) {
+    public static void extras (int threshold) {
         //all empty points get set to a random number
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++)if(m[i][j] >= 0)
             m[i][j] = ThreadLocalRandom.current().nextInt(0, 100);
@@ -236,7 +230,7 @@ public class Map {
      * Turn the map into it's 3D form
      * includes: scaling, walls and height map
      */
-    public int[][][] mapTo3D(){
+    public static int[][][] mapTo3D(){
     	//initialize the 3D map
     	//+2's are for the walls surrounding the map
     	int[][][] map = new int[SIZE*SCALE+2][SIZE*SCALE+2][HEIGHT];
@@ -321,7 +315,7 @@ public class Map {
     /*
      * creates a Map
      */
-    public int[][][] createMap(){
+    public static int[][][] createMap(){
     	//initialize 2D map
     	m = new int[SIZE][SIZE];
         m[ThreadLocalRandom.current().nextInt(0, SIZE)][ThreadLocalRandom.current().nextInt(0, SIZE)] = -2;
@@ -343,7 +337,7 @@ public class Map {
     /*
      * creates a good map
      */
-    public int[][][] createGoodMap(){
+    public static int[][][] createGoodMap(){
     	boolean good = false;
     	int[][][] map = new int[SIZE][SIZE][HEIGHT];
     	
@@ -359,6 +353,6 @@ public class Map {
      * run option to test
      */
     public static void main(String[] args) {
-    (new Map()).createGoodMap();
+    Map.createGoodMap();
   }
 }
