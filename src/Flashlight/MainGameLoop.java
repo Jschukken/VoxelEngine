@@ -27,6 +27,7 @@ import Shaders.StaticShader;
 import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
 import ToolBox.TexturedModelMaker;
+import Map.Map;
 
 /**
  * The main game manager
@@ -44,7 +45,7 @@ public class MainGameLoop {
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[20][5][20];
+	public static int[][][] map;
 
 	private static String state = "startup";
 
@@ -152,9 +153,7 @@ public class MainGameLoop {
 	 *            used to load models to the gpu
 	 */
 	private static void loadMap(Loader loader) {
-
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
-
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
 				for (int z = 0; z < map[0][0].length; z++) {
@@ -208,6 +207,19 @@ public class MainGameLoop {
 	 * TEMPORARY, creates a simple map while the map generator is in progress, can be used for debugging
 	 */
 	private static void tempMapCreator(){
+		map = Map.createGoodMap();
+
+		
+		int[][][] backup_map = map.clone();
+		map = new int[backup_map.length][backup_map[0][0].length][backup_map[0].length];
+		for (int x = 0; x < backup_map.length; x++) {
+			for (int y = 0; y < backup_map[0].length; y++) {
+				for (int z = 0; z < backup_map[0][0].length; z++) {
+					map[x][z][y] = backup_map[x][y][z];
+				}
+			}
+		}
+		
 //		for (int x = 0; x < map.length; x++) {
 //			for (int z = 0; z < map[0].length; z++) {
 //				for (int y = 0; y < map[0][0].length; y++) {
@@ -217,6 +229,7 @@ public class MainGameLoop {
 //			}
 //		}
 		
+		/*
 		//map[1][1][1] = 2;
 		map[10][1][2] = 2;
 		map[10][1][18] = 2;
@@ -233,6 +246,7 @@ public class MainGameLoop {
 		map[9][1][11] = 1;
 		map[11][1][9] = 1;
 		map[10][2][10] = 1;
+		*/
 	}
 	/**
 	 * renders all entities within the render distance and visible to the camera to the screen
