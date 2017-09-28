@@ -1,5 +1,6 @@
 package KNearest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +28,37 @@ public class KNearest {
 	 * @return  {@code true} if {@code p} is "good", {@code false} if {@code p} is "bad"
 	 */
 	public boolean classify(Point p) {
-		return true;
+		
+		/* Retrieve the list of k nearest points */
+		List<Point> kNearestPoints = getKNearestPoints(p);
+		
+		/* Create two counters to count each class */
+		int goodCount = 0;
+		int badCount = 0;
+		
+		/**
+		 * Get the classification from each point, and 
+		 * increment the correct counter
+		 */
+		for (Point q : kNearestPoints) {
+			if (q.getClassification()) {
+				goodCount++;
+			} else {
+				badCount++;
+			}
+		}
+		
+		/**
+		 * If more good points are near, we classify the point as good, otherwise
+		 * we classify as bad. In case of a tie, we classify the point as good.
+		 * To avoid ties an uneven value for k is ideal.
+		 */
+		if (goodCount >= badCount) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 	
 	/**
@@ -94,8 +125,29 @@ public class KNearest {
 		for (int i = 0; i < points.size(); i++) {
 			distances.put(i, Point.getDistance(p, points.get(i)));
 		}
+
+		/* Store the result */
+		List<Point> result = new ArrayList<Point>();
 		
-		/* TO DO: SORT DISTANCES AND RETURN THE POINTS 0...K */
+		/**
+		 * Loop k times to find the point with the smallest distance and
+		 * add it to the result
+		 */
+		for (int i = 0; i < k; i++) {
+			
+			double minDist = Double.MAX_VALUE;
+			
+			for (int j : distances.keySet()) {
+				if (distances.get(j) < minDist) {
+					minDist = distances.get(j);
+					result.add(points.get(j));
+				}
+			}
+			
+		}
+		
+		return result;
+		
 	}
 	
 }
