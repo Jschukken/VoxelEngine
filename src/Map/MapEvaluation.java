@@ -3,12 +3,16 @@ package Map;
 import java.util.Arrays;
 public class MapEvaluation {
 
-    int[][] map = 
-    {  { 1,   -2,  -3,  4,  5,  6,  7,  8,  9 },
-       { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
-       { 19, 20, 21, 22, 23, 24, 25, 26, 27 } };
+    
 	
-    public int[] characteristics () {
+    public static int[] characteristics (int[][] map) {
+    /*
+    	int[][] map = 
+    	    {  { 1,   -2,  -3,  4,  5,  6,  7,  8,  9 },
+    	       { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
+    	       { 19, 20, 21, 22, 23, 24, 25, 26, 27 } };
+    	       */
+    
     int[] characteristics = new int [7];		
     int dx = 0;  //destination x coordinate
     int dy =0;  //destination y coordinate
@@ -17,7 +21,7 @@ public class MapEvaluation {
     int spawns=0; //amount of spawn points
     int distance; // distance from current spawn point to destination
     int maxdist=0; //max distance
-    int mindist=0; //min distance
+    int mindist=50; //min distance
     int meandist=0; //average distance
     int pathtile = 0; //amount of pathtiles
     int sidepath = 0; //amount of side paths from current path tile 
@@ -27,11 +31,11 @@ public class MapEvaluation {
     /*
      * distance between spawn point and destination
      */
-    for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==-2){
+    for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==2){
         dx = i;
         dy = j;
     }
-    for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==-3){
+    for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)if(map[i][j]==3){
         sx = i;
         sy = j;
         spawns++;
@@ -67,26 +71,22 @@ public class MapEvaluation {
     int[][] lmap = new int[map.length+2][map[0].length+2];
     for(int i = 0; i < map.length; i++)for(int j = 0; j < map[0].length; j++)lmap[i+1][j+1]=map[i][j];
         
-    for(int i = 1; i < map.length-1; i++)for(int j = 1; j < map[0].length-1; j++){
-        if(map[i+1][j]==1){
+    for(int i = 1; i < lmap.length-1; i++)for(int j = 1; j < lmap[0].length-1; j++)if(lmap[i][j]==1){
+        if(lmap[i+1][j]==1){
             sidepath++;}			
-        if(map[i][j+1]==1) {
+        if(lmap[i][j+1]==1) {
             sidepath++;}			
-        if(map[i-1][j]==1) {
+        if(lmap[i-1][j]==1) {
             sidepath++;}				
-        if(map[i][j-1]==1) {
+        if(lmap[i][j-1]==1) {
             sidepath++;}			
     
-        if (sidepath==1) {
-		deadend++;
-        }
-        if(sidepath>2) {
-            routeoption = routeoption + ((sidepath -2)/2);}
-	
-	sidepath=0;
+        if (sidepath==1) deadend++;
+        if(sidepath>2) routeoption = routeoption + (sidepath -2);
+        sidepath=0;
     }
    
-    characteristics[5] = routeoption;
+    characteristics[5]=routeoption;
     characteristics[6]=deadend; 
     
     
@@ -96,7 +96,4 @@ public class MapEvaluation {
 		                        
    
     }
-         public static void main(String[] args) {
-        new MapEvaluation().characteristics();}
-    
 }

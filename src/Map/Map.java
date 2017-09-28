@@ -195,7 +195,7 @@ public class Map {
     /*
      * print the 2D map
      */
-    public void print2D() {
+    public static void print2D() {
     	//set everything to positive for readability
         for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] < 0)
         	m[k][l] = Math.abs(m[k][l]);
@@ -213,7 +213,7 @@ public class Map {
     /*
      * print the 3D map in layers
      */
-    public void print3D(int[][][] map) {
+    public static void print3D(int[][][] map) {
         for(int k = 0; k < HEIGHT; k++){
             for(int i = 0; i < map.length; i++){
                 for(int j = 0; j < map[0].length; j++) {
@@ -343,6 +343,9 @@ public class Map {
     	
     	while(!good) {
     		map = createMap();
+    		print2D();
+    		int[] test = MapEvaluation.characteristics(m);
+
     		//good = kNearest(evaluation(m));
     		good = true;
     	}
