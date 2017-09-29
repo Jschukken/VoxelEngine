@@ -344,7 +344,7 @@ public class Map {
     	while(!good) {
     		map = createMap();
     		print2D();
-    		int[] test = MapEvaluation.characteristics(m);
+    		double[] test = MapEvaluation.characteristics(m);
 
     		//good = kNearest(evaluation(m));
     		good = true;
