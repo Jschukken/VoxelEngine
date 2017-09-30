@@ -107,12 +107,12 @@ public class Camera {
 			
 			//collision handeling
 			position.x += dx;
-			for(int i = 0; i < 4 && CollisionHandler.checkPlayerCollision(position); i++){
+			for(int i = 0; i < 4 && (CollisionHandler.checkPlayerCollision(position) || CollisionHandler.protectedZones(position)); i++){
 				position.x -= dx/4;
 
 			}
 			position.z += dz;
-			for(int i = 0; i < 4 && CollisionHandler.checkPlayerCollision(position); i++){
+			for(int i = 0; i < 4 && (CollisionHandler.checkPlayerCollision(position)|| CollisionHandler.protectedZones(position)); i++){
 				position.z -= dz/4;
 
 			}
@@ -143,7 +143,7 @@ public class Camera {
 	}
 
 	private void attack(){
-		MainGameLoop.addPatricleEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
+		MainGameLoop.addAttackEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
 	}
 
 	/**

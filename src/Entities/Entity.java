@@ -85,5 +85,10 @@ public class Entity {
 	public void getHit(){
 		
 	}
+	
+	public void destroy(){
+		
+		
+	}
 
 }

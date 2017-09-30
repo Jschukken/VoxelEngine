@@ -35,7 +35,7 @@ public class PlayerAttack extends Entity {
 		}
 	}
 	
-	private void destroy(){
+	public void destroy(){
 		//remove from game
 	}
 

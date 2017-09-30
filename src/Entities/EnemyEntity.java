@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
 import Models.TexturedModel;
+import ToolBox.TexturedModelMaker;
 
 public class EnemyEntity extends Entity {
 
@@ -87,13 +88,17 @@ public class EnemyEntity extends Entity {
 	 * simulates getting hit
 	 */
 	public void getHit(){
+		//MainGameLoop.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
 		destroy();
 	}
 	
 	/**
 	 * removes enemy from the game
 	 */
-	private void destroy() {
+	public void destroy() {
+		for(int i = 0; i < 100; i++){
+			MainGameLoop.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
+		}
 		MainGameLoop.removeActiveEntity(this);
 
 	}
