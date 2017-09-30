@@ -22,6 +22,7 @@ public class Map {
     public static void lee (int k, int x, int y, boolean finished){
     	//return once destination or another path to it has been reached
     	if(m[x][y] == -2 || m[x][y] == -5 || finished) {
+    		System.out.println("goal found");
     		finished = true;
     		return;
     	}
@@ -313,9 +314,9 @@ public class Map {
     }
     
     /*
-     * creates a Map
+     * creates a map
      */
-    public static int[][][] createMap(){
+    public static void createMap(){
     	//initialize 2D map
     	m = new int[SIZE][SIZE];
         m[ThreadLocalRandom.current().nextInt(0, SIZE)][ThreadLocalRandom.current().nextInt(0, SIZE)] = -2;
@@ -330,8 +331,7 @@ public class Map {
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++)if(m[i][j] < 0)
         	m[i][j] = Math.abs(m[i][j]);
         
-        //turn to 3D (no height map or walls)
-        return mapTo3D();
+        
     }
     
     /*
@@ -342,12 +342,13 @@ public class Map {
     	int[][][] map = new int[SIZE][SIZE][HEIGHT];
     	
     	while(!good) {
-    		map = createMap();
+    		createMap();
     		print2D();
     		int[] test = MapEvaluation.characteristics(m);
 
-    		//good = kNearest(evaluation(m));
+    		//good = kNearest(MapEvaluation.characteristics(m));
     		good = true;
+    		map = mapTo3D();
     	}
     	return map;
     }
