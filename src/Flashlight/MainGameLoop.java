@@ -10,6 +10,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
+import Entities.Button;
 import Entities.Camera;
 import Entities.DestinationEntity;
 import Entities.EnemyEntity;
@@ -42,7 +43,7 @@ public class MainGameLoop {
 	private static final int MIN_RENDER_DISTANCE = 3;
 	private static final int PARTICLE_COUNT = 100;
 	public static StaticShaderMenu menush = null;
-	public static TexturedModel button1 = null;
+	public static Button button1 = null;
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
@@ -435,7 +436,7 @@ public class MainGameLoop {
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
-		TexturedModel tMod = new TexturedModel(model, texture);
+		Button tMod = new Button(model, texture, vertices);
 		button1 = tMod;
 	}
 
