@@ -10,12 +10,14 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
+import PathFinding.AStar;
 import Entities.Camera;
 import Entities.EnemyEntity;
 import Entities.Entity;
 import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
 import GameEngine.AudioHandler;
+import Map.Map;
 import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
@@ -44,7 +46,7 @@ public class MainGameLoop {
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[20][5][20];
+	public static int[][][] map;
 
 	private static String state = "startup";
 
@@ -64,7 +66,8 @@ public class MainGameLoop {
 		MasterGameRenderer gameRenderer = null;
 		MasterMenuRenderer menuRenderer = null;
 		AudioHandler ah = null;
-		tempMapCreator();
+		//tempMapCreator();
+		mapCreator();
 
 		while (!Display.isCloseRequested()) {
 
@@ -203,10 +206,29 @@ public class MainGameLoop {
 		}
 
 	}
-
+	
+	/**
+	 * creates a map using the Map package/class
+	 */
+	private static void mapCreator(){
+		map = Map.createGoodMap();											//generate map
+		int[][][] backUp = map;												//backup for editing
+		map = new int[map.length][map[0][0].length][map[0].length];			//empty and start over;
+			
+		//fix coordinates
+		for (int x = 0; x < backUp.length; x++) {
+			for (int z = 0; z < backUp[0].length; z++) {
+				for (int y = 0; y < backUp[0][0].length; y++) {
+					map[x][y][z] = backUp[x][z][y];
+				}
+			}
+		}
+	}
+	
 	/**
 	 * TEMPORARY, creates a simple map while the map generator is in progress, can be used for debugging
 	 */
+	/*
 	private static void tempMapCreator(){
 //		for (int x = 0; x < map.length; x++) {
 //			for (int z = 0; z < map[0].length; z++) {
@@ -216,13 +238,12 @@ public class MainGameLoop {
 //				}
 //			}
 //		}
-		
 		//map[1][1][1] = 2;
 		map[10][1][2] = 2;
 		map[10][1][18] = 2;
 		map[18][1][10] = 2;
 		map[2][1][10] = 2;
-		
+	
 		map[10][1][10] = 1;
 		map[9][1][10] = 1;
 		map[9][1][9] = 1;
@@ -234,6 +255,8 @@ public class MainGameLoop {
 		map[11][1][9] = 1;
 		map[10][2][10] = 1;
 	}
+	*/
+	
 	/**
 	 * renders all entities within the render distance and visible to the camera to the screen
 	 * 

@@ -2,12 +2,12 @@ package Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * The map generation
+ * Starts the map generation
+ * generates a candidate map (MapEvaluation and KNarest)
+ * calls other classes to check it
+ * finishes the map
  * 
- * @author Chiel Ton
- *
  */
-
 public class Map {
 	public static final int SIZE = 10;       	//x and y size of the map
     public static final int HEIGHT = 10;      	//z size of the map
