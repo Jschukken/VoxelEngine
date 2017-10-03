@@ -110,11 +110,16 @@ public class MainGameLoop {
 			case "menu":
 				Mouse.setGrabbed(false);
 				renderMenu(menuShader, menuRenderer);
-
-				if (Mouse.isButtonDown(0) && mouseInButton()) {
-					state = "loadmap";
-					Mouse.setGrabbed(true);
+				if (mouseInButton(button1)) {
+					button1.setTexture(new ModelTexture(loader.loadTexture("Duck")));
+					if (Mouse.isButtonDown(0)) {
+						state = "loadmap";
+						Mouse.setGrabbed(true);
+					}
+				} else {
+					button1.setTexture(new ModelTexture(loader.loadTexture("Tile")));
 				}
+				
 				break;
 
 			case "loadmap":
@@ -460,9 +465,13 @@ public class MainGameLoop {
 	 * 
 	 * @return whether the mouse is inside the button
 	 */
-	public static boolean mouseInButton() {
-
-		if (Mouse.getX() > 540 && Mouse.getX() < 1380 && Mouse.getY() > 304 && Mouse.getY() < 776) {
+	public static boolean mouseInButton(Button button) {
+		int width = Display.getDisplayMode().getWidth();
+		int height = Display.getDisplayMode().getHeight();
+		float mouseX = (float) (-1.0 + 2.0 * Mouse.getX() / width);
+		float mouseY = (float) (-1.0 + 2.0 * Mouse.getY() / height);
+		
+		if (mouseX > button.getLeftX() && mouseX < button.getRightX() && mouseY > button.getBotY() && mouseY < button.getTopY()) {
 			return true;
 		}
 		return false;
