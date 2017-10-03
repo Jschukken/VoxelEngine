@@ -17,7 +17,7 @@ public class Button extends TexturedModel {
 	 * @return the X coordinate of the left edge as a float
 	 */
 	public float getLeftX() {
-		return vertices[0];
+		return Math.min(Math.min(vertices[0], vertices[3]), Math.min(vertices[6], vertices[9]));
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class Button extends TexturedModel {
 	 * @return the X coordinate of the right edge as a float
 	 */
 	public float getRightX() {
-		return vertices[6];
+		return Math.max(Math.max(vertices[0], vertices[3]), Math.max(vertices[6], vertices[9]));
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class Button extends TexturedModel {
 	 * @return the Y coordinate of the top edge as a float
 	 */
 	public float getTopY() {
-		return vertices[1];
+		return Math.max(Math.max(vertices[1], vertices[4]), Math.max(vertices[7], vertices[10]));
 	}
 	
 	/**
@@ -41,6 +41,6 @@ public class Button extends TexturedModel {
 	 * @return the Y coordinate of the bottom edge as a float
 	 */
 	public float getBotY() {
-		return vertices[4];
+		return Math.min(Math.min(vertices[1], vertices[4]), Math.min(vertices[7], vertices[10]));
 	}
 }
