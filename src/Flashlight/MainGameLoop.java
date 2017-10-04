@@ -43,7 +43,8 @@ public class MainGameLoop {
 	private static final int MIN_RENDER_DISTANCE = 3;
 	private static final int PARTICLE_COUNT = 100;
 	public static StaticShaderMenu menush = null;
-	public static Button button1 = null;
+	public static Button startButton = null;
+	public static Button quitButton = null;
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
@@ -57,6 +58,12 @@ public class MainGameLoop {
 	public static List<Entity> activeEntities = new ArrayList<Entity>();
 	public static List<Entity> particleEntities = new ArrayList<Entity>();
 	public static List<Entity> attackEntities = new ArrayList<Entity>();
+	
+	public static List<Button> mainMenuButtons = new ArrayList<Button>();
+	public static List<Button> mapCreationButtons = new ArrayList<Button>();
+	public static List<Button> pauseMenuButtons = new ArrayList<Button>();
+	public static List<Button> gameOverButtons = new ArrayList<Button>();
+	
 	public static Entity destination;
 
 	private static boolean pauseCheck = false;
@@ -103,23 +110,14 @@ public class MainGameLoop {
 				gameRenderer = new MasterGameRenderer(shader);
 				menuRenderer = new MasterMenuRenderer();
 				createButtons(loader);
-				state = "menu";
+				state = "mainMenu";
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 				break;
 
-			case "menu":
+			case "mainMenu":
 				Mouse.setGrabbed(false);
 				renderMenu(menuShader, menuRenderer);
-				if (mouseInButton(button1)) {
-					button1.setTexture(new ModelTexture(loader.loadTexture("Duck")));
-					if (Mouse.isButtonDown(0)) {
-						state = "loadmap";
-						Mouse.setGrabbed(true);
-					}
-				} else {
-					button1.setTexture(new ModelTexture(loader.loadTexture("Tile")));
-				}
-				
+				checkMainButtons();
 				break;
 
 			case "loadmap":
@@ -432,7 +430,7 @@ public class MainGameLoop {
 	 *            loader required to load the models.
 	 */
 	public static void createButtons(Loader loader) {
-		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f };
+		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, 0.1f, -1f, 0.5f, 0.1f, 1f, 0.5f, 0.5f, -1f };
 
 		int[] indices = { 0, 1, 3, 3, 2, 1 };
 
@@ -442,7 +440,15 @@ public class MainGameLoop {
 
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		Button tMod = new Button(model, texture, vertices);
-		button1 = tMod;
+		startButton = tMod;
+		
+		float[] verts = { -0.5f, -0.1f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, -0.1f, -1f };
+
+		model = loader.loadToVao(verts, indices, uv);
+
+		texture = new ModelTexture(loader.loadTexture("Tile"));
+		tMod = new Button(model, texture, verts);
+		quitButton = tMod;
 	}
 
 	/**
@@ -454,9 +460,34 @@ public class MainGameLoop {
 	public static void renderMenu(StaticShaderMenu shader, MasterMenuRenderer renderer) {
 		renderer.prepare();
 		shader.start();
-		TexturedModelRenderer.render(button1, shader);
+		TexturedModelRenderer.render(startButton, shader);
+		TexturedModelRenderer.render(quitButton, shader);
 		shader.stop();
 		DisplayManager.updateDisplay();
+	}
+	
+	/**
+	 * Checks all buttons if the mouse is in them
+	 */
+	public static void checkMainButtons() {
+		if (mouseInButton(startButton)) {
+			startButton.setTexture(new ModelTexture(loader.loadTexture("Duck")));
+			if (Mouse.isButtonDown(0)) {
+				state = "loadmap";
+				Mouse.setGrabbed(true);
+			}
+		} else {
+			startButton.setTexture(new ModelTexture(loader.loadTexture("Tile")));
+		}
+		
+		if (mouseInButton(quitButton)) {
+			quitButton.setTexture(new ModelTexture(loader.loadTexture("Duck")));
+			if (Mouse.isButtonDown(0)) {
+				DisplayManager.closeDisplay();
+			}
+		} else {
+			quitButton.setTexture(new ModelTexture(loader.loadTexture("Tile")));
+		}
 	}
 
 	/**
