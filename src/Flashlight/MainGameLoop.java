@@ -88,7 +88,7 @@ public class MainGameLoop {
 					gameRenderer.cleanUp();
 					menuRenderer.cleanUp();
 				} catch (NullPointerException e) {
-					System.out.println("shit");
+					System.out.println("CleanUp error: its cool yo");
 				}
 
 				ah = new AudioHandler();
