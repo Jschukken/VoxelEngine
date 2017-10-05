@@ -58,12 +58,6 @@ public class MainGameLoop {
 	public static List<Entity> activeEntities = new ArrayList<Entity>();
 	public static List<Entity> particleEntities = new ArrayList<Entity>();
 	public static List<Entity> attackEntities = new ArrayList<Entity>();
-	
-	public static List<Button> mainMenuButtons = new ArrayList<Button>();
-	public static List<Button> mapCreationButtons = new ArrayList<Button>();
-	public static List<Button> pauseMenuButtons = new ArrayList<Button>();
-	public static List<Button> gameOverButtons = new ArrayList<Button>();
-	
 	public static Entity destination;
 
 	private static boolean pauseCheck = false;
@@ -423,8 +417,7 @@ public class MainGameLoop {
 	}
 
 	/**
-	 * Creates buttons for the main menu. Currently only the start button. TODO:
-	 * Create new button object for genericity
+	 * Creates buttons for the main menu. 
 	 * 
 	 * @param loader
 	 *            loader required to load the models.
