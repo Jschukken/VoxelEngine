@@ -48,7 +48,7 @@ public class MainGameLoop {
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-	public static int[][][] map = new int[20][10][20];
+	public static int[][][] map;
 
 	private static String state = "startup";
 
@@ -70,7 +70,7 @@ public class MainGameLoop {
 		MasterGameRenderer gameRenderer = null;
 		MasterMenuRenderer menuRenderer = null;
 		AudioHandler ah = null;
-		mapCreator();
+		map = Map.createGoodMap();
 
 		while (!Display.isCloseRequested()) {
 
@@ -227,24 +227,6 @@ public class MainGameLoop {
 
 	}
 	
-	/**
-	 * creates a map using the Map package/class
-	 */
-	private static void mapCreator(){
-		map = Map.createGoodMap();											//generate map
-		int[][][] backUp = map;												//backup for editing
-		map = new int[map.length][map[0][0].length][map[0].length];			//empty and start over;
-			
-		//fix coordinates
-		for (int x = 0; x < backUp.length; x++) {
-			for (int z = 0; z < backUp[0].length; z++) {
-				for (int y = 0; y < backUp[0][0].length; y++) {
-					map[x][y][z] = backUp[x][z][y];
-				}
-			}
-		}
-	}
-
 	/**
 	 * TEMPORARY, creates a simple map while the map generator is in progress,
 	 * can be used for debugging
