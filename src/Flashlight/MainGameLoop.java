@@ -10,7 +10,6 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
-import PathFinding.AStar;
 import Entities.Camera;
 import Entities.EnemyEntity;
 import Entities.Entity;
@@ -66,7 +65,7 @@ public class MainGameLoop {
 		MasterGameRenderer gameRenderer = null;
 		MasterMenuRenderer menuRenderer = null;
 		AudioHandler ah = null;
-		//tempMapCreator();
+		tempMapCreator();
 		mapCreator();
 
 		while (!Display.isCloseRequested()) {
@@ -228,22 +227,21 @@ public class MainGameLoop {
 	/**
 	 * TEMPORARY, creates a simple map while the map generator is in progress, can be used for debugging
 	 */
-	/*
 	private static void tempMapCreator(){
-//		for (int x = 0; x < map.length; x++) {
-//			for (int z = 0; z < map[0].length; z++) {
-//				for (int y = 0; y < map[0][0].length; y++) {
-//					if((int)(Math.random()*10) == 1)
-//						map[x][z][y] = 1;
-//				}
-//			}
-//		}
-		//map[1][1][1] = 2;
+		// for (int x = 0; x < map.length; x++) {
+		// for (int z = 0; z < map[0].length; z++) {
+		// for (int y = 0; y < map[0][0].length; y++) {
+		// if((int)(Math.random()*10) == 1)
+		// map[x][z][y] = 1;
+		// }
+		// }
+		// }
+		// map[1][1][1] = 2;
 		map[10][1][2] = 2;
 		map[10][1][18] = 2;
 		map[18][1][10] = 2;
 		map[2][1][10] = 2;
-	
+
 		map[10][1][10] = 1;
 		map[9][1][10] = 1;
 		map[9][1][9] = 1;
@@ -255,7 +253,6 @@ public class MainGameLoop {
 		map[11][1][9] = 1;
 		map[10][2][10] = 1;
 	}
-	*/
 	
 	/**
 	 * renders all entities within the render distance and visible to the camera to the screen
