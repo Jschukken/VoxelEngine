@@ -15,6 +15,7 @@ import Entities.EnemyEntity;
 import Entities.Entity;
 import Entities.SpawnPointEntity;
 import GameEngine.AudioHandler;
+import KNearest.KNearestRendering;
 import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
@@ -60,6 +61,7 @@ public class MainGameLoop {
 		StaticShaderMenu menuShader = null;
 		MasterGameRenderer gameRenderer = null;
 		MasterMenuRenderer menuRenderer = null;
+		KNearestRendering kNearestRenderer = new KNearestRendering();
 		AudioHandler ah = null;
 		tempMapCreator();
 
@@ -107,6 +109,9 @@ public class MainGameLoop {
 					state = "loadmap";
 					Mouse.setGrabbed(true);
 				}
+				if (Keyboard.isKeyDown(Keyboard.KEY_K)) {
+					state = "knearest";
+				}
 				break;
 
 			case "loadmap":
@@ -130,6 +135,12 @@ public class MainGameLoop {
 				pause();
 				renderGame(gameRenderer, shader, camera);
 				break;
+				
+			case "knearest":
+				kNearestRenderer.renderKNearestGraph(menuShader, menuRenderer);
+				kNearestRenderer.updateGraph();
+				break;
+				
 			default:
 				System.out.println("state error: " + state + " is an invalid state");
 				System.exit(-1);
