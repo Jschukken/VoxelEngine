@@ -1,5 +1,6 @@
 package ToolBox;
 
+import Entities.Button;
 import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.Loader;
@@ -7,19 +8,24 @@ import Textures.ModelTexture;
 
 /**
  * helper class designed for static function that create models
+ * 
  * @author Jelle Schukken
  *
  */
 public class TexturedModelMaker {
-	
+
 	public static TexturedModel basicCube;
-	// note: may want to remove the texturing here and do that in the map loading, so the cube becomes more general
+
+	// note: may want to remove the texturing here and do that in the map
+	// loading, so the cube becomes more general
 	/**
 	 * creates a basic 1 by 1 cube
-	 * @param loader the loader with which to load the cube
+	 * 
+	 * @param loader
+	 *            the loader with which to load the cube
 	 * @return the cube textured model
 	 */
-	public static TexturedModel cubeTexturedModel(Loader loader){
+	public static TexturedModel cubeTexturedModel(Loader loader) {
 
 		float[] vertices = { -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
 
@@ -47,6 +53,21 @@ public class TexturedModelMaker {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		basicCube = new TexturedModel(model, texture);
 		return basicCube;
+	}
+
+	public static Button createButton(Loader loader) {
+		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f };
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
+		Button tMod = new Button(model, texture, vertices);
+		return tMod;
+
 	}
 
 }

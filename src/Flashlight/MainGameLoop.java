@@ -432,17 +432,7 @@ public class MainGameLoop {
 	 *            loader required to load the models.
 	 */
 	public static void createButtons(Loader loader) {
-		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f };
-
-		int[] indices = { 0, 1, 3, 3, 2, 1 };
-
-		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
-
-		RawModel model = loader.loadToVao(vertices, indices, uv);
-
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
-		Button tMod = new Button(model, texture, vertices);
-		button1 = tMod;
+		button1 = TexturedModelMaker.createButton(loader);
 	}
 
 	/**
