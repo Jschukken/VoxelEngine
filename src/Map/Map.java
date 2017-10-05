@@ -350,6 +350,17 @@ public class Map {
     		good = true;
     		map = mapTo3D();
     	}
+    	int[][][] backUp = map;												//backup for editing
+		map = new int[map.length][map[0][0].length][map[0].length];			//empty and start over;
+			
+		//fix coordinates
+		for (int x = 0; x < backUp.length; x++) {
+			for (int z = 0; z < backUp[0].length; z++) {
+				for (int y = 0; y < backUp[0][0].length; y++) {
+					map[x][y][z] = backUp[x][z][y];
+				}
+			}
+		}
     	return map;
     }
     
