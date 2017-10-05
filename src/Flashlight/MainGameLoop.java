@@ -19,6 +19,7 @@ import Entities.ParticleEntity;
 import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
 import GameEngine.AudioHandler;
+import Map.Map;
 import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
@@ -69,7 +70,7 @@ public class MainGameLoop {
 		MasterGameRenderer gameRenderer = null;
 		MasterMenuRenderer menuRenderer = null;
 		AudioHandler ah = null;
-		tempMapCreator();
+		mapCreator();
 
 		while (!Display.isCloseRequested()) {
 
@@ -224,6 +225,24 @@ public class MainGameLoop {
 			state = "startup";
 		}
 
+	}
+	
+	/**
+	 * creates a map using the Map package/class
+	 */
+	private static void mapCreator(){
+		map = Map.createGoodMap();											//generate map
+		int[][][] backUp = map;												//backup for editing
+		map = new int[map.length][map[0][0].length][map[0].length];			//empty and start over;
+			
+		//fix coordinates
+		for (int x = 0; x < backUp.length; x++) {
+			for (int z = 0; z < backUp[0].length; z++) {
+				for (int y = 0; y < backUp[0][0].length; y++) {
+					map[x][y][z] = backUp[x][z][y];
+				}
+			}
+		}
 	}
 
 	/**

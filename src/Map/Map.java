@@ -2,14 +2,14 @@ package Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * The map generation
+ * Starts the map generation
+ * generates a candidate map (MapEvaluation and KNarest)
+ * calls other classes to check it
+ * finishes the map
  * 
- * @author Chiel Ton
- *
  */
-
 public class Map {
-	public static final int SIZE = 10;       	//x and y size of the map
+	public static final int SIZE = 25;       	//x and y size of the map
     public static final int HEIGHT = 10;      	//z size of the map
     public static final int THRESHOLD = 80;  	//threshold for randomly turning 0's into 1's
     public static final int SCALE = 5;  		//size of 3D map compared to 2D map
@@ -22,6 +22,7 @@ public class Map {
     public static void lee (int k, int x, int y, boolean finished){
     	//return once destination or another path to it has been reached
     	if(m[x][y] == -2 || m[x][y] == -5 || finished) {
+    		System.out.println("goal found");
     		finished = true;
     		return;
     	}
@@ -195,7 +196,7 @@ public class Map {
     /*
      * print the 2D map
      */
-    public void print2D() {
+    public static void print2D() {
     	//set everything to positive for readability
         for(int k = 0; k < m.length; k++)for(int l = 0; l < m[0].length; l++)if(m[k][l] < 0)
         	m[k][l] = Math.abs(m[k][l]);
@@ -213,7 +214,7 @@ public class Map {
     /*
      * print the 3D map in layers
      */
-    public void print3D(int[][][] map) {
+    public static void print3D(int[][][] map) {
         for(int k = 0; k < HEIGHT; k++){
             for(int i = 0; i < map.length; i++){
                 for(int j = 0; j < map[0].length; j++) {
@@ -313,9 +314,9 @@ public class Map {
     }
     
     /*
-     * creates a Map
+     * creates a map
      */
-    public static int[][][] createMap(){
+    public static void createMap(){
     	//initialize 2D map
     	m = new int[SIZE][SIZE];
         m[ThreadLocalRandom.current().nextInt(0, SIZE)][ThreadLocalRandom.current().nextInt(0, SIZE)] = -2;
@@ -330,8 +331,7 @@ public class Map {
         for(int i = 0; i < m.length; i++)for(int j = 0; j < m[0].length; j++)if(m[i][j] < 0)
         	m[i][j] = Math.abs(m[i][j]);
         
-        //turn to 3D (no height map or walls)
-        return mapTo3D();
+        
     }
     
     /*
@@ -342,9 +342,13 @@ public class Map {
     	int[][][] map = new int[SIZE][SIZE][HEIGHT];
     	
     	while(!good) {
-    		map = createMap();
-    		//good = kNearest(evaluation(m));
+    		createMap();
+    		print2D();
+    		//double[] test = MapEvaluation.characteristics(m);
+
+    		//good = kNearest(MapEvaluation.characteristics(m));
     		good = true;
+    		map = mapTo3D();
     	}
     	return map;
     }
