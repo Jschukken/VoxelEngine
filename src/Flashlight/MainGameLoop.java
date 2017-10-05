@@ -8,6 +8,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entities.Button;
@@ -19,6 +20,8 @@ import Entities.ParticleEntity;
 import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
 import GameEngine.AudioHandler;
+import Guis.GuiRenderer;
+import Guis.GuiTexture;
 import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
@@ -69,8 +72,8 @@ public class MainGameLoop {
 		MasterGameRenderer gameRenderer = null;
 		MasterMenuRenderer menuRenderer = null;
 		AudioHandler ah = null;
-		tempMapCreator();
-
+		List<GuiTexture> guis = new ArrayList<GuiTexture>();
+		GuiRenderer guiRenderer = null;
 		while (!Display.isCloseRequested()) {
 
 			switch (state) {
@@ -87,6 +90,7 @@ public class MainGameLoop {
 					menush.cleanUp();
 					gameRenderer.cleanUp();
 					menuRenderer.cleanUp();
+					guiRenderer.cleanUp();
 				} catch (NullPointerException e) {
 					System.out.println("shit");
 				}
@@ -103,6 +107,9 @@ public class MainGameLoop {
 				gameRenderer = new MasterGameRenderer(shader);
 				menuRenderer = new MasterMenuRenderer();
 				createButtons(loader);
+				GuiTexture gui = new GuiTexture(loader.loadTexture("duck"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+				guis.add(gui);
+				guiRenderer = new GuiRenderer(loader);
 				state = "menu";
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 				break;
@@ -132,6 +139,7 @@ public class MainGameLoop {
 				manageMusic();
 				updateGame(camera);
 				renderGame(gameRenderer, shader, camera);
+				guiRenderer.render(guis);
 				break;
 
 			case "gameover":
@@ -343,7 +351,6 @@ public class MainGameLoop {
 		for (Entity entity : attackEntities) {
 			renderer.render(entity, shader);
 		}
-
 		shader.stop();
 
 		DisplayManager.updateDisplay();
