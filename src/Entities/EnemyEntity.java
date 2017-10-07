@@ -97,9 +97,9 @@ public class EnemyEntity extends Entity {
 	 */
 	public void destroy() {
 		for(int i = 0; i < 100; i++){
-			MainGameLoop.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
+			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
 		}
-		MainGameLoop.removeActiveEntity(this);
+		MainGameLoop.mapManager.removeActiveEntity(this);
 
 	}
 	

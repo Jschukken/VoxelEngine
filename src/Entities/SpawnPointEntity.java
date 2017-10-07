@@ -28,7 +28,7 @@ public class SpawnPointEntity extends Entity {
 		if(spawnTimer >= spawnRate){
 			spawnTimer = 0;
 			Vector3f p = new Vector3f(position.x,position.y,position.z);
-			MainGameLoop.addActiveEntity(enemy, p, path);
+			MainGameLoop.mapManager.addActiveEntity(enemy, p, path);
 			
 		}
 	}

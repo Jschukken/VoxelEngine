@@ -18,6 +18,7 @@ import ToolBox.TexturedModelMaker;
 public class Camera {
 	
 	private static float FRICTION = 4;
+	public static final boolean GRAVITY = false;
 	
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
@@ -128,7 +129,9 @@ public class Camera {
 
 			}
 			
-			dy = Math.max(dy-0.01f,-maxSpeed*4);
+			if(GRAVITY){
+				dy = Math.max(dy-0.01f,-maxSpeed*4);
+			}
 			
 			fallCheck();
 			
@@ -143,7 +146,7 @@ public class Camera {
 	}
 
 	private void attack(){
-		MainGameLoop.addAttackEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
+		MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
 	}
 
 	/**
