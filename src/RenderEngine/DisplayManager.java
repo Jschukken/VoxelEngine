@@ -71,7 +71,7 @@ public class DisplayManager {
 	 */
 	public static void closeDisplay(){
 		MainGameLoop.loader.cleanUp();
-		MainGameLoop.sh.cleanUp();
+		MainGameLoop.mapManager.cleanUp();
 		MainGameLoop.audH.cleanUp();
 		Display.destroy();
 		System.exit(0);

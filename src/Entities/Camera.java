@@ -18,6 +18,7 @@ import ToolBox.TexturedModelMaker;
 public class Camera {
 	
 	private static float FRICTION = 4;
+	public static final boolean GRAVITY = false;
 	
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
@@ -30,6 +31,8 @@ public class Camera {
 	private float currSpeed;
 	private float strafe;
 	
+	private int hp;
+	
 	private IntBuffer[] jumpSFX;
 	
 	
@@ -40,6 +43,7 @@ public class Camera {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		jumpSFX = MainGameLoop.audH.createSound("jump");
+		hp = 10;
 	}
 	
 	/**
@@ -128,7 +132,9 @@ public class Camera {
 
 			}
 			
-			dy = Math.max(dy-0.01f,-maxSpeed*4);
+			if(GRAVITY){
+				dy = Math.max(dy-0.01f,-maxSpeed*4);
+			}
 			
 			fallCheck();
 			
@@ -143,7 +149,14 @@ public class Camera {
 	}
 
 	private void attack(){
-		MainGameLoop.addAttackEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
+		MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
+	}
+	
+	public void getHit(){
+		hp--;
+		if(hp<=0){
+			MainGameLoop.setState("gameover");
+		}
 	}
 
 	/**
