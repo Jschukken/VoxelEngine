@@ -13,12 +13,14 @@ public class EnemyEntity extends Entity {
 	private int pathPosition = 0;
 	private static final float ENEMY_SPEED = .1001f;
 	private Vector3f position;
+	private int hp;
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
 			int[] path) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.path = path;
 		this.position = position;
+		hp = 20;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -89,7 +91,10 @@ public class EnemyEntity extends Entity {
 	 */
 	public void getHit(){
 		//MainGameLoop.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
-		destroy();
+		hp--;
+		if(hp<=0){
+			destroy();
+		}
 	}
 	
 	/**

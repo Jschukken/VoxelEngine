@@ -23,7 +23,7 @@ public class MapManager {
 	
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
-	private static final int PARTICLE_COUNT = 100;
+	private static final int PARTICLE_COUNT = 300;
 	
 	private Loader loader;
 	private MasterGameRenderer renderer;
@@ -77,11 +77,6 @@ public class MapManager {
 
 		shader.start();
 		shader.loadViewMatrix(camera);
-		try {
-			renderer.render(destination, shader);
-		} catch (NullPointerException e) {
-			System.out.println("destination is required");
-		}
 
 		// vector the camera is looking at
 		Vector3f lookAt = camera.getLookAt();
@@ -108,6 +103,7 @@ public class MapManager {
 			}
 
 		}
+		
 		for (Entity entity : activeEntities) {
 
 			// vector from the entity to the camera
@@ -127,13 +123,54 @@ public class MapManager {
 			}
 
 		}
+		
 		for (Entity entity : particleEntities) {
-			renderer.render(entity, shader);
+			// vector from the entity to the camera
+			toCamera = new Vector3f(camera.getPosition().x - entity.getPosition().x,
+					camera.getPosition().y - entity.getPosition().y,
+					camera.getPosition().z - entity.getPosition().z + 0.01f);
+
+			toCamera.normalise();
+
+			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
+					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
+					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
+
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV + 5)
+					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+				renderer.render(entity, shader);
+			}
 		}
+		
 		for (Entity entity : attackEntities) {
-			renderer.render(entity, shader);
+			// vector from the entity to the camera
+			toCamera = new Vector3f(camera.getPosition().x - entity.getPosition().x,
+					camera.getPosition().y - entity.getPosition().y,
+					camera.getPosition().z - entity.getPosition().z + 0.01f);
+
+			toCamera.normalise();
+
+			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
+					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
+					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
+
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV + 5)
+					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+				renderer.render(entity, shader);
+			}
 		}
 
+		try {
+			double dist = Math.sqrt(Math.pow(camera.getPosition().x - destination.getPosition().x, 2)
+					+ Math.pow(camera.getPosition().y - destination.getPosition().y, 2)
+					+ Math.pow(camera.getPosition().z - destination.getPosition().z, 2));
+			if(dist<RENDER_DISTANCE){
+				renderer.render(destination, shader);
+			}
+		} catch (NullPointerException e) {
+			System.out.println("destination is required");
+		}
+		
 		shader.stop();
 	}
 	
