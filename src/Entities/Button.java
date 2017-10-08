@@ -43,4 +43,8 @@ public class Button extends TexturedModel {
 	public float getBotY() {
 		return Math.min(Math.min(vertices[1], vertices[4]), Math.min(vertices[7], vertices[10]));
 	}
+	
+	public void onClick() {
+		
+	}
 }
