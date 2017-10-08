@@ -59,19 +59,4 @@ public class TexturedModelMaker {
 		return basicCube;
 	}
 
-	public static Button createButton(Loader loader) {
-		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f };
-
-		int[] indices = { 0, 1, 3, 3, 2, 1 };
-
-		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
-
-		RawModel model = loader.loadToVao(vertices, indices, uv);
-
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
-		Button tMod = new Button(model, texture, vertices);
-		return tMod;
-
-	}
-
 }

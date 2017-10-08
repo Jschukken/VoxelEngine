@@ -70,7 +70,6 @@ public class DisplayManager {
 	 * closes the display and cleans up loose memory
 	 */
 	public static void closeDisplay(){
-		MainGameLoop.loader.cleanUp();
 		MainGameLoop.mapManager.cleanUp();
 		MainGameLoop.audH.cleanUp();
 		Display.destroy();

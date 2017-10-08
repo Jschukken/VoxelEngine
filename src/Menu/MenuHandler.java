@@ -1,48 +1,66 @@
 package Menu;
 
-import java.nio.IntBuffer;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 
 import Entities.Button;
 import Flashlight.MainGameLoop;
-import GameEngine.AudioHandler;
-import GameEngine.MapManager;
-import Map.Map;
 import Models.RawModel;
+import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
 import RenderEngine.MasterMenuRenderer;
-import RenderEngine.TexturedModelRenderer;
-import Shaders.StaticShader;
 import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
-import ToolBox.TexturedModelMaker;
 
+/* CHEAT SHEET
+ * Z =  0 -> Overlay
+ * Z = -1 -> Buttons
+ * Z=  -2 -> Background
+ */
 
 public class MenuHandler {
 	
 	public List<Button> mainMenu = new ArrayList<Button>();
+	public List<TexturedModel> mainMenuFluff = new ArrayList<TexturedModel>();
+	
 	public List<Button> mapMenu = new ArrayList<Button>();
+	public List<TexturedModel> mapMenuFluff = new ArrayList<TexturedModel>();
+	
 	public List<Button> pauseMenu = new ArrayList<Button>();
+	public List<TexturedModel> pauseMenuFluff = new ArrayList<TexturedModel>();
+	
 	public List<Button> gameOverMenu = new ArrayList<Button>();
+	public List<TexturedModel> gameOverFluff = new ArrayList<TexturedModel>();
+	
 	public List<Button> activeMenu = new ArrayList<Button>();
+	public List<TexturedModel> activeFluff = new ArrayList<TexturedModel>();
 	
+	private boolean mouseHeld = false;
 	
-	public MenuHandler() {		
+	public MenuHandler() {
 	}
 	
+	
+	public void createMenus(Loader loader) {
+		createMainMenu(loader);
+		createMapMenu(loader);
+		createPauseMenu(loader);
+		createGameOverMenu(loader);
+	}
+	
+	/**
+	 * creates all buttons 
+	 * @param loader
+	 *
+	 */
 	public void createMainMenu(Loader loader) {
 
-		System.out.println("Creating menu");
-		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, 0.1f, -1f, 0.5f, 0.1f, 1f, 0.5f, 0.5f, -1f };
+		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, 1f, 0.3f, 0.3f, -1f };
 
 		int[] indices = { 0, 1, 3, 3, 2, 1 };
 
@@ -50,32 +68,192 @@ public class MenuHandler {
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
-		Button tMod = new Button(model, texture, vertices) {
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		
+		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
-				MainGameLoop.setState("loadmap");
+				MainGameLoop.setState("mapMenu");
 			}
 		};
 		
 		mainMenu.add(tMod);
 		
-		vertices = new float[]{ -0.5f, -0.1f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, -0.1f, -1f };
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, 1f, 0.3f, -0.1f, -1f };
 		
 		model = loader.loadToVao(vertices, indices, uv);
 		
-		texture = new ModelTexture(loader.loadTexture("Tile"));
-		Button tmod = new Button(model, texture, vertices) {
+		tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		
+		tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+//				MainGameLoop.setState("settings");
+			}
+		};
+		
+		mainMenu.add(tMod);
+		
+		vertices = new float[] {-0.3f, -0.5f, -1f, -0.3f, -0.8f, -1f, 0.3f, -0.8f, -1f, 0.3f, -0.5f, -1f};
+		
+		model = loader.loadToVao(vertices, indices, uv);
+
+		tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
 				DisplayManager.closeDisplay();
 			}
 		};
 		
-		mainMenu.add(tmod);
+		mainMenu.add(tMod);
+	}	
 
+	public void createMapMenu(Loader loader) {
+
+		float[] vertices = { -0.7f, -0.7f, -1f, -0.7f, -0.95f, -1f, -0.2f, -0.95f, 1f, -0.2f, -0.7f, -1f };
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				MainGameLoop.setState("loadmap");
+				Mouse.setGrabbed(true);
+			}
+		};
+		
+		mapMenu.add(tMod);
+		
+		vertices = new float[]{ 0.2f, -0.7f, -1f, 0.2f, -0.95f, -1f, 0.7f, -0.95f, 1f, 0.7f, -0.7f, -1f };
+		
+		model = loader.loadToVao(vertices, indices, uv);
+
+		tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				MainGameLoop.setState("mainMenu");
+			}
+		};
+		
+		mapMenu.add(tMod);
 	}	
 	
+	public void createPauseMenu(Loader loader) {
+
+		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, 1f, 0.3f, 0.3f, -1f };
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				MainGameLoop.setState("game");
+				Mouse.setGrabbed(true);
+			}
+		};
+		
+		pauseMenu.add(tMod);
+		
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, 1f, 0.3f, -0.1f, -1f };
+		
+		model = loader.loadToVao(vertices, indices, uv);
+
+		tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				MainGameLoop.setState("gameover");
+			}
+		};
+		
+		pauseMenu.add(tMod);
+	}	
+	
+	public void createGameOverMenu(Loader loader) {
+
+		System.out.println("Creating menu");
+		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, 1f, 0.3f, 0.3f, -1f };
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				MainGameLoop.setState("mainMenu");
+			}
+		};
+		
+		gameOverMenu.add(tMod);
+		
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, 1f, 0.3f, -0.1f, -1f };
+		
+		model = loader.loadToVao(vertices, indices, uv);
+
+		tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				DisplayManager.closeDisplay();
+			}
+		};
+		
+		gameOverMenu.add(tMod);
+		
+		vertices = new float[] { -0.95f, -0.85f, -1f, -0.95f, -0.95f, -1f, -0.85f, -0.95f, -1f, -0.85f, -0.85f, -1f};
+
+		model = loader.loadToVao(vertices, indices, uv);
+
+		tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+//				DisplayManager.closeDisplay();
+			}
+		};
+		
+		gameOverMenu.add(tMod);
+		vertices = new float[] { -0.8f, -0.85f, -1f, -0.8f, -0.95f, -1f, -0.7f, -0.95f, -1f, -0.7f, -0.85f, -1f};
+
+		model = loader.loadToVao(vertices, indices, uv);
+
+		tex1 = new ModelTexture(loader.loadTexture("Tile"));
+		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+//				DisplayManager.closeDisplay();
+			}
+		};
+		
+		gameOverMenu.add(tMod);
+	}	
 	/**
 	 * updates all buttons relevant for the current state
 	 */
@@ -89,12 +267,15 @@ public class MenuHandler {
 		for (Button button : activeMenu) {
 
 			if (mouseX > button.getLeftX() && mouseX < button.getRightX() && mouseY > button.getBotY() && mouseY < button.getTopY()) {
-				button.setTexture(new ModelTexture(loader.loadTexture("Duck")));
-				if (Mouse.isButtonDown(0)) {
+				button.activeTexture();
+				if (Mouse.isButtonDown(0) && !mouseHeld) {
 					button.onClick();
+					mouseHeld = true;
+				} else if (!Mouse.isButtonDown(0)){
+					mouseHeld = false;
 				}
 			} else {
-				button.setTexture(new ModelTexture(loader.loadTexture("Tile")));
+				button.inactiveTexture();
 			}
 			
 		}

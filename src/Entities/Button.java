@@ -6,9 +6,13 @@ import Textures.ModelTexture;
 
 public class Button extends TexturedModel {
 	private float[] vertices;
+	private ModelTexture inactiveTex;
+	private ModelTexture activeTex;
 
-	public Button(RawModel model, ModelTexture texture, float[] vert) {
-		super(model, texture);
+	public Button(RawModel model, ModelTexture tex1, ModelTexture tex2, float[] vert) {
+		super(model, tex1);
+		inactiveTex = tex1;
+		activeTex = tex2;
 		vertices = vert;
 	}
 	
@@ -45,6 +49,13 @@ public class Button extends TexturedModel {
 	}
 	
 	public void onClick() {
-		
+	}
+	
+	public void activeTexture() {
+		super.setTexture(activeTex);
+	}
+	
+	public void inactiveTexture() {
+		super.setTexture(inactiveTex);
 	}
 }
