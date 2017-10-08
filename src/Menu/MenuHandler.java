@@ -25,27 +25,37 @@ import Textures.ModelTexture;
 
 public class MenuHandler {
 	
+	// a list of buttons and a list of non-button textures needed for the main menu
 	public List<Button> mainMenu = new ArrayList<Button>();
 	public List<TexturedModel> mainMenuFluff = new ArrayList<TexturedModel>();
-	
+
+	// a list of buttons and a list of non-button textures needed for the map selection menu
 	public List<Button> mapMenu = new ArrayList<Button>();
 	public List<TexturedModel> mapMenuFluff = new ArrayList<TexturedModel>();
-	
+
+	// a list of buttons and a list of non-button textures needed for the pause menu
 	public List<Button> pauseMenu = new ArrayList<Button>();
 	public List<TexturedModel> pauseMenuFluff = new ArrayList<TexturedModel>();
-	
+
+	// a list of buttons and a list of non-button textures needed for the game over menu
 	public List<Button> gameOverMenu = new ArrayList<Button>();
 	public List<TexturedModel> gameOverFluff = new ArrayList<TexturedModel>();
-	
+
+	// a list of buttons and a list of non-button textures indicating which menu is active currently.
 	public List<Button> activeMenu = new ArrayList<Button>();
 	public List<TexturedModel> activeFluff = new ArrayList<TexturedModel>();
 	
+	// a boolean to prevent pressing the button on the next screen immediately by holding the mouse
 	private boolean mouseHeld = false;
 	
 	public MenuHandler() {
 	}
 	
-	
+	/**
+	 * creates all buttons and (TODO: fluff) for the game.
+	 * @param loader
+	 * 			The loader required to load textures.
+	 */
 	public void createMenus(Loader loader) {
 		createMainMenu(loader);
 		createMapMenu(loader);
@@ -54,8 +64,9 @@ public class MenuHandler {
 	}
 	
 	/**
-	 * creates all buttons 
+	 * creates all buttons and (TODO: fluff) for the main menu
 	 * @param loader
+	 * 			The loader required to load textures.
 	 *
 	 */
 	public void createMainMenu(Loader loader) {
@@ -111,7 +122,12 @@ public class MenuHandler {
 		
 		mainMenu.add(tMod);
 	}	
-
+	
+	/**
+	 * creates all buttons and (TODO: fluff) for the map selection menu
+	 * @param loader
+	 * 			The loader required to load textures.
+	 */
 	public void createMapMenu(Loader loader) {
 
 		float[] vertices = { -0.7f, -0.7f, -1f, -0.7f, -0.95f, -1f, -0.2f, -0.95f, 1f, -0.2f, -0.7f, -1f };
@@ -150,6 +166,11 @@ public class MenuHandler {
 		mapMenu.add(tMod);
 	}	
 	
+	/**
+	 * creates all buttons and (TODO: fluff) for the pause menu
+	 * @param loader
+	 * 			The loader required to load textures.
+	 */
 	public void createPauseMenu(Loader loader) {
 
 		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, 1f, 0.3f, 0.3f, -1f };
@@ -188,6 +209,11 @@ public class MenuHandler {
 		pauseMenu.add(tMod);
 	}	
 	
+	/**
+	 * creates all buttons and (TODO: fluff) for the game over menu
+	 * @param loader
+	 * 			The loader required to load textures.
+	 */
 	public void createGameOverMenu(Loader loader) {
 
 		System.out.println("Creating menu");
@@ -254,8 +280,9 @@ public class MenuHandler {
 		
 		gameOverMenu.add(tMod);
 	}	
+	
 	/**
-	 * updates all buttons relevant for the current state
+	 * updates all buttons relevant to the current state
 	 */
 	public void updateButtons(Loader loader) {
 		
@@ -281,6 +308,13 @@ public class MenuHandler {
 		}
 	}
 	
+	/**
+	 * Renders the currently active menu
+	 * @param shader 
+	 * 			The shader required to shade the objects
+	 * @param renderer
+	 * 			The renderer required to render the objects
+	 */
 	public void renderMenu(StaticShaderMenu shader, MasterMenuRenderer renderer) {
 		renderer.prepare();
 		shader.start();

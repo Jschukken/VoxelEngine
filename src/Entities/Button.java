@@ -5,7 +5,11 @@ import Models.TexturedModel;
 import Textures.ModelTexture;
 
 public class Button extends TexturedModel {
+	
+	// the list of vertices indicating the button's location and size.
 	private float[] vertices;
+	
+	// the two textures of a button. Inactive for when the mouse is not hovering over it. Active for when it is.
 	private ModelTexture inactiveTex;
 	private ModelTexture activeTex;
 
@@ -48,13 +52,24 @@ public class Button extends TexturedModel {
 		return Math.min(Math.min(vertices[1], vertices[4]), Math.min(vertices[7], vertices[10]));
 	}
 	
+	/**
+	 * In the current state, acts as a dummy to override and to avoid errors.
+	 * Should be overridden per instance of Button to signify what that specific button should do.
+	 */
 	public void onClick() {
+		System.out.println("Ye forgot to override this ya dunce!");
 	}
 	
+	/**
+	 * Sets the current texture to the active texture
+	 */
 	public void activeTexture() {
 		super.setTexture(activeTex);
 	}
 	
+	/**
+	 * Sets the current texture to the inactive texture
+	 */
 	public void inactiveTexture() {
 		super.setTexture(inactiveTex);
 	}
