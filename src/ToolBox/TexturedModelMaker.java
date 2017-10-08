@@ -3,7 +3,11 @@ package ToolBox;
 import Entities.Button;
 import Models.RawModel;
 import Models.TexturedModel;
+import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
+import RenderEngine.MasterMenuRenderer;
+import RenderEngine.TexturedModelRenderer;
+import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
 
 /**
@@ -53,21 +57,6 @@ public class TexturedModelMaker {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		basicCube = new TexturedModel(model, texture);
 		return basicCube;
-	}
-
-	public static Button createButton(Loader loader) {
-		float[] vertices = { -0.5f, 0.5f, -1f, -0.5f, -0.5f, -1f, 0.5f, -0.5f, 1f, 0.5f, 0.5f, -1f };
-
-		int[] indices = { 0, 1, 3, 3, 2, 1 };
-
-		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
-
-		RawModel model = loader.loadToVao(vertices, indices, uv);
-
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
-		Button tMod = new Button(model, texture, vertices);
-		return tMod;
-
 	}
 
 }

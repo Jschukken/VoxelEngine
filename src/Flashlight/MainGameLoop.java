@@ -12,14 +12,12 @@ import Entities.Button;
 import GameEngine.AudioHandler;
 import GameEngine.MapManager;
 import Map.Map;
+import Menu.MenuHandler;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
 import RenderEngine.MasterMenuRenderer;
-import RenderEngine.TexturedModelRenderer;
 import Shaders.StaticShader;
 import Shaders.StaticShaderMenu;
-import Textures.ModelTexture;
-import ToolBox.TexturedModelMaker;
 
 /**
  * The main game manager
@@ -34,6 +32,7 @@ public class MainGameLoop {
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
+	public static MenuHandler menuh;
 	public static int[][][] map;
 
 	private static String state = "startup";
@@ -76,24 +75,23 @@ public class MainGameLoop {
 				menuShader = new StaticShaderMenu();
 				menush = menuShader;
 				menuRenderer = new MasterMenuRenderer();
-				createButtons(loader);
-				state = "menu";
+				menuh = new MenuHandler();
+				menuh.createMenus(loader);
+				state = "mainMenu";
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 				break;
 
-			case "menu":
+			case "mainMenu":
 				Mouse.setGrabbed(false);
-				renderMenu(menuShader, menuRenderer);
-				if (mouseInButton(button1)) {
-					button1.setTexture(new ModelTexture(loader.loadTexture("Duck")));
-					if (Mouse.isButtonDown(0)) {
-						state = "loadmap";
-						Mouse.setGrabbed(true);
-					}
-				} else {
-					button1.setTexture(new ModelTexture(loader.loadTexture("Tile")));
-				}
+				menuh.setState(state);
+				menuh.updateButtons(loader);
+				menuh.renderMenu(menuShader, menuRenderer);
+				break;
 				
+			case "mapMenu":
+				menuh.setState(state);
+				menuh.updateButtons(loader);
+				menuh.renderMenu(menuShader, menuRenderer);
 				break;
 
 			case "loadmap":
@@ -111,12 +109,16 @@ public class MainGameLoop {
 				break;
 
 			case "gameover":
-				state = "startup";
+				menuh.setState(state);
+				menuh.updateButtons(loader);
+				menuh.renderMenu(menuShader, menuRenderer);
 				break;
 
 			case "pause":
 				manageMusic();
-				pause();
+				menuh.setState(state);
+				menuh.updateButtons(loader);
+				menuh.renderMenu(menuShader, menuRenderer);
 				mapManager.update();
 				break;
 			default:
@@ -137,6 +139,7 @@ public class MainGameLoop {
 		} else if (!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck) {
 			state = "pause";
 			pauseCheck = false;
+			Mouse.setGrabbed(false);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			state = "startup";
@@ -154,18 +157,6 @@ public class MainGameLoop {
 	}
 
 	/**
-	 * manages pause state
-	 */
-	private static void pause() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
-			pauseCheck = true;
-		} else if (!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck) {
-			state = "game";
-			pauseCheck = false;
-		}
-	}
-
-	/**
 	 * sets the state of the game
 	 * 
 	 * @param newState
@@ -175,48 +166,5 @@ public class MainGameLoop {
 		state = newState;
 	}
 
-	/**
-	 * Creates buttons for the main menu. Currently only the start button. TODO:
-	 * Create new button object for genericity
-	 * 
-	 * @param loader
-	 *            loader required to load the models.
-	 */
-	public static void createButtons(Loader loader) {
-		button1 = TexturedModelMaker.createButton(loader);
-	}
-
-	/**
-	 * Renders the menu
-	 * 
-	 * @param shader
-	 *            the shader required to give textures to the model
-	 */
-	
-	public static void renderMenu(StaticShaderMenu shader, MasterMenuRenderer renderer) {
-		renderer.prepare();
-		shader.start();
-		TexturedModelRenderer.render(button1, shader);
-		shader.stop();
-		DisplayManager.updateDisplay();
-	}
-
-	/**
-	 * Checks whether the mouse is inside the boundaries of the button TODO:
-	 * Change to work with new Button object
-	 * 
-	 * @return whether the mouse is inside the button
-	 */
-	public static boolean mouseInButton(Button button) {
-		int width = Display.getDisplayMode().getWidth();
-		int height = Display.getDisplayMode().getHeight();
-		float mouseX = (float) (-1.0 + 2.0 * Mouse.getX() / width);
-		float mouseY = (float) (-1.0 + 2.0 * Mouse.getY() / height);
-		
-		if (mouseX > button.getLeftX() && mouseX < button.getRightX() && mouseY > button.getBotY() && mouseY < button.getTopY()) {
-			return true;
-		}
-		return false;
-	}
 
 }
