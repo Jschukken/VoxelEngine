@@ -1,6 +1,10 @@
 package Map;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import KNearest.KNearest;
 
 /**
  * Used to do map generation
@@ -465,16 +469,30 @@ public class Map {
 	 */
 	public static int[][][] createGoodMap() {
 		boolean good = false;
+		boolean valid = false;
 		int[][][] map = new int[SIZE][SIZE][HEIGHT];
 
-		while (!good) {
+		
+		while (!good && !valid) {
+			valid = false;
+			good = false;
 			createMap();
-			// double[] test = MapEvaluation.characteristics(m);
-
-			// good = kNearest(MapEvaluation.characteristics(m));
+			
+			//needs to be fixed tomorrow
+			List<Double> characteristics = new ArrayList<>();
+			characteristics = MapEvaluation.characteristics(m);
+			if(characteristics.get((int) characteristics.size()-1) == 1) {
+				characteristics.remove(characteristics.size()-1);
+				//valid = true;
+				//still has to go to static
+				//good = KNearest.classify(characteristics);
+			}
+			System.out.println(characteristics);
+			//switch with other position when testing is done
+			valid = true;
 			good = true;
-			map = mapTo3D();
 		}
+		map = mapTo3D();
 		int[][][] backUp = map; // backup for editing
 		map = new int[map.length][map[0][0].length][map[0].length]; // empty and start over;
 
