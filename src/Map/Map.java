@@ -94,10 +94,6 @@ public class Map {
 	}
 
 	public static void leeIsland(int x, int y) {
-		// return once destination or another path to it has been reached
-
-		
-
 		// Check for edge, go down
 		if (x + 1 < SIZE) {
 			if (m[x + 1][y] == -1) {
