@@ -2,41 +2,66 @@ package Entities;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
 import Models.TexturedModel;
 
 public class PlayerAttack extends Entity {
-	private static final float PROJECTILE_SPEED = -0.4f;
-	private boolean moving = true;
+	private float projectileSpeed = 0.3f;
+	private float rise = 0.01f;
+	private int fade = 90;
+	private static final float ANGLE = (float) 90 / 4;
 	private Vector3f position;
-	//private Vector3f rotation;
+	// private Vector3f rotation;
 	private Vector3f direction;
+	private Vector3f scale;
 
 	public PlayerAttack(TexturedModel model, Vector3f position, Vector3f rot, Vector3f direction, Vector3f scale) {
-		super(model, position, 0, (float)Math.signum(Math.sin(Math.toRadians(direction.y)))*rot.z, -(float)Math.signum(Math.sin(Math.toRadians(direction.y)))*rot.y, scale);
+		super(model, position, 0, (float) Math.toRadians(-direction.y), 0, scale);
 		this.position = position;
-		//rotation = direction;
-		this.direction = direction;
+		// rotation = direction;
+		this.direction = new Vector3f((float) (direction.x + Math.random() * ANGLE - ANGLE / 2),
+				(float) (direction.y + Math.random() * ANGLE - ANGLE / 2),
+				(float) (direction.z + Math.random() * ANGLE - ANGLE / 2));
+		this.scale = scale;
 	}
-	
-	public void update(){
-		if(moving){
-			Entity ent = CollisionHandler.hitDetectionSingleEnemy(position);
-			if(CollisionHandler.checkEnemyCollision(position)){//temporary
-				moving = false;
-			}else if(ent != null){
-				ent.getHit();
-				destroy();
-			}else{
-				position.x += (float)-(PROJECTILE_SPEED*Math.sin(Math.toRadians(direction.y)));
-				position.z += (float)(PROJECTILE_SPEED*Math.cos(Math.toRadians(direction.y)));
-				position.y += (float)(PROJECTILE_SPEED*Math.sin(Math.toRadians(direction.x)));
+
+	public void update() {
+		fade--;
+		Entity ent = CollisionHandler.hitDetectionSingleEnemy(new Vector3f(position.x+scale.x/2.0f,position.y+scale.y/2.0f,position.z+scale.z/2.0f));
+		if (ent != null) {
+			ent.getHit();
+			destroy();
+		} else if (fade < 0) {
+			destroy();
+		} else {
+			position.x += (float) (projectileSpeed * Math.sin(Math.toRadians(direction.y)));
+			if (CollisionHandler.checkFlameCollision(position)) {
+				position.x -= (float) (projectileSpeed * Math.sin(Math.toRadians(direction.y)));
+				projectileSpeed = projectileSpeed / 1.02f;
 			}
+			position.z += (float) -(projectileSpeed * Math.cos(Math.toRadians(direction.y)));
+			if (CollisionHandler.checkFlameCollision(position)) {
+				position.z -= (float) -(projectileSpeed * Math.cos(Math.toRadians(direction.y)));
+				projectileSpeed = projectileSpeed / 1.02f;
+			}
+			position.y += (float) -(projectileSpeed * Math.sin(Math.toRadians(direction.x))) + rise;
+			if (CollisionHandler.checkFlameCollision(position)) {
+				position.y -= (float) -(projectileSpeed * Math.sin(Math.toRadians(direction.x))) + rise;
+				direction.x = direction.x/2;
+			}
+			projectileSpeed = projectileSpeed / 1.02f;
+			scale.x = scale.x + .009f;
+			scale.y = scale.y + .009f;
+			scale.z = scale.z + .009f;
+			rise += 0.001f;
+
 		}
+
 	}
-	
-	public void destroy(){
-		//remove from game
+
+	public void destroy() {
+		MainGameLoop.mapManager.removeAttackEntity(this);
 	}
 
 }

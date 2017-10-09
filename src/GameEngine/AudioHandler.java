@@ -27,12 +27,15 @@ public class AudioHandler {
 	 * creates audio session
 	 */
 	public AudioHandler() {
+		boolean check = false;
+		for(int i = 0; i<3 && !check;i++){
+			check = true;
 		try {
 			AL.create();
 		} catch (LWJGLException le) {
 			le.printStackTrace();
-			System.exit(-1);
-			return;
+			check = false;
+		}
 		}
 	}
 

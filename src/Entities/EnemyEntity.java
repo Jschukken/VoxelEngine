@@ -21,7 +21,6 @@ public class EnemyEntity extends Entity {
 		this.path = path;
 		this.position = position;
 		hp = 20;
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -90,7 +89,9 @@ public class EnemyEntity extends Entity {
 	 * simulates getting hit
 	 */
 	public void getHit(){
-		//MainGameLoop.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
+		for(int i = 0; i < 5; i++){
+			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
+		}
 		hp--;
 		if(hp<=0){
 			destroy();
