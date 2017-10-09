@@ -16,6 +16,7 @@ public class MapEvaluation {
 	private static int dx = 0; // end point x coordinate
 	private static int dy = 0; // end point y coordinate
 	private static int spawns; // amount of spawn points
+	private static boolean found; // ugly
 
 	private static List<Double> characteristics = new ArrayList<>(); // return list
 
@@ -30,38 +31,54 @@ public class MapEvaluation {
 	 *            map being evaluated
 	 * @return reached end 0 if not reached 1 if reached
 	 */
-	private static int lee(int x, int y) {
-		if (map[x][y] == 2) {
-			return 1;
+	private static void lee(int x, int y) {
+		if (found) {
+			return;
 		}
 		map[x][y] = 4;
 
 		// Check for edge, go down
 		if (x + 1 < map.length) {
-			if (map[x + 1][y] == 1) {
+			if(map[x + 1][y] == 2) {
+				found = true;
+				return;
+			}
+			else if (map[x + 1][y] == 1) {
 				lee(x + 1, y);
 			}
 		}
 		// Check for edge, go up
 		if (x - 1 >= 0) {
-			if (map[x - 1][y] == 1) {
+			if(map[x - 1][y] == 2) {
+				found = true;
+				return;
+			}
+			else if (map[x - 1][y] == 1) {
 				lee(x - 1, y);
 			}
 		}
 		// Check for edge, go right
 		if (y + 1 < map.length) {
-			if (map[x][y + 1] == 1) {
+			if(map[x][y + 1] == 2) {
+				found = true;
+				return;
+			}
+			else if (map[x][y + 1] == 1) {
 				lee(x, y + 1);
 			}
+			
 		}
 		// Check for edge, go left
 		if (y - 1 >= 0) {
-			if (map[x][y - 1] == 1) {
+			if(map[x][y - 1] == 2) {
+				found = true;
+				return;
+			}
+			else if (map[x][y - 1] == 1) {
 				lee(x, y - 1);
 			}
-
+			
 		}
-		return 0;
 	}
 
 	/**
@@ -71,16 +88,18 @@ public class MapEvaluation {
 	 */
 	private static void checkValid() {
 		int spawnacces = 0; // amount of spawns that can reach the end point via paths
+		found = false;
 
 		// run lee to check if the map is valid
 		for (int i = 1; i < map.length; i++)
 			for (int j = 1; j < map[0].length; j++)
 				if (map[i][j] == 3) {
-					int a = lee(i, j);
-					System.out.println(a);
-					if (a == 1) {
+					lee(i, j);
+					if (found) {
 						spawnacces++;
 					}
+					// set values back to basic
+					found = false;
 					for (int k = 1; k < map.length; k++)
 						for (int l = 1; l < map[0].length; l++)
 							if (map[k][l] == 4)

@@ -477,6 +477,7 @@ public class Map {
 			valid = false;
 			good = false;
 			createMap();
+			print2D();
 			
 			//needs to be fixed tomorrow
 			List<Double> characteristics = new ArrayList<>();
