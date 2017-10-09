@@ -31,11 +31,10 @@ public class MapEvaluation {
 	 * @return reached end 0 if not reached 1 if reached
 	 */
 	private static int lee(int x, int y) {
-		int reachEnd = 0;
-		map[x][y] = 4;
 		if (map[x][y] == 2) {
-			reachEnd = 1;
+			return 1;
 		}
+		map[x][y] = 4;
 
 		// Check for edge, go down
 		if (x + 1 < map.length) {
@@ -62,7 +61,7 @@ public class MapEvaluation {
 			}
 
 		}
-		return reachEnd;
+		return 0;
 	}
 
 	/**
@@ -77,14 +76,17 @@ public class MapEvaluation {
 		for (int i = 1; i < map.length; i++)
 			for (int j = 1; j < map[0].length; j++)
 				if (map[i][j] == 3) {
-					if (lee(i, j) == 1) {
+					int a = lee(i, j);
+					System.out.println(a);
+					if (a == 1) {
 						spawnacces++;
 					}
+					for (int k = 1; k < map.length; k++)
+						for (int l = 1; l < map[0].length; l++)
+							if (map[k][l] == 4)
+								map[k][l] = 1;
 				}
-		for (int i = 1; i < map.length; i++)
-			for (int j = 1; j < map[0].length; j++)
-				if (map[i][j] == 4)
-					map[i][j] = 1;
+
 		// check if all spawns worked
 		if (spawnacces == spawns) {
 			characteristics.add((double) 1);
@@ -193,15 +195,15 @@ public class MapEvaluation {
 	 * @return the parameter list the class returns
 	 */
 	public static List<Double> characteristics(int[][] m) {
-		//load map into the class
+		// load map into the class
 		map = m;
-		
+
 		// define a map with an extra 0 border for use in later function
 		lmap = new int[map.length + 2][map[0].length + 2];
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
 				lmap[i + 1][j + 1] = map[i][j];
-		
+
 		// find the end point and save the coordinates
 		for (int i = 1; i < lmap.length - 1; i++)
 			for (int j = 1; j < lmap[0].length - 1; j++)
@@ -209,7 +211,7 @@ public class MapEvaluation {
 					dx = i;
 					dy = j;
 				}
-		
+
 		// count the number of spawns
 		for (int i = 1; i < lmap.length - 1; i++)
 			for (int j = 1; j < lmap[0].length - 1; j++)

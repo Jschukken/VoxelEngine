@@ -13,7 +13,7 @@ import KNearest.KNearest;
  * @edited Frouke Hekker
  */
 public class Map {
-	public static final int SIZE = 25; // x and y size of the map
+	public static final int SIZE = 10; // x and y size of the map
 	public static final int HEIGHT = 7; // z size of the map
 	public static final int THRESHOLD = 80; // threshold for randomly turning 0's into 1's
 	public static final int SCALE = 5; // size of 3D map compared to 2D map
