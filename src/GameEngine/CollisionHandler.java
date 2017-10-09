@@ -21,7 +21,8 @@ public class CollisionHandler {
 
 		try {
 			// lower square
-			if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z + .1)] == 1) {
+			if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
+					+ .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
 					+ .9)] == 1) {
@@ -34,7 +35,8 @@ public class CollisionHandler {
 				return true;
 			}
 			// middle square
-			else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z + .1)] == 1) {
+			else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
+					+ .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
 					+ .9)] == 1) {
@@ -67,6 +69,18 @@ public class CollisionHandler {
 		}
 	}
 
+	public static boolean checkFlameCollision(Vector3f position) {
+		try {
+			if (MainGameLoop.mapManager.map[(int) (position.x + 0.2f)][(int) (position.y + 0.2f)][(int) (position.z
+					+ 0.2f)] == 1) {
+				return true;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return false;
+		}
+		return false;
+	}
+
 	/**
 	 * checks to see if the enemy collides with anything given the enemy
 	 * position in the map
@@ -79,7 +93,8 @@ public class CollisionHandler {
 
 		try {
 			// lower square
-			if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z + .1)] == 1) {
+			if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
+					+ .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
 					+ .9)] == 1) {
@@ -92,7 +107,8 @@ public class CollisionHandler {
 				return true;
 			}
 			// middle square
-			else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z + .1)] == 1) {
+			else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
+					+ .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
 					+ .9)] == 1) {
@@ -119,8 +135,11 @@ public class CollisionHandler {
 	 */
 	public static Entity hitDetectionSingleEnemy(Vector3f position) {
 		for (Entity entity : MainGameLoop.mapManager.activeEntities) {
-			if ((int) position.x == (int) entity.getPosition().x && (int) position.z == (int) entity.getPosition().z
-					&& (int) position.y == (int) entity.getPosition().y) {
+			if (position.x >= entity.getPosition().x && position.x <= entity.getPosition().x + entity.getScale().x
+					&& position.y >= entity.getPosition().y
+					&& position.y <= entity.getPosition().y + entity.getScale().y
+					&& position.z >= entity.getPosition().z
+					&& position.z <= entity.getPosition().z + entity.getScale().z) {
 				return entity;
 			}
 		}
@@ -128,13 +147,19 @@ public class CollisionHandler {
 
 	}
 
-	public static boolean protectedZones(Vector3f position){
-		if(Math.sqrt(Math.pow(position.x-MainGameLoop.mapManager.destination.getPosition().x,2)+Math.pow(position.z-MainGameLoop.mapManager.destination.getPosition().z,2)) < 3){
-			return true;
+	public static boolean protectedZones(Vector3f position) {
+		try {
+			if (Math.sqrt(Math.pow(position.x - MainGameLoop.mapManager.destination.getPosition().x, 2)
+					+ Math.pow(position.z - MainGameLoop.mapManager.destination.getPosition().z, 2)) < 3) {
+				return true;
+			}
+		} catch (NullPointerException e) {
+
 		}
-		for(Entity entity: MainGameLoop.mapManager.activeEntities){
-			if(entity.getClass() == SpawnPointEntity.class){
-				if(Math.sqrt(Math.pow(position.x-entity.getPosition().x,2)+Math.pow(position.z-entity.getPosition().z,2)) < 2){
+		for (Entity entity : MainGameLoop.mapManager.activeEntities) {
+			if (entity.getClass() == SpawnPointEntity.class) {
+				if (Math.sqrt(Math.pow(position.x - entity.getPosition().x, 2)
+						+ Math.pow(position.z - entity.getPosition().z, 2)) < 2) {
 					return true;
 				}
 			}

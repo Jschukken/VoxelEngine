@@ -18,7 +18,7 @@ import ToolBox.TexturedModelMaker;
 public class Camera {
 	
 	private static float FRICTION = 4;
-	public static final boolean GRAVITY = false;
+	public static final boolean GRAVITY = true;
 	
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
@@ -149,7 +149,7 @@ public class Camera {
 	}
 
 	private void attack(){
-		MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.3f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
+		MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y+.7f,position.z),getLookAt() ,new Vector3f(rotX,rotY,rotZ));
 	}
 	
 	public void getHit(){
@@ -174,7 +174,7 @@ public class Camera {
 		return new Vector3f(
 				(float) (Math.cos(Math.toRadians(rotY+90)) * Math.cos(Math.toRadians(rotX))),
 				(float) (Math.sin(Math.toRadians(rotX))),
-				(float) (Math.sin(Math.toRadians(rotY+90)))
+				(float) (Math.cos(Math.toRadians(rotY)) * Math.cos(Math.toRadians(rotX)))
 				);
 
 	}

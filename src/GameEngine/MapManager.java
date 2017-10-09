@@ -20,32 +20,32 @@ import Shaders.StaticShader;
 import ToolBox.TexturedModelMaker;
 
 public class MapManager {
-	
+
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
 	private static final int PARTICLE_COUNT = 300;
-	
+
 	private Loader loader;
 	private MasterGameRenderer renderer;
 	private StaticShader shader;
-	public  int[][][] map;
-	
+	public int[][][] map;
+
 	public List<Entity> mapEntities = new ArrayList<Entity>();
 	public List<Entity> activeEntities = new ArrayList<Entity>();
 	public List<Entity> particleEntities = new ArrayList<Entity>();
 	public List<Entity> attackEntities = new ArrayList<Entity>();
 	public Entity destination;
 	public Camera camera;
-	
-	public MapManager(){
+
+	public MapManager() {
 		map = Map.createGoodMap();
 		loader = new Loader();
 		shader = new StaticShader();
 		renderer = new MasterGameRenderer(shader);
 	}
-	
-	public void loadMap(){
-		camera = new Camera(new Vector3f(map.length/2, map[0].length, map[0][0].length/2), 0, 0, 0);
+
+	public void loadMap() {
+		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
@@ -62,16 +62,18 @@ public class MapManager {
 					} else if (map[x][y][z] == 3) {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
-//					} else if (x == 0 || y == 0 || z == 0 || z == map[0][0].length - 1 || x == map.length - 1) {
-//						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
-//						map[x][y][z] = 1;
+						// } else if (x == 0 || y == 0 || z == 0 || z ==
+						// map[0][0].length - 1 || x == map.length - 1) {
+						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
+						// z), 0, 0, 0, new Vector3f(1, 1, 1)));
+						// map[x][y][z] = 1;
 					}
 				}
 			}
 		}
 	}
-	
-	public void render(){
+
+	public void render() {
 
 		renderer.prepare();
 
@@ -97,13 +99,13 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV + 5)
-					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV  + 5) || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}
 
 		}
-		
+
 		for (Entity entity : activeEntities) {
 
 			// vector from the entity to the camera
@@ -123,7 +125,7 @@ public class MapManager {
 			}
 
 		}
-		
+
 		for (Entity entity : particleEntities) {
 			// vector from the entity to the camera
 			toCamera = new Vector3f(camera.getPosition().x - entity.getPosition().x,
@@ -141,7 +143,7 @@ public class MapManager {
 				renderer.render(entity, shader);
 			}
 		}
-		
+
 		for (Entity entity : attackEntities) {
 			// vector from the entity to the camera
 			toCamera = new Vector3f(camera.getPosition().x - entity.getPosition().x,
@@ -164,37 +166,37 @@ public class MapManager {
 			double dist = Math.sqrt(Math.pow(camera.getPosition().x - destination.getPosition().x, 2)
 					+ Math.pow(camera.getPosition().y - destination.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - destination.getPosition().z, 2));
-			if(dist<RENDER_DISTANCE){
+			if (dist < RENDER_DISTANCE) {
 				renderer.render(destination, shader);
 			}
 		} catch (NullPointerException e) {
 			System.out.println("destination is required");
 		}
-		
+
 		shader.stop();
 	}
-	
-	public void update(){
+
+	public void update() {
 		camera.move();
 		try {
 			destination.update();
 		} catch (NullPointerException e) {
 			System.out.println("destination is required");
 		}
-		
+
 		for (int i = 0; i < activeEntities.size(); i++) {
 			activeEntities.get(i).update();
 		}
 		for (Entity particle : particleEntities) {
 			particle.update();
 		}
-		for (Entity entity : attackEntities) {
-			entity.update();
+		for (int i = 0; i < attackEntities.size();i++) {
+			attackEntities.get(i).update();
 		}
 
 	}
-	
-	public void cleanUp(){
+
+	public void cleanUp() {
 		try {
 			loader.cleanUp();
 			shader.cleanUp();
@@ -203,7 +205,7 @@ public class MapManager {
 			System.out.println("CleanUp error: its cool yo");
 		}
 	}
-	
+
 	/**
 	 * adds an active entity to the game
 	 * 
@@ -220,23 +222,34 @@ public class MapManager {
 		activeEntities.add(enemy);
 
 	}
-	
+
 	public void addParticleEntity(TexturedModel entity, Vector3f position) {
-		Entity particle = new ParticleEntity(entity, position,0,0,0, new Vector3f(.1f, .1f, .1f));
+		Entity particle = new ParticleEntity(entity, position, 0, 0, 0, new Vector3f(.1f, .1f, .1f));
 		particleEntities.add(particle);
 		if (particleEntities.size() > PARTICLE_COUNT) {
 			particleEntities.remove(0);
 		}
 	}
-	
+
 	public void addAttackEntity(TexturedModel entity, Vector3f position, Vector3f rot, Vector3f direction) {
-		Entity attack = new PlayerAttack(entity, position, rot, direction, new Vector3f(.5f, .5f, .5f));
+		Entity attack = new PlayerAttack(entity, position, rot, direction, new Vector3f(.1f, .1f, .1f));
 		attackEntities.add(attack);
 		if (attackEntities.size() > PARTICLE_COUNT) {
 			attackEntities.remove(0);
 		}
 	}
-	
+
+	/**
+	 * removes the given entity from the game
+	 * 
+	 * @param entity
+	 *            the entity to remove
+	 */
+	public void removeAttackEntity(Entity entity) {
+
+		attackEntities.remove(entity);
+	}
+
 	/**
 	 * removes the given entity from the game
 	 * 
@@ -247,7 +260,7 @@ public class MapManager {
 
 		activeEntities.remove(entity);
 	}
-	
+
 	/**
 	 * TEMPORARY, creates a simple map while the map generator is in progress,
 	 * can be used for debugging
@@ -268,7 +281,5 @@ public class MapManager {
 		map[10][2][10] = 1;
 
 	}
-
-	
 
 }
