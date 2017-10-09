@@ -45,8 +45,9 @@ public class KNearestRendering {
 		 */
 		float height = Display.getDisplayMode().getHeight();
 		float width = Display.getDisplayMode().getWidth();
-		TexturedModel xAxis = createRectangle(-0.8f, -0.8f, 1.6f, 0.1f, "black");
-		TexturedModel yAxis = createRectangle(-0.8f, -0.8f, 0.1f, 1.6f, "black");
+		float normalizedX = (width / 10) + 1f / (2);
+		TexturedModel xAxis = createRectangle(-0.8f, -0.8f, 0.1f, 1.6f, "red");
+		TexturedModel yAxis = createRectangle(-0.8f, -0.8f, 1.6f, 0.1f, "blue");
 		renderer.render(xAxis, shader);
 		renderer.render(yAxis, shader);
 		
