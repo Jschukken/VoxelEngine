@@ -137,8 +137,8 @@ public class MainGameLoop {
 				break;
 				
 			case "knearest":
+				kNearestRenderer.registerClicksButtons();
 				kNearestRenderer.renderKNearestGraph(menuShader, menuRenderer);
-				kNearestRenderer.updateGraph();
 				break;
 				
 			default:

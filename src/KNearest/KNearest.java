@@ -39,6 +39,8 @@ public class KNearest {
 	 */
 	public boolean classify(Point p) {
 
+		System.out.println("Classifying point: " + p.toString());
+		
 		/* Retrieve the list of k nearest points */
 		List<Point> kNearestPoints = getKNearestPoints(p);
 
@@ -49,7 +51,9 @@ public class KNearest {
 		/**
 		 * Get the classification from each point, and increment the correct counter
 		 */
+		System.out.println("Checking neighbors:");
 		for (Point q : kNearestPoints) {
+			System.out.println(q.toString());
 			if (q.getClassification()) {
 				goodCount++;
 			} else {
@@ -63,8 +67,12 @@ public class KNearest {
 		 * ties an uneven value for k is ideal.
 		 */
 		if (goodCount >= badCount) {
+			p.setClassification(true);
+			points.add(p);
 			return true;
 		} else {
+			p.setClassification(false);
+			points.add(p);
 			return false;
 		}
 
