@@ -43,6 +43,12 @@ public class Loader {
 			return new RawModel(vaoID, indices.length);
 			
 		}
+		public RawModel loadToVao(float[] pos){
+			int vaoID = createVao();
+			this.storeDataInAttributeList(pos, 0, 2);
+			GL30.glBindVertexArray(0);
+			return new RawModel(vaoID, pos.length/2);
+		}
 		
 		/**
 		 * creates the vao on the gpu
