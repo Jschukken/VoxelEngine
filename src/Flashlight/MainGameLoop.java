@@ -49,7 +49,7 @@ public class MainGameLoop {
 		MasterMenuRenderer menuRenderer = null;
 		AudioHandler ah = null;
 		mapManager = null;
-		map = Map.createGoodMap();
+		//map = Map.createGoodMap();
 
 		while (!Display.isCloseRequested()) {
 

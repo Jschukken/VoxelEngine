@@ -12,7 +12,9 @@ import Entities.Entity;
 import Entities.ParticleEntity;
 import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
+import KNearest.KNearest;
 import Map.Map;
+import Map.MapEvaluation;
 import Models.TexturedModel;
 import RenderEngine.Loader;
 import RenderEngine.MasterGameRenderer;
@@ -28,6 +30,7 @@ public class MapManager {
 	private Loader loader;
 	private MasterGameRenderer renderer;
 	private StaticShader shader;
+	private KNearest kNear;
 	public int[][][] map;
 
 	public List<Entity> mapEntities = new ArrayList<Entity>();
@@ -38,12 +41,70 @@ public class MapManager {
 	public Camera camera;
 
 	public MapManager() {
-		map = Map.createGoodMap();
+		kNear = new KNearest();
+		map = createGoodMap();
 		loader = new Loader();
 		shader = new StaticShader();
 		renderer = new MasterGameRenderer(shader);
 	}
+	
+	/**
+	 * creates a good map using the create map function and validating using
+	 * k-nearest
+	 * 
+	 * @param return
+	 *            the generated 'good' map
+	 */
+	private int[][][] createGoodMap() {
+		boolean good = false;
+		boolean valid = false;
+		int errorCatch = 0;
+		int[][][] map = new int[Map.SIZE][Map.SIZE][Map.HEIGHT];
 
+		
+		while (!good && !valid) {
+			errorCatch++;
+			if(errorCatch>500){
+				System.out.println("cannot generate a good map");
+				cleanUp();
+				System.exit(-1);
+			}
+			
+			valid = false;
+			good = false;
+			Map.createMap();
+			Map.print2D();
+			
+			List<Double> characteristics = new ArrayList<>();
+			characteristics = MapEvaluation.characteristics(Map.m);
+			if(characteristics.get((int) characteristics.size()-1) == 1) {//check if map is valid
+				characteristics.remove(characteristics.size()-1);
+				valid = true;
+				good = kNear.classify(characteristics); // use k-nearest
+			}
+			System.out.println(characteristics);
+			//disable this when k-nearest works
+			valid = true;
+			good = true;
+		}
+		map = Map.mapTo3D();
+		int[][][] backUp = map; // backup for editing
+		map = new int[map.length][map[0][0].length][map[0].length]; // empty and start over;
+
+		// fix coordinates
+		for (int x = 0; x < backUp.length; x++) {
+			for (int z = 0; z < backUp[0].length; z++) {
+				for (int y = 0; y < backUp[0][0].length; y++) {
+					map[x][y][z] = backUp[x][z][y];
+				}
+			}
+		}
+		return map;
+	}
+
+	/**
+	 * turns a map array into its corrisponding entities 
+	 */
 	public void loadMap() {
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
@@ -62,6 +123,7 @@ public class MapManager {
 					} else if (map[x][y][z] == 3) {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
+						camera.setPosition(new Vector3f(x,y+4,z));
 						// } else if (x == 0 || y == 0 || z == 0 || z ==
 						// map[0][0].length - 1 || x == map.length - 1) {
 						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
