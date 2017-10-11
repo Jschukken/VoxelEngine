@@ -18,9 +18,9 @@ import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
 
 /* CHEAT SHEET
- * Z =  0 -> Overlay
+ * Z =  0 -> Background
  * Z = -1 -> Buttons
- * Z=  -2 -> Background
+ * Z=  -2 -> Overlay
  */
 
 public class MenuHandler {
@@ -61,6 +61,7 @@ public class MenuHandler {
 		createMapMenu(loader);
 		createPauseMenu(loader);
 		createGameOverMenu(loader);
+		createBackground(loader);
 	}
 	
 	/**
@@ -71,7 +72,7 @@ public class MenuHandler {
 	 */
 	public void createMainMenu(Loader loader) {
 
-		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, 1f, 0.3f, 0.3f, -1f };
+		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, -1f, 0.3f, 0.3f, -1f };
 
 		int[] indices = { 0, 1, 3, 3, 2, 1 };
 
@@ -79,8 +80,8 @@ public class MenuHandler {
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
-		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Start Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button"));
 		
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
@@ -91,12 +92,12 @@ public class MenuHandler {
 		
 		mainMenu.add(tMod);
 		
-		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, 1f, 0.3f, -0.1f, -1f };
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
 		
 		model = loader.loadToVao(vertices, indices, uv);
 		
-		tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tex1 = new ModelTexture(loader.loadTexture("Settings Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Settings Button"));
 		
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
@@ -111,8 +112,8 @@ public class MenuHandler {
 		
 		model = loader.loadToVao(vertices, indices, uv);
 
-		tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Quit Button"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -130,7 +131,7 @@ public class MenuHandler {
 	 */
 	public void createMapMenu(Loader loader) {
 
-		float[] vertices = { -0.7f, -0.7f, -1f, -0.7f, -0.95f, -1f, -0.2f, -0.95f, 1f, -0.2f, -0.7f, -1f };
+		float[] vertices = { -0.7f, -0.7f, -1f, -0.7f, -0.95f, -1f, -0.2f, -0.95f, -1f, -0.2f, -0.7f, -1f };
 
 		int[] indices = { 0, 1, 3, 3, 2, 1 };
 
@@ -138,8 +139,8 @@ public class MenuHandler {
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
-		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Start Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button"));
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -150,12 +151,12 @@ public class MenuHandler {
 		
 		mapMenu.add(tMod);
 		
-		vertices = new float[]{ 0.2f, -0.7f, -1f, 0.2f, -0.95f, -1f, 0.7f, -0.95f, 1f, 0.7f, -0.7f, -1f };
+		vertices = new float[]{ 0.2f, -0.7f, -1f, 0.2f, -0.95f, -1f, 0.7f, -0.95f, -1f, 0.7f, -0.7f, -1f };
 		
 		model = loader.loadToVao(vertices, indices, uv);
 
-		tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tex1 = new ModelTexture(loader.loadTexture("Back Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Back Button"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -173,7 +174,7 @@ public class MenuHandler {
 	 */
 	public void createPauseMenu(Loader loader) {
 
-		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, 1f, 0.3f, 0.3f, -1f };
+		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, -1f, 0.3f, 0.3f, -1f };
 
 		int[] indices = { 0, 1, 3, 3, 2, 1 };
 
@@ -181,8 +182,8 @@ public class MenuHandler {
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
-		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Resume Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Resume Button"));
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -193,12 +194,12 @@ public class MenuHandler {
 		
 		pauseMenu.add(tMod);
 		
-		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, 1f, 0.3f, -0.1f, -1f };
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
 		
 		model = loader.loadToVao(vertices, indices, uv);
 
-		tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Quit Button"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -216,8 +217,7 @@ public class MenuHandler {
 	 */
 	public void createGameOverMenu(Loader loader) {
 
-		System.out.println("Creating menu");
-		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, 1f, 0.3f, 0.3f, -1f };
+		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, -1f, 0.3f, 0.3f, -1f };
 
 		int[] indices = { 0, 1, 3, 3, 2, 1 };
 
@@ -225,8 +225,8 @@ public class MenuHandler {
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
-		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Main menu Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Main menu Button"));
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -236,12 +236,12 @@ public class MenuHandler {
 		
 		gameOverMenu.add(tMod);
 		
-		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, 1f, 0.3f, -0.1f, -1f };
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
 		
 		model = loader.loadToVao(vertices, indices, uv);
 
-		tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Quit Button"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -255,8 +255,8 @@ public class MenuHandler {
 
 		model = loader.loadToVao(vertices, indices, uv);
 
-		tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tex1 = new ModelTexture(loader.loadTexture("Tick box"));
+		tex2 = new ModelTexture(loader.loadTexture("Tick box"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -269,8 +269,8 @@ public class MenuHandler {
 
 		model = loader.loadToVao(vertices, indices, uv);
 
-		tex1 = new ModelTexture(loader.loadTexture("Tile"));
-		tex2 = new ModelTexture(loader.loadTexture("Duck"));
+		tex1 = new ModelTexture(loader.loadTexture("Cross box"));
+		tex2 = new ModelTexture(loader.loadTexture("Cross box"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -280,6 +280,25 @@ public class MenuHandler {
 		
 		gameOverMenu.add(tMod);
 	}	
+	
+	public void createBackground(Loader loader) {
+		
+		float[] vertices = { -1f, 1f, 0f, -1f, -1f, 0f, 1f, -1f, 0f, 1f, 1f, 0f };
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Background"));
+		TexturedModel tMod = new TexturedModel(model, tex1);
+		
+		mainMenuFluff.add(tMod);
+		mapMenuFluff.add(tMod);
+		pauseMenuFluff.add(tMod);
+		gameOverFluff.add(tMod);
+	}
 	
 	/**
 	 * updates all buttons relevant to the current state
@@ -321,6 +340,9 @@ public class MenuHandler {
 		for (Button button : activeMenu) {
 			renderer.render(button, shader);
 		}
+		for (TexturedModel tMod : activeFluff) {
+			renderer.render(tMod, shader);
+		}
 		shader.stop();
 		DisplayManager.updateDisplay();
 	}
@@ -335,18 +357,22 @@ public class MenuHandler {
 		
 		case "mainMenu":
 			activeMenu = mainMenu;
+			activeFluff = mainMenuFluff;
 			break;
 			
 		case "mapMenu":
 			activeMenu = mapMenu;
+			activeFluff = mapMenuFluff;
 			break;
 			
 		case "pause":
 			activeMenu = pauseMenu;
+			activeFluff = pauseMenuFluff;
 			break;
 			
 		case "gameover":
 			activeMenu = gameOverMenu;
+			activeFluff = gameOverFluff;
 			break;
 		}
 	}
