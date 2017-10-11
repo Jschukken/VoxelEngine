@@ -1,6 +1,7 @@
 package PathFinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
@@ -25,9 +26,7 @@ public class CreatePath {
 	 *            destination vector
 	 * @return the path between destination and end
 	 */
-	public static List<Integer> createPath(int[][][] m, Vector3f s, Vector3f d) {
-		List<Integer> path = new ArrayList<>(); //return path
-		
+	public static List<Integer> createPath(int[][][] m, Vector3f s, Vector3f d) {		
 		//set map back to its 2D form
 		int[][] map = new int[m.length][m[0][0].length];
 		for (int i = 0; i < m.length; i++)
@@ -47,8 +46,7 @@ public class CreatePath {
 					}
 
 		//obtain and return path
-		path = AStar.aStarStart(map, s, d);
-		return path;
+		return AStar.aStarStart(map, s, d);
 	}
 
 	/**
@@ -56,7 +54,17 @@ public class CreatePath {
 	 */
 	public static void main(String[] args) {
 		List<Integer> path = new ArrayList<>();
-		int[][][] map = Map.createGoodMap();
+		int[][][] map = new int[10][1][10];
+		map[5][0][5] =2;
+		map[5][0][7] =3;
+		map[4][0][5] =1;
+		map[4][0][6]=1;
+		map[4][0][7]=1;
+		map[6][0][5]=1;
+		map[6][0][7]=1;
+		map[7][0][5]=1;
+		map[7][0][6]=1;
+		map[7][0][7]=1;
 		int dx = 0, dy = 0, dz = 0, sx = 0, sy = 0, sz = 0;
 
 		// find starting and end point
@@ -78,8 +86,9 @@ public class CreatePath {
 		
 		//convert and print path
 		int[] print = new int[path.size()] ;
-		for(int i = 0; i < path.size()-1; i++) {
+		for(int i = 0; i < path.size(); i++) {
 			print[i] = path.get(i);
 		}
+		System.out.println(Arrays.toString(print));
 	}
 }

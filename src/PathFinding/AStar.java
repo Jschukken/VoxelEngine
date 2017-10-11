@@ -24,6 +24,7 @@ public class AStar {
 	 * @return h
 	 */
 	public static double calculateH(int x, int y) {
+		//calculate manhattan distance
 		return Math.abs(x - DX) + Math.abs(y - DY);
 	}
 
@@ -38,6 +39,7 @@ public class AStar {
 		double min = Double.MAX_VALUE;
 		int index = -1;
 
+		//loop over saving minimal value
 		for (int i = 0; i < list.size(); i++) {
 			Node current = list.get(i);
 			if (current.f < min) {
@@ -45,7 +47,7 @@ public class AStar {
 				index = i;
 			}
 		}
-
+		//return index of the minimal value
 		return index;
 	}
 
@@ -75,16 +77,17 @@ public class AStar {
 			q = open.get(minimalF(open));
 			open.remove(q);
 			//checking whether destination has been reached
-			if(q.x == DX && q.y == DY)
+			if(q.x == DX && q.y == DY) {
 				break;
+			}
 			// adding four possible parents
-			if (MAP[q.x + 1][q.y] == 1)
+			if (MAP[q.x + 1][q.y] != 0)
 				successor.add(new Node(q.x + 1, q.y, q));
-			if (MAP[q.x - 1][q.y] == 1)
+			if (MAP[q.x - 1][q.y] != 0)
 				successor.add(new Node(q.x - 1, q.y, q));
-			if (MAP[q.x][q.y + 1] == 1)
+			if (MAP[q.x][q.y + 1] != 0)
 				successor.add(new Node(q.x, q.y + 1, q));
-			if (MAP[q.x][q.y - 1] == 1)
+			if (MAP[q.x][q.y - 1] != 0)
 				successor.add(new Node(q.x, q.y - 1, q));
 			// check if parent can go to open
 			for (Node temp : successor) {
@@ -99,9 +102,11 @@ public class AStar {
 				for (Node comp : closed)
 					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f)
 						add = false;
-				if (add)
+				if (add) {
 					open.add(temp);
+				}
 			}
+			successor.clear();
 			closed.add(q);
 		}
 		// from destination node track via parents back to spawn
@@ -129,16 +134,15 @@ public class AStar {
 	 *            the vector pointing to the destination
 	 * @return the path found by the algorithm
 	 */
-	public static List<Integer> aStarStart(int[][] m, Vector3f s, Vector3f d) {
+	public static List<Integer> aStarStart(int[][] m, Vector3f d, Vector3f s) {
 		// convert input variables to integers
 		int sx = (int) s.getX();
 		int sy = (int) s.getY();
-		DX = (int) s.getX();
-		DY = (int) s.getY();
+		DX = (int) d.getX();
+		DY = (int) d.getY();
 		MAP = m;
 
-		List<Integer> path = aStar(sx, sy);
-
-		return path;
+		//create and return path
+		return aStar(sx, sy);
 	}
 }
