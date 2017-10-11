@@ -488,7 +488,6 @@ public class Map {
 				//still has to go to static
 				//good = KNearest.classify(characteristics);
 			}
-			System.out.println(characteristics);
 			//switch with other position when testing is done
 			valid = true;
 			good = true;
