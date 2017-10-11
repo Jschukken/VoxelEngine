@@ -16,7 +16,6 @@ public class Lee {
 	private static int DX;
 	private static int DY;
 	private static int DZ;
-	private static int SIZE;
 	private static int[][][] MAP;
 
 	/**
@@ -41,56 +40,74 @@ public class Lee {
 		}
 
 		if (x + 1 < MAP.length) {
-			if (MAP[x + 1][y][z + 1] > k + 1) {
-				MAP[x + 1][y][z + 1] = k + 1;
-				lee3D(k + 1, x + 1, y, z + 1, finished);
-			} else if (MAP[x + 1][y][z] > k + 1) {
+			if (y + 1 < MAP[0].length) {
+				if (MAP[x + 1][y + 1][z] > k + 1) {
+					MAP[x + 1][y + 1][z] = k + 1;
+					lee3D(k + 1, x + 1, y + 1, z, finished);
+				}
+			}
+			if (MAP[x + 1][y][z] > k + 1) {
 				MAP[x + 1][y][z] = k + 1;
 				lee3D(k + 1, x + 1, y, z, finished);
-			} else if (z - 1 > 0)
-				if (MAP[x + 1][y][z - 1] > k + 1) {
-					MAP[x + 1][y][z - 1] = k + 1;
-					lee3D(k + 1, x + 1, y, z - 1, finished);
+			}
+			if (y - 1 > 0)
+				if (MAP[x + 1][y - 1][z] > k + 1) {
+					MAP[x + 1][y - 1][z] = k + 1;
+					lee3D(k + 1, x + 1, y - 1, z, finished);
 				}
 		}
 		if (x - 1 >= 0) {
-			if (MAP[x - 1][y][z + 1] > k + 1) {
-				MAP[x - 1][y][z + 1] = k + 1;
-				lee3D(k + 1, x - 1, y, z + 1, finished);
-			} else if (MAP[x - 1][y][z] > k + 1) {
+			if (y + 1 < MAP[0].length) {
+				if (MAP[x - 1][y + 1][z] > k + 1) {
+					MAP[x - 1][y + 1][z] = k + 1;
+					lee3D(k + 1, x - 1, y + 1, z, finished);
+				}
+			}
+			if (MAP[x - 1][y][z] > k + 1) {
 				MAP[x - 1][y][z] = k + 1;
 				lee3D(k + 1, x - 1, y, z, finished);
-			} else if (z - 1 > 0)
-				if (MAP[x - 1][y][z - 1] > k + 1) {
-					MAP[x - 1][y][z - 1] = k + 1;
-					lee3D(k + 1, x - 1, y, z - 1, finished);
+			}
+			if (y - 1 > 0)
+				if (MAP[x - 1][y-1][z] > k + 1) {
+					MAP[x - 1][y-1][z] = k + 1;
+					lee3D(k + 1, x - 1, y-1, z, finished);
 				}
 		}
-		if (y + 1 < SIZE) {
-			if (MAP[x][y + 1][z + 1] > k + 1) {
-				MAP[x][y + 1][z + 1] = k + 1;
-				lee3D(k + 1, x, y + 1, z + 1, finished);
-			} else if (MAP[x][y + 1][z] > k + 1) {
-				MAP[x][y + 1][z] = k + 1;
-				lee3D(k + 1, x, y + 1, z, finished);
-			} else if (z - 1 > 0)
+		if (z + 1 < MAP[0][0].length) {
+			if (y + 1 < MAP[0].length) {
+				if (MAP[x][y + 1][z + 1] > k + 1) {
+					MAP[x][y + 1][z + 1] = k + 1;
+					lee3D(k + 1, x, y + 1, z + 1, finished);
+				}
+			}
+			if (MAP[x][y][z +1] > k + 1) {
+				MAP[x][y][z +1] = k + 1;
+				lee3D(k + 1, x, y, z+1, finished);
+			}
+			if (y - 1 > 0) {
+				if (MAP[x][y - 1][z + 1] > k + 1) {
+					MAP[x + 1][y - 1][z + 1] = k + 1;
+					lee3D(k + 1, x, y - 1, z + 1, finished);
+				}
+			}
+		}
+		if (z - 1 >= 0) {
+			if (y + 1 < MAP[0].length) {
 				if (MAP[x][y + 1][z - 1] > k + 1) {
-					MAP[x + 1][y + 1][z - 1] = k + 1;
-					lee3D(k + 1, x, y + 1, z - 1, finished);
+					MAP[x][y + 1][z - 1] = k + 1;
+					lee3D(k + 1, x, y + 1, z + 1, finished);
 				}
-		}
-		if (y - 1 >= 0) {
-			if (MAP[x][y - 1][z + 1] > k + 1) {
-				MAP[x][y - 1][z + 1] = k + 1;
-				lee3D(k + 1, x, y - 1, z + 1, finished);
-			} else if (MAP[x][y - 1][z] > k + 1) {
-				MAP[x][y - 1][z] = k + 1;
-				lee3D(k + 1, x, y - 1, z, finished);
-			} else if (z - 1 > 0)
+			}
+			if (MAP[x][y][z-1] > k + 1) {
+				MAP[x][y][z-1] = k + 1;
+				lee3D(k + 1, x, y, z-1, finished);
+			}
+			if (y - 1 > 0) {
 				if (MAP[x][y - 1][z - 1] > k + 1) {
 					MAP[x][y - 1][z - 1] = k + 1;
 					lee3D(k + 1, x, y - 1, z - 1, finished);
 				}
+			}
 		}
 		System.out.println("no end point found");
 	}
@@ -116,65 +133,69 @@ public class Lee {
 		path.add(z);
 
 		// try all possible options to find a step down in the matrix
-		if (x + 1 < SIZE) {
-			if (MAP[x + 1][y][z + 1] == k - 1) {
-				leeBack3D(path, k - 1, x + 1, y, z + 1);
+		if (x + 1 < MAP[0].length) {
+			if (MAP[x + 1][y+1][z] == k - 1) {
+				leeBack3D(path, k - 1, x + 1, y, z);
 				return;
 			} else if (MAP[x + 1][y][z] == k - 1) {
 				leeBack3D(path, k - 1, x + 1, y, z);
 				return;
-			} else if (z - 1 > 0)
-				if (MAP[x + 1][y][z - 1] == k - 1) {
-					leeBack3D(path, k - 1, x + 1, y, z - 1);
+			} else if (y - 1 > 0)
+				if (MAP[x + 1][y-1][z ] == k - 1) {
+					leeBack3D(path, k - 1, x + 1, y-1, z);
 					return;
 				}
 		}
 		if (x - 1 > 0) {
-			if (MAP[x - 1][y][z + 1] == k - 1) {
-				leeBack3D(path, k - 1, x - 1, y, z + 1);
+			if (MAP[x - 1][y+1][z] == k - 1) {
+				leeBack3D(path, k - 1, x - 1, y+1, z);
 				return;
 			} else if (MAP[x - 1][y][z] == k - 1) {
 				leeBack3D(path, k - 1, x - 1, y, z);
 				return;
-			} else if (z - 1 > 0)
-				if (MAP[x - 1][y][z - 1] == k - 1) {
-					leeBack3D(path, k - 1, x - 1, y, z - 1);
+			} else if (y - 1 > 0)
+				if (MAP[x - 1][y-1][z] == k - 1) {
+					leeBack3D(path, k - 1, x - 1, y-1, z);
 					return;
 				}
 		}
-		if (y + 1 < SIZE) {
+		if (z + 1 < MAP[0][0].length) {
 			if (MAP[x][y + 1][z + 1] == k - 1) {
 				leeBack3D(path, k - 1, x, y + 1, z + 1);
 				return;
-			} else if (MAP[x][y + 1][z] == k - 1) {
-				leeBack3D(path, k - 1, x, y + 1, z);
+			} else if (MAP[x][y][z+1] == k - 1) {
+				leeBack3D(path, k - 1, x, y , z+ 1);
 				return;
-			} else if (z - 1 > 0)
-				if (MAP[x][y + 1][z - 1] == k - 1) {
-					leeBack3D(path, k - 1, x, y + 1, z - 1);
+			} else if (y - 1 > 0)
+				if (MAP[x][y - 1][z + 1] == k - 1) {
+					leeBack3D(path, k - 1, x, y - 1, z + 1);
 					return;
 				}
 		}
-		if (y - 1 > 0) {
-			if (MAP[x][y - 1][z + 1] == k - 1) {
-				leeBack3D(path, k - 1, x, y - 1, z + 1);
+		if (z - 1 > 0) {
+			if (MAP[x][y + 1][z - 1] == k - 1) {
+				leeBack3D(path, k - 1, x, y + 1, z - 1);
 				return;
 			} else if (MAP[x][y - 1][z] == k - 1) {
-				leeBack3D(path, k - 1, x, y - 1, z);
+				leeBack3D(path, k - 1, x, y , z- 1);
 				return;
-			} else if (z - 1 > 0)
+			} else if (y - 1 > 0)
 				if (MAP[x][y - 1][z - 1] == k - 1) {
 					leeBack3D(path, k - 1, x, y - 1, z - 1);
 					return;
 				}
 		}
 	}
-	
+
 	/**
 	 * starts the execution of Lee's algorithm
-	 * @param m the current 3D map
-	 * @param s the vector pointing to the spawn
-	 * @param d the vector pointing to the destination
+	 * 
+	 * @param m
+	 *            the current 3D map
+	 * @param s
+	 *            the vector pointing to the spawn
+	 * @param d
+	 *            the vector pointing to the destination
 	 * @return
 	 */
 	public static List<Integer> startLee(int[][][] m, Vector3f s, Vector3f d) {
@@ -186,7 +207,6 @@ public class Lee {
 		DY = (int) s.getY();
 		DX = (int) s.getZ();
 		MAP = m;
-		SIZE = MAP.length;
 
 		// create return path using lee's algorithm
 		for (int i = 0; i < MAP.length; i++) {
@@ -217,7 +237,7 @@ public class Lee {
 				}
 			}
 		}
-		//backtrack and save path
+		// backtrack and save path
 		List<Integer> path = new ArrayList<>();
 		leeBack3D(path, e, x, y, z);
 		// set matrix back to normal
@@ -225,7 +245,7 @@ public class Lee {
 			for (int j = 0; j < MAP[0].length; j++)
 				for (int k = 0; k < MAP[0][0].length; k++)
 					if (MAP[i][j][k] > 0 || MAP[i][j][k] == -5)
-						m[i][j][k] = 0;	
+						m[i][j][k] = 0;
 		return path;
 	}
 }

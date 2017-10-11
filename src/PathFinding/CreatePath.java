@@ -55,13 +55,19 @@ public class CreatePath {
 		//fix coordinates
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
-				for(int k = 0; k < map[0][0].length; k++)
+				for(int k = 0; k < map[0][0].length; k++) {
 					if(map[i][j][k] == 2) {
-						int sx = i;
-						int sy = k;
-						int sz = j;
+						dx = i;
+						dy = k;
+						dz = j;
 					}
-
+					if(map[i][j][k] == 3) {
+						sx = i;
+						sy = k;
+						sz = j;
+					}
+				}
+	
 		path = createPath(map, new Vector3f(dx, dy, dz), new Vector3f(sx, sy, sz));
 	}
 }
