@@ -5,266 +5,140 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import Map.Map;
-
-/*
- * Manages enemies pathfinding
+/**
+ * Finds a path for the enemies to follow using A*
+ * 
+ * @author Chiel Ton
+ *
  */
 public class AStar {
-	private static int DX;
-	private static int DY;
-	private static int DZ;
-	private static int SIZE;
-	private static int[][][] MAP;
-	
-	/*
-	 * Given two points, calculates path between these two points
-	 * return path is given as an integer array: xyzxyzxyzxyzxyzxyz...
-	 * Uses the AStar method
+	private static int DX;// end point x coordinate
+	private static int DY;// end point y coordinate
+	private static int[][] MAP;// 2D version of current map
+
+	/**
+	 * Calculates the heuristic value for the given node (Manhattan distance)
+	 * 
+	 * @param a
+	 *            Node for which the h value must be calculated
+	 * @return h
 	 */
-	public static int[] aStar(int sx, int sy, int sz) {
-		List<Integer> path = new ArrayList<>();
-		List<Integer> open = new ArrayList<>(); 	// open list
-		List<Integer> closed = new ArrayList<>(); 	// closed list
-		
-		open.add(sx);
-		open.add(sy);
-		open.add(sz);
-		
-		while(open.size()!=0) {
-			int[] q;
-		}		
-		/*
-		init open;
-		init closed;
-		open.add(sx,sy);
-		
-		while(open.size!=0) {
-			q = node with leastt f;
-			open.remove q
-			obtainq's succesor and set their parents to q;
-			for(all succesors) {
-				successor.g = q.g + distance between successor and q
-				successor.h = distance from goal to succ/essor
-				successor.f = successor.g + successor.h
-				       
-				if (node with same position as successor in open && node.f < successor.f)
-				   	skip this successor;
-				else if (node with same position as successor in closed && node.f < successor.f)
-				   	skip this successor;
-				else
-				    add node to open;
-			}
-			closed.add q
-		}
-		*/
-		//convert to int array and return
-		int[] ret = new int[path.size()];
-	    for (int i=0; i < ret.length; i++)
-	    {
-	        ret[i] = path.get(i).intValue();
-	    }
-		return ret;
+	public static double calculateH(int x, int y) {
+		return Math.abs(x - DX) + Math.abs(y - DY);
 	}
-	
-	/*
-     * fill the map using lee's algorithm
-     */
-    public static void lee3D (int k, int x, int y, int z, boolean finished){
-    	//return once destination or another path to it has been reached
-    	if((DX == x && DY == y && DZ == z) || finished) {
-    		finished = true;
-    		return;
-    	}
-    	
-    	if(x+1 < MAP.length) {
-            if(MAP[x+1][y][z+1] > k+1) {
-                MAP[x+1][y][z+1] = k+1;
-                lee3D(k+1, x+1, y, z+1, finished);
-            }
-            else if(MAP[x+1][y][z] > k+1) {
-                MAP[x+1][y][z] = k+1;
-                lee3D(k+1, x+1, y, z, finished);
-            }
-            else if(z-1 > 0) if(MAP[x+1][y][z-1] > k+1){
-                MAP[x+1][y][z-1] = k+1;
-                lee3D(k+1, x+1, y, z-1, finished);            	
-            }
-        }
-        if(x-1 >= 0) {
-        	if(MAP[x-1][y][z+1] > k+1) {
-                MAP[x-1][y][z+1] = k+1;
-                lee3D(k+1, x-1, y, z+1, finished);
-            }
-            else if(MAP[x-1][y][z] > k+1) {
-                MAP[x-1][y][z] = k+1;
-                lee3D(k+1, x-1, y, z, finished);
-            }
-            else if(z-1 > 0) if(MAP[x-1][y][z-1] > k+1){
-                MAP[x-1][y][z-1] = k+1;
-                lee3D(k+1, x-1, y, z-1, finished);            	
-            }
-        }
-        if(y+1 < SIZE) {
-        	if(MAP[x][y+1][z+1] > k+1) {
-                MAP[x][y+1][z+1] = k+1;
-                lee3D(k+1, x, y+1, z+1, finished);
-            }
-            else if(MAP[x][y+1][z] > k+1) {
-                MAP[x][y+1][z] = k+1;
-                lee3D(k+1, x, y+1, z, finished);
-            }
-            else if(z-1 > 0) if(MAP[x][y+1][z-1] > k+1){
-                MAP[x+1][y+1][z-1] = k+1;
-                lee3D(k+1, x, y+1, z-1, finished);            	
-            }
-        }
-        if(y-1 >= 0) {
-        	if(MAP[x][y-1][z+1] > k+1) {
-                MAP[x][y-1][z+1] = k+1;
-                lee3D(k+1, x, y-1, z+1, finished);
-            }
-            else if(MAP[x][y-1][z] > k+1) {
-                MAP[x][y-1][z] = k+1;
-                lee3D(k+1, x, y-1, z, finished);
-            }
-            else if(z-1 > 0) if(MAP[x][y-1][z-1] > k+1){
-                MAP[x][y-1][z-1] = k+1;
-                lee3D(k+1, x, y-1, z-1, finished);            	
-            }
-        }
-        System.out.println("no end point found");
-    }
-    
-    /*
-     * Backtrack through the filled matrix to find the shortest path
-     */
-    public static void leeBack3D (List<Integer> path, int k, int x, int y, int z){
-    	//set current point as part of the path
-    	path.add(x);
-    	path.add(y);
-    	path.add(z);
-    	
-    	//try all possible options to find a step down in the matrix
-    	if(x+1 < SIZE) {
-    		if(MAP[x+1][y][z+1] == k-1) {
-                leeBack3D(path, k-1, x+1, y, z+1);
-                return;
-            }
-            else if(MAP[x+1][y][z] == k-1) {
-            	leeBack3D(path, k-1, x+1, y, z);
-            	return;
-            }
-            else if(z-1 > 0) if(MAP[x+1][y][z-1] == k-1){
-            	leeBack3D(path, k-1, x+1, y, z-1);
-            	return;    	
-            }
-        }
-        if(x-1 > 0) {
-        	if(MAP[x-1][y][z+1] == k-1) {
-                leeBack3D(path, k-1, x-1, y, z+1);
-                return;
-            }
-            else if(MAP[x-1][y][z] == k-1) {
-            	leeBack3D(path, k-1, x-1, y, z);
-            	return;
-            }
-            else if(z-1 > 0) if(MAP[x-1][y][z-1] == k-1){
-            	leeBack3D(path, k-1, x-1, y, z-1);
-            	return;    	
-            }
-        }
-        if(y+1 < SIZE) {
-        	if(MAP[x][y+1][z+1] == k-1) {
-                leeBack3D(path, k-1, x, y+1, z+1);
-                return;
-            }
-            else if(MAP[x][y+1][z] == k-1) {
-            	leeBack3D(path, k-1, x, y+1, z);
-            	return;
-            }
-            else if(z-1 > 0) if(MAP[x][y+1][z-1] == k-1){
-            	leeBack3D(path, k-1, x, y+1, z-1);
-            	return;    	
-            }
-        }
-        if(y-1 > 0) {
-        	if(MAP[x][y-1][z+1] == k-1) {
-                leeBack3D(path, k-1, x, y-1, z+1);
-                return;
-            }
-            else if(MAP[x][y-1][z] == k-1) {
-            	leeBack3D(path, k-1, x, y-1, z);
-            	return;
-            }
-            else if(z-1 > 0) if(MAP[x][y-1][z-1] == k-1){
-            	leeBack3D(path, k-1, x, y-1, z-1);
-            	return;    	
-            }
-        }
-        System.out.println("no path found");
-    }
-    
-	/*
-	 * Given two points, calculates path between these two points
-	 * return path is given as an integer array with repeating x y z
-	 * Uses Lee's algorithm method
+
+	/**
+	 * Returns the index of the minimal f entry
+	 * 
+	 * @param list,
+	 *            the list from which the node with minimal F will be selected
+	 * @return the index
 	 */
-	public static int[] createPath(int[][][] m, Vector3f s, Vector3f d) {
+	private static int minimalF(List<Node> list) {
+		double min = Double.MAX_VALUE;
+		int index = -1;
+
+		for (int i = 0; i < list.size(); i++) {
+			Node current = list.get(i);
+			if (current.f < min) {
+				min = current.f;
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	/**
+	 * given two points, calculates path between these two points return path is
+	 * given as an integer list: xyxyxyxyxyxy... Uses the AStar method
+	 * 
+	 * @param sx
+	 *            spawn x point
+	 * @param sy
+	 *            spawn y point
+	 * @return the list of integers that form the path
+	 */
+	private static List<Integer> aStar(int sx, int sy) {
+		List<Integer> path = new ArrayList<>();// return path
+		List<Node> pathNodes = new ArrayList<>();// nodes to be in the return path
+		List<Node> open = new ArrayList<>();// open list for A*
+		List<Node> closed = new ArrayList<>();// closed list for A*
+		List<Node> successor = new ArrayList<>();// list of successors for A*
+
+		// initialize first node
+		open.add(new Node(sx, sy));
+		Node q = null;
+
+		// run the actual algorithm
+		while (open.size() != 0) {
+			q = open.get(minimalF(open));
+			open.remove(q);
+			//checking whether destination has been reached
+			if(q.x == DX && q.y == DY)
+				break;
+			// adding four possible parents
+			if (MAP[q.x + 1][q.y] == 1)
+				successor.add(new Node(q.x + 1, q.y, q));
+			if (MAP[q.x - 1][q.y] == 1)
+				successor.add(new Node(q.x - 1, q.y, q));
+			if (MAP[q.x][q.y + 1] == 1)
+				successor.add(new Node(q.x, q.y + 1, q));
+			if (MAP[q.x][q.y - 1] == 1)
+				successor.add(new Node(q.x, q.y - 1, q));
+			// check if parent can go to open
+			for (Node temp : successor) {
+				temp.g = q.g + 1;
+				temp.h = Math.abs(temp.x - DX) + Math.abs(temp.y - DY);
+				temp.f = temp.g + temp.h;
+
+				boolean add = true;
+				for (Node comp : open)
+					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f)
+						add = false;
+				for (Node comp : closed)
+					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f)
+						add = false;
+				if (add)
+					open.add(temp);
+			}
+			closed.add(q);
+		}
+		// from destination node track via parents back to spawn
+		while(q.p != null) {
+			pathNodes.add(q);
+			q = q.p;
+		}
+		//turn node list to desired integer list
+		for(int i = pathNodes.size()-1; i>=0; i--){
+			Node current = pathNodes.get(i);
+			path.add(current.x);
+			path.add(current.y);
+		}
+		return path;
+	}
+
+	/**
+	 * starts the execution of A*
+	 * 
+	 * @param m
+	 *            the current 3D map
+	 * @param s
+	 *            the vector pointing to the spawn
+	 * @param d
+	 *            the vector pointing to the destination
+	 * @return the path found by the algorithm
+	 */
+	public static List<Integer> aStarStart(int[][] m, Vector3f s, Vector3f d) {
 		// convert input variables to integers
 		int sx = (int) s.getX();
 		int sy = (int) s.getY();
-		int sz = (int) s.getZ();
 		DX = (int) s.getX();
 		DY = (int) s.getY();
-		DX = (int) s.getZ();
 		MAP = m;
-		SIZE = MAP.length;
 
-		// create return path using lee's algorithm
-		for (int i = 0; i < MAP.length; i++) {
-			for (int j = 0; j < MAP[0].length; j++) {
-				for (int k = 0; k < MAP[0][0].length; k++) {
-					if (MAP[i][j][k] > 0)
-						MAP[i][j][k] = -MAP[i][j][k];
-					if (MAP[i][j][k] == 0)
-						MAP[i][j][k] = 200;
-				}
-			}
-		}
-		lee3D(0, sx, sy, sz, false);
-		int e = 0;
-		int x = 0;
-		int y = 0;
-		int z = 0;
-		// find the starting point for the back track
-		for (int i = 0; i < MAP.length; i++) {
-			for (int j = 0; j < MAP[0].length; j++) {
-				for (int k = 0; k < MAP[0][0].length; k++) {
-					if (MAP[i][j][k] > e && MAP[i][j][k] != 200) {
-						e = MAP[i][j][k];
-						x = i;
-						y = j;
-						z = k;
-					}
-				}
-			}
-		}
-		List<Integer> path = new ArrayList<>();
-		leeBack3D(path, e, x, y, z);
-		// set matrix back to normal
-		for (int i = 0; i < MAP.length; i++)
-			for (int j = 0; j < MAP[0].length; j++)
-				for(int k = 0; k < MAP[0][0].length; k++)
-				if (MAP[i][j][k] > 0 || MAP[i][j][k] == -5)
-					m[i][j][k] = 0;
-		
-		//converts arrayList into array and returns
-		int[] ret = new int[path.size()];
-	    for (int i=0; i < ret.length; i++)
-	    {
-	        ret[i] = path.get(i).intValue();
-	    }
-		return ret;
+		List<Integer> path = aStar(sx, sy);
+
+		return path;
 	}
 }
