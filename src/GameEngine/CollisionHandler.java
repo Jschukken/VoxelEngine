@@ -150,7 +150,8 @@ public class CollisionHandler {
 	public static boolean protectedZones(Vector3f position) {
 		try {
 			if (Math.sqrt(Math.pow(position.x - MainGameLoop.mapManager.destination.getPosition().x, 2)
-					+ Math.pow(position.z - MainGameLoop.mapManager.destination.getPosition().z, 2)) < 3) {
+					+ Math.pow(position.z - MainGameLoop.mapManager.destination.getPosition().z, 2)) < 3 && 
+					 position.y - MainGameLoop.mapManager.destination.getPosition().y < 3) {
 				return true;
 			}
 		} catch (NullPointerException e) {

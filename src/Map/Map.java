@@ -19,7 +19,7 @@ public class Map {
 	public static final int SCALE = 5; // size of 3D map compared to 2D map
 	public static final int LIGHTS = 10; // number of lights on the map
 
-	private static int[][] m; // 2D map currently being worked on
+	public static int[][] m; // 2D map currently being worked on
 
 	/**
 	 * fill the matrix using lee's algorithm
@@ -460,58 +460,4 @@ public class Map {
 
 	}
 
-	/**
-	 * creates a good map using the create map function and validating using
-	 * k-nearest
-	 * 
-	 * @param return
-	 *            the generated 'good' map
-	 */
-	public static int[][][] createGoodMap() {
-		boolean good = false;
-		boolean valid = false;
-		int[][][] map = new int[SIZE][SIZE][HEIGHT];
-
-		
-		while (!good && !valid) {
-			valid = false;
-			good = false;
-			createMap();
-			print2D();
-			
-			//needs to be fixed tomorrow
-			List<Double> characteristics = new ArrayList<>();
-			characteristics = MapEvaluation.characteristics(m);
-			if(characteristics.get((int) characteristics.size()-1) == 1) {
-				characteristics.remove(characteristics.size()-1);
-				//valid = true;
-				//still has to go to static
-				//good = KNearest.classify(characteristics);
-			}
-			System.out.println(characteristics);
-			//switch with other position when testing is done
-			valid = true;
-			good = true;
-		}
-		map = mapTo3D();
-		int[][][] backUp = map; // backup for editing
-		map = new int[map.length][map[0][0].length][map[0].length]; // empty and start over;
-
-		// fix coordinates
-		for (int x = 0; x < backUp.length; x++) {
-			for (int z = 0; z < backUp[0].length; z++) {
-				for (int y = 0; y < backUp[0][0].length; y++) {
-					map[x][y][z] = backUp[x][z][y];
-				}
-			}
-		}
-		return map;
-	}
-
-	/**
-	 * run option to test
-	 */
-	public static void main(String[] args) {
-		Map.createGoodMap();
-	}
 }
