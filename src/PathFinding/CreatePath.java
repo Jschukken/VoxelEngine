@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Map.Map;
@@ -26,8 +27,8 @@ public class CreatePath {
 	 *            destination vector
 	 * @return the path between destination and end
 	 */
-	public static List<Integer> createPath(int[][][] m, Vector3f s, Vector3f d) {		
-		//set map back to its 2D form
+	public static List<Integer> createPath(int[][][] m, Vector3f d, Vector3f s) {
+		// set map back to 2D form
 		int[][] map = new int[m.length][m[0][0].length];
 		for (int i = 0; i < m.length; i++)
 			for (int j = 0; j < m[0].length; j++)
@@ -44,9 +45,12 @@ public class CreatePath {
 					} else if (m[i][j][k] == 3) {
 						map[i][k] = 3;
 					}
-
-		//obtain and return path
-		return AStar.aStarStart(map, s, d);
+		// set vectors to 2D
+		// these get functions confuse the shit out of me -Chiel
+		Vector2f spawn = new Vector2f(s.getX(), s.getY());
+		Vector2f destination = new Vector2f(d.getX(), d.getY());
+		// obtain and return path
+		return AStar.startAStar(map, destination, spawn);
 	}
 
 	/**
@@ -55,16 +59,16 @@ public class CreatePath {
 	public static void main(String[] args) {
 		List<Integer> path = new ArrayList<>();
 		int[][][] map = new int[10][1][10];
-		map[5][0][5] =2;
-		map[5][0][7] =3;
-		map[4][0][5] =1;
-		map[4][0][6]=1;
-		map[4][0][7]=1;
-		map[6][0][5]=1;
-		map[6][0][7]=1;
-		map[7][0][5]=1;
-		map[7][0][6]=1;
-		map[7][0][7]=1;
+		map[5][0][5] = 2;
+		map[5][0][7] = 3;
+		map[4][0][5] = 1;
+		map[4][0][6] = 1;
+		map[4][0][7] = 1;
+		map[6][0][5] = 1;
+		map[6][0][7] = 1;
+		map[7][0][5] = 1;
+		map[7][0][6] = 1;
+		map[7][0][7] = 1;
 		int dx = 0, dy = 0, dz = 0, sx = 0, sy = 0, sz = 0;
 
 		// find starting and end point
@@ -83,12 +87,11 @@ public class CreatePath {
 					}
 				}
 		path = createPath(map, new Vector3f(dx, dy, dz), new Vector3f(sx, sy, sz));
-		
-		//convert and print path
-		int[] print = new int[path.size()] ;
-		for(int i = 0; i < path.size(); i++) {
+
+		// convert and print path
+		int[] print = new int[path.size()];
+		for (int i = 0; i < path.size(); i++)
 			print[i] = path.get(i);
-		}
 		System.out.println(Arrays.toString(print));
 	}
 }

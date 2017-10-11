@@ -3,7 +3,10 @@ package PathFinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+
+import Map.Map;
 
 /**
  * Finds a path for the enemies to follow using A*
@@ -24,7 +27,7 @@ public class AStar {
 	 * @return h
 	 */
 	public static double calculateH(int x, int y) {
-		//calculate manhattan distance
+		// calculate manhattan distance
 		return Math.abs(x - DX) + Math.abs(y - DY);
 	}
 
@@ -39,7 +42,7 @@ public class AStar {
 		double min = Double.MAX_VALUE;
 		int index = -1;
 
-		//loop over saving minimal value
+		// loop over saving minimal value
 		for (int i = 0; i < list.size(); i++) {
 			Node current = list.get(i);
 			if (current.f < min) {
@@ -47,7 +50,7 @@ public class AStar {
 				index = i;
 			}
 		}
-		//return index of the minimal value
+		// return index of the minimal value
 		return index;
 	}
 
@@ -76,8 +79,8 @@ public class AStar {
 		while (open.size() != 0) {
 			q = open.get(minimalF(open));
 			open.remove(q);
-			//checking whether destination has been reached
-			if(q.x == DX && q.y == DY) {
+			// checking whether destination has been reached
+			if (q.x == DX && q.y == DY) {
 				break;
 			}
 			// adding four possible parents
@@ -110,12 +113,12 @@ public class AStar {
 			closed.add(q);
 		}
 		// from destination node track via parents back to spawn
-		while(q.p != null) {
+		while (q.p != null) {
 			pathNodes.add(q);
 			q = q.p;
 		}
-		//turn node list to desired integer list
-		for(int i = pathNodes.size()-1; i>=0; i--){
+		// turn node list to desired integer list
+		for (int i = pathNodes.size() - 1; i >= 0; i--) {
 			Node current = pathNodes.get(i);
 			path.add(current.x);
 			path.add(current.y);
@@ -134,7 +137,7 @@ public class AStar {
 	 *            the vector pointing to the destination
 	 * @return the path found by the algorithm
 	 */
-	public static List<Integer> aStarStart(int[][] m, Vector3f d, Vector3f s) {
+	public static List<Integer> startAStar(int[][] m, Vector2f d, Vector2f s) {
 		// convert input variables to integers
 		int sx = (int) s.getX();
 		int sy = (int) s.getY();
@@ -142,7 +145,8 @@ public class AStar {
 		DY = (int) d.getY();
 		MAP = m;
 
-		//create and return path
+		// create and return path
+		// does not include spawn
 		return aStar(sx, sy);
 	}
 }

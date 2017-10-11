@@ -1,11 +1,10 @@
 package PathFinding;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.lwjgl.util.vector.Vector3f;
-
-import Map.Map;
+import org.lwjgl.util.vector.Vector2f;
 
 /**
  * Runs the Lee algorithm to generate a path from a spawn to end
@@ -15,175 +14,96 @@ import Map.Map;
 public class Lee {
 	private static int DX;
 	private static int DY;
-	private static int DZ;
-	private static int[][][] MAP;
+	private static int[][] MAP;
+	private static List<Integer> PATH;
 
 	/**
-	 * fill the map using lee's algorithm
+	 * fill the matrix using lee's algorithm
 	 * 
 	 * @param k
-	 *            current cell value
+	 *            current depth
 	 * @param x
-	 *            current x coordinate
+	 *            x coordinate from the current point
 	 * @param y
-	 *            current y coordinate
-	 * @param z
-	 *            current z coordinate
+	 *            y coordinate from the current point
 	 * @param finished
-	 *            boolean to indicate the algorithm is finished
+	 *            boolean to indicate the destination has been found
 	 */
-	private static void lee3D(int k, int x, int y, int z, boolean finished) {
-		// return once destination or another path to it has been reached
-		if ((DX == x && DY == y && DZ == z) || finished) {
+	public static void lee(int k, int x, int y, boolean finished) {
+		// return once destination has been reached
+		if ((x == DX && y == DY) || finished) {
 			finished = true;
 			return;
 		}
 
-		if (x + 1 < MAP.length) {
-			if (y + 1 < MAP[0].length) {
-				if (MAP[x + 1][y + 1][z] > k + 1) {
-					MAP[x + 1][y + 1][z] = k + 1;
-					lee3D(k + 1, x + 1, y + 1, z, finished);
-				}
+		// Check for edge, go down
+		if (x + 1 < MAP.length)
+			if (MAP[x + 1][y] > k + 1) {
+				MAP[x + 1][y] = k + 1;
+				lee(k + 1, x + 1, y, finished);
 			}
-			if (MAP[x + 1][y][z] > k + 1) {
-				MAP[x + 1][y][z] = k + 1;
-				lee3D(k + 1, x + 1, y, z, finished);
+		// Check for edge, go up
+		if (x - 1 >= 0)
+			if (MAP[x - 1][y] > k + 1) {
+				MAP[x - 1][y] = k + 1;
+				lee(k + 1, x - 1, y, finished);
 			}
-			if (y - 1 > 0)
-				if (MAP[x + 1][y - 1][z] > k + 1) {
-					MAP[x + 1][y - 1][z] = k + 1;
-					lee3D(k + 1, x + 1, y - 1, z, finished);
-				}
-		}
-		if (x - 1 >= 0) {
-			if (y + 1 < MAP[0].length) {
-				if (MAP[x - 1][y + 1][z] > k + 1) {
-					MAP[x - 1][y + 1][z] = k + 1;
-					lee3D(k + 1, x - 1, y + 1, z, finished);
-				}
+		// Check for edge, go right
+		if (y + 1 < MAP[0].length)
+			if (MAP[x][y + 1] > k + 1) {
+				MAP[x][y + 1] = k + 1;
+				lee(k + 1, x, y + 1, finished);
 			}
-			if (MAP[x - 1][y][z] > k + 1) {
-				MAP[x - 1][y][z] = k + 1;
-				lee3D(k + 1, x - 1, y, z, finished);
+		// Check for edge, go left
+		if (y - 1 >= 0)
+			if (MAP[x][y - 1] > k + 1) {
+				MAP[x][y - 1] = k + 1;
+				lee(k + 1, x, y - 1, finished);
 			}
-			if (y - 1 > 0)
-				if (MAP[x - 1][y-1][z] > k + 1) {
-					MAP[x - 1][y-1][z] = k + 1;
-					lee3D(k + 1, x - 1, y-1, z, finished);
-				}
-		}
-		if (z + 1 < MAP[0][0].length) {
-			if (y + 1 < MAP[0].length) {
-				if (MAP[x][y + 1][z + 1] > k + 1) {
-					MAP[x][y + 1][z + 1] = k + 1;
-					lee3D(k + 1, x, y + 1, z + 1, finished);
-				}
-			}
-			if (MAP[x][y][z +1] > k + 1) {
-				MAP[x][y][z +1] = k + 1;
-				lee3D(k + 1, x, y, z+1, finished);
-			}
-			if (y - 1 > 0) {
-				if (MAP[x][y - 1][z + 1] > k + 1) {
-					MAP[x + 1][y - 1][z + 1] = k + 1;
-					lee3D(k + 1, x, y - 1, z + 1, finished);
-				}
-			}
-		}
-		if (z - 1 >= 0) {
-			if (y + 1 < MAP[0].length) {
-				if (MAP[x][y + 1][z - 1] > k + 1) {
-					MAP[x][y + 1][z - 1] = k + 1;
-					lee3D(k + 1, x, y + 1, z + 1, finished);
-				}
-			}
-			if (MAP[x][y][z-1] > k + 1) {
-				MAP[x][y][z-1] = k + 1;
-				lee3D(k + 1, x, y, z-1, finished);
-			}
-			if (y - 1 > 0) {
-				if (MAP[x][y - 1][z - 1] > k + 1) {
-					MAP[x][y - 1][z - 1] = k + 1;
-					lee3D(k + 1, x, y - 1, z - 1, finished);
-				}
-			}
-		}
-		System.out.println("no end point found");
 	}
 
 	/**
 	 * Backtrack through the filled matrix to find the shortest path
 	 * 
-	 * @param path
-	 *            path found so far
 	 * @param k
-	 *            current cell value
+	 *            current step of the function
 	 * @param x
-	 *            current x coordinate
+	 *            x coordinate of the current point
 	 * @param y
-	 *            current y coordinate
-	 * @param z
-	 *            current z coordinate
+	 *            y coordinate of the current
 	 */
-	private static void leeBack3D(List<Integer> path, int k, int x, int y, int z) {
+	public static void leeBack(int k, int x, int y) {
 		// set current point as part of the path
-		path.add(x);
-		path.add(y);
-		path.add(z);
+		PATH.add(x);
+		PATH.add(y);
 
-		// try all possible options to find a step down in the matrix
-		if (x + 1 < MAP[0].length) {
-			if (MAP[x + 1][y+1][z] == k - 1) {
-				leeBack3D(path, k - 1, x + 1, y, z);
+		// Check for edge, go down
+		if (x + 1 < MAP.length) {
+			if (MAP[x + 1][y] == k - 1) {
+				leeBack(k - 1, x + 1, y);
 				return;
-			} else if (MAP[x + 1][y][z] == k - 1) {
-				leeBack3D(path, k - 1, x + 1, y, z);
-				return;
-			} else if (y - 1 > 0)
-				if (MAP[x + 1][y-1][z ] == k - 1) {
-					leeBack3D(path, k - 1, x + 1, y-1, z);
-					return;
-				}
+			}
 		}
+		// Check for edge, go up
 		if (x - 1 > 0) {
-			if (MAP[x - 1][y+1][z] == k - 1) {
-				leeBack3D(path, k - 1, x - 1, y+1, z);
+			if (MAP[x - 1][y] == k - 1) {
+				leeBack(k - 1, x - 1, y);
 				return;
-			} else if (MAP[x - 1][y][z] == k - 1) {
-				leeBack3D(path, k - 1, x - 1, y, z);
-				return;
-			} else if (y - 1 > 0)
-				if (MAP[x - 1][y-1][z] == k - 1) {
-					leeBack3D(path, k - 1, x - 1, y-1, z);
-					return;
-				}
+			}
 		}
-		if (z + 1 < MAP[0][0].length) {
-			if (MAP[x][y + 1][z + 1] == k - 1) {
-				leeBack3D(path, k - 1, x, y + 1, z + 1);
+		// Check for edge, go right
+		if (y + 1 < MAP[0].length) {
+			if (MAP[x][y + 1] == k - 1) {
+				leeBack(k - 1, x, y + 1);
 				return;
-			} else if (MAP[x][y][z+1] == k - 1) {
-				leeBack3D(path, k - 1, x, y , z+ 1);
-				return;
-			} else if (y - 1 > 0)
-				if (MAP[x][y - 1][z + 1] == k - 1) {
-					leeBack3D(path, k - 1, x, y - 1, z + 1);
-					return;
-				}
+			}
 		}
-		if (z - 1 > 0) {
-			if (MAP[x][y + 1][z - 1] == k - 1) {
-				leeBack3D(path, k - 1, x, y + 1, z - 1);
+		// Check for edge, go left
+		if (y - 1 > 0) {
+			if (MAP[x][y - 1] == k - 1) {
+				leeBack(k - 1, x, y - 1);
 				return;
-			} else if (MAP[x][y - 1][z] == k - 1) {
-				leeBack3D(path, k - 1, x, y , z- 1);
-				return;
-			} else if (y - 1 > 0)
-				if (MAP[x][y - 1][z - 1] == k - 1) {
-					leeBack3D(path, k - 1, x, y - 1, z - 1);
-					return;
-				}
+			}
 		}
 	}
 
@@ -198,54 +118,68 @@ public class Lee {
 	 *            the vector pointing to the destination
 	 * @return
 	 */
-	public static List<Integer> startLee(int[][][] m, Vector3f s, Vector3f d) {
+	public static List<Integer> startLee(int[][] m, Vector2f d, Vector2f s) {
 		// convert input variables to integers
 		int sx = (int) s.getX();
 		int sy = (int) s.getY();
-		int sz = (int) s.getZ();
-		DX = (int) s.getX();
-		DY = (int) s.getY();
-		DX = (int) s.getZ();
+		DX = (int) d.getX();
+		DY = (int) d.getY();
 		MAP = m;
+		PATH = new ArrayList<>(); // return path
 
-		// create return path using lee's algorithm
+		// fill matrix using lee
 		for (int i = 0; i < MAP.length; i++) {
 			for (int j = 0; j < MAP[0].length; j++) {
-				for (int k = 0; k < MAP[0][0].length; k++) {
-					if (MAP[i][j][k] > 0)
-						MAP[i][j][k] = -MAP[i][j][k];
-					if (MAP[i][j][k] == 0)
-						MAP[i][j][k] = 200;
-				}
+				if (MAP[i][j] == 0)
+					MAP[i][j] = -1;
+				if (MAP[i][j] == 1)
+					MAP[i][j] = 200;
+				if (MAP[i][j] == 2 || MAP[i][j] == 3)
+					MAP[i][j] = -MAP[i][j];
 			}
 		}
-		lee3D(0, sx, sy, sz, false);
-		int e = 0;
+		lee(0, sx, sy, false);
+		// find the starting point for the back track
+		// which is the lowest point next to the destination
+		int e = 200;
 		int x = 0;
 		int y = 0;
-		int z = 0;
-		// find the starting point for the back track
-		for (int i = 0; i < MAP.length; i++) {
-			for (int j = 0; j < MAP[0].length; j++) {
-				for (int k = 0; k < MAP[0][0].length; k++) {
-					if (MAP[i][j][k] > e && MAP[i][j][k] != 200) {
-						e = MAP[i][j][k];
-						x = i;
-						y = j;
-						z = k;
-					}
-				}
+		if (DX + 1 < MAP.length)
+			if (MAP[DX + 1][DY] < e && MAP[DX + 1][DY] != -1) {
+				e = MAP[DX + 1][DY];
+				x = DX + 1;
+				y = DY;
 			}
+		if (DX - 1 >= 0)
+			if (MAP[DX - 1][DY] < e && MAP[DX - 1][DY] != -1) {
+				e = MAP[DX - 1][DY];
+				x = DX - 1;
+				y = DY;
+			}
+		if (DY + 1 < MAP[0].length)
+			if (MAP[DX][DY + 1] < e && MAP[DX][DY + 1] != -1) {
+				e = MAP[DX][DY + 1];
+				x = DX;
+				y = DY + 1;
+			}
+		if (DY - 1 >= 0)
+			if (MAP[DX][DY - 1] < e && MAP[DX][DY - 1] != -1) {
+				e = MAP[DX][DY - 1];
+				x = DX;
+				y = DY - 1;
+			}
+
+		// backtrack, fix order and return
+		// does not include spawn
+		leeBack(e, x, y);
+		Collections.reverse(PATH);
+		for(int i = 0; i<PATH.size();i+=2) {
+			int b = PATH.get(i);
+			PATH.set(i, PATH.get(i+1));
+			PATH.set(i+1, b);
 		}
-		// backtrack and save path
-		List<Integer> path = new ArrayList<>();
-		leeBack3D(path, e, x, y, z);
-		// set matrix back to normal
-		for (int i = 0; i < MAP.length; i++)
-			for (int j = 0; j < MAP[0].length; j++)
-				for (int k = 0; k < MAP[0][0].length; k++)
-					if (MAP[i][j][k] > 0 || MAP[i][j][k] == -5)
-						m[i][j][k] = 0;
-		return path;
+		PATH.add(DX);
+		PATH.add(DY);
+		return PATH;
 	}
 }
