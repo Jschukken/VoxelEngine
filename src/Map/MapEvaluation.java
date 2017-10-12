@@ -91,8 +91,8 @@ public class MapEvaluation {
 		found = false;
 
 		// run lee to check if the map is valid
-		for (int i = 1; i < map.length; i++)
-			for (int j = 1; j < map[0].length; j++)
+		for (int i =0; i < map.length; i++)
+			for (int j = 0; j < map[0].length; j++)
 				if (map[i][j] == 3) {
 					lee(i, j);
 					if (found) {
