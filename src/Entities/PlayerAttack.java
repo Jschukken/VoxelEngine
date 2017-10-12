@@ -7,9 +7,11 @@ import GameEngine.CollisionHandler;
 import Models.TexturedModel;
 
 public class PlayerAttack extends Entity {
-	private float projectileSpeed = 0.3f;
+	private float projectileSpeedX = 0.3f;
+	private float projectileSpeedY = 0.3f;
+	private float projectileSpeedZ = 0.3f;
 	private float rise = 0.01f;
-	private int fade = 70 - (int)(Math.random()*70);
+	private int fade = 50 - (int)(Math.random()*30);
 	private static final float ANGLE = (float) 90 / 3;
 	private Vector3f position;
 	// private Vector3f rotation;
@@ -31,7 +33,6 @@ public class PlayerAttack extends Entity {
 					(float) (direction.z + Math.random() * ANGLE - ANGLE / 2));
 			i++;
 		}
-		System.out.println(i);
 
 		this.direction = newDir;
 		this.scale = scale;
@@ -47,25 +48,32 @@ public class PlayerAttack extends Entity {
 		} else if (fade < 0) {
 			destroy();
 		} else {
-			position.x += (float) (projectileSpeed * Math.sin(Math.toRadians(direction.y)));
-			if (CollisionHandler.checkFlameCollision(position)) {
-				position.x -= (float) (projectileSpeed * Math.sin(Math.toRadians(direction.y)));
-				projectileSpeed = projectileSpeed / 1.02f;
+			position.x += (float) (projectileSpeedX * Math.sin(Math.toRadians(direction.y)));
+			if (CollisionHandler.checkFlameCollision(new Vector3f(position.x + scale.x / 2.0f, position.y + scale.y / 2.0f, position.z + scale.z / 2.0f))) {
+				position.x -= (float) (projectileSpeedX * Math.sin(Math.toRadians(direction.y)));
+				projectileSpeedX /= 1.2f;
+				projectileSpeedZ /= 1.02f;
 			}
-			position.z += (float) -(projectileSpeed * Math.cos(Math.toRadians(direction.y)));
-			if (CollisionHandler.checkFlameCollision(position)) {
-				position.z -= (float) -(projectileSpeed * Math.cos(Math.toRadians(direction.y)));
-				projectileSpeed = projectileSpeed / 1.02f;
+			position.z += (float) -(projectileSpeedZ * Math.cos(Math.toRadians(direction.y)));
+			if (CollisionHandler.checkFlameCollision(new Vector3f(position.x + scale.x / 2.0f, position.y + scale.y / 2.0f, position.z + scale.z / 2.0f))) {
+				position.z -= (float) -(projectileSpeedZ * Math.cos(Math.toRadians(direction.y)));
+				projectileSpeedX /= 1.02f;
+				projectileSpeedZ /= 1.2f;
 			}
-			position.y += (float) -(projectileSpeed * Math.sin(Math.toRadians(direction.x))) + rise;
-			if (CollisionHandler.checkFlameCollision(position)) {
-				position.y -= (float) -(projectileSpeed * Math.sin(Math.toRadians(direction.x))) + rise;
+			position.y += (float) -(projectileSpeedY * Math.sin(Math.toRadians(direction.x))) + rise;
+			if (CollisionHandler.checkFlameCollision(new Vector3f(position.x + scale.x / 2.0f, position.y + scale.y / 2.0f, position.z + scale.z / 2.0f))) {
+				position.y -= (float) -(projectileSpeedY * Math.sin(Math.toRadians(direction.x))) + rise;
 				direction.x = direction.x / 2;
 			}
-			projectileSpeed = projectileSpeed / 1.02f;
+			projectileSpeedX = projectileSpeedX / 1.02f;
+			projectileSpeedZ = projectileSpeedZ / 1.02f;
+			projectileSpeedY = projectileSpeedY / 1.02f;
 			scale.x = scale.x + scaler;
+			position.x -= scaler/2.0;
 			scale.y = scale.y + scaler;
+			position.y -= scaler/2.0;
 			scale.z = scale.z + scaler;
+			position.z -= scaler/2.0;
 			rise += 0.001f;
 
 		}
