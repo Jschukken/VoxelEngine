@@ -100,8 +100,8 @@ public class MapEvaluation {
 					}
 					// set values back to basic
 					found = false;
-					for (int k = 1; k < map.length; k++)
-						for (int l = 1; l < map[0].length; l++)
+					for (int k = 0; k < map.length; k++)
+						for (int l = 0; l < map[0].length; l++)
 							if (map[k][l] == 4)
 								map[k][l] = 1;
 				}
