@@ -41,7 +41,7 @@ public class MapManager {
 	public Camera camera;
 
 	public MapManager() {
-		kNear = new KNearest();
+		kNear = new KNearest(5);
 		map = createGoodMap();
 		loader = new Loader();
 		shader = new StaticShader();

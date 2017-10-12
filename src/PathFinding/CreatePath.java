@@ -27,7 +27,9 @@ public class CreatePath {
 	 *            destination vector
 	 * @return the path between destination and end
 	 */
-	public static List<Integer> createPath(int[][][] m, Vector3f d, Vector3f s) {
+	public static int[] createPath(int[][][] m, Vector3f d, Vector3f s) {
+		List<Integer> path = new ArrayList<>(); //holds the final path
+		
 		// set map back to 2D form
 		int[][] map = new int[m.length][m[0][0].length];
 		for (int i = 0; i < m.length; i++)
@@ -49,7 +51,11 @@ public class CreatePath {
 		Vector2f spawn = new Vector2f(s.getX(), s.getY());
 		Vector2f destination = new Vector2f(d.getX(), d.getY());
 		// obtain and return path
-		return AStar.startAStar(map, destination, spawn);
+		int[] ret = new int[path.size()];
+		for(int i = 0; i < path.size()-1; i++) {
+			ret[0] = path.get(i);
+		}
+		return ret;
 	}
 
 	/**
@@ -85,7 +91,8 @@ public class CreatePath {
 						sz = j;
 					}
 				}
-		path = createPath(map, new Vector3f(dx, dy, dz), new Vector3f(sx, sy, sz));
+		//removed since createPath was changed
+		//path = createPath(map, new Vector3f(dx, dy, dz), new Vector3f(sx, sy, sz));
 
 		// convert and print path
 		int[] print = new int[path.size()];

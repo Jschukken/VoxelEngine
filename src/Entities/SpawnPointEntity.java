@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import Models.TexturedModel;
+import PathFinding.CreatePath;
 
 public class SpawnPointEntity extends Entity {
 
@@ -18,7 +19,7 @@ public class SpawnPointEntity extends Entity {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.enemy = enemy;
 		//this.path = path;
-		this.path = new int[]{(int)position.x,(int)position.y,(int)position.z,10,3,10};
+		this.path = CreatePath.createPath(MainGameLoop.mapManager.map, position, MainGameLoop.mapManager.destination.getPosition());
 		this.position = position;
 		spawnTimer = (int)(Math.random()*spawnRate);
 	}
@@ -28,9 +29,7 @@ public class SpawnPointEntity extends Entity {
 		if(spawnTimer >= spawnRate){
 			spawnTimer = 0;
 			Vector3f p = new Vector3f(position.x,position.y,position.z);
-			MainGameLoop.mapManager.addActiveEntity(enemy, p, path);
-			
+			MainGameLoop.mapManager.addActiveEntity(enemy, p, path);		
 		}
 	}
-
 }
