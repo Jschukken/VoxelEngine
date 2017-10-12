@@ -80,7 +80,7 @@ public class MapManager {
 			if(characteristics.get((int) characteristics.size()-1) == 1) {//check if map is valid
 				characteristics.remove(characteristics.size()-1);
 				valid = true;
-				good = kNear.classify(characteristics); // use k-nearest
+				//good = kNear.classify(characteristics); // use k-nearest
 			}
 			System.out.println(characteristics);
 			//disable this when k-nearest works
@@ -293,8 +293,9 @@ public class MapManager {
 		}
 	}
 
-	public void addAttackEntity(TexturedModel entity, Vector3f position, Vector3f rot, Vector3f direction) {
-		Entity attack = new PlayerAttack(entity, position, rot, direction, new Vector3f(.1f, .1f, .1f));
+	public void addAttackEntity(TexturedModel entity, Vector3f position, Vector3f rot, Vector3f direction, Vector3f scale) {
+		System.out.println(direction.x+direction.y+direction.z+ "hi1");
+		Entity attack = new PlayerAttack(entity, position, rot, direction, scale);
 		attackEntities.add(attack);
 		if (attackEntities.size() > PARTICLE_COUNT) {
 			attackEntities.remove(0);

@@ -151,8 +151,11 @@ public class Camera {
 	}
 
 	private void attack() {
-		MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
-				new Vector3f(position.x, position.y + .7f, position.z), getLookAt(), new Vector3f(rotX, rotY, rotZ));
+		for (int i = 0; i < 2; i++) {
+			MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
+					new Vector3f(position.x, position.y + .7f, position.z), getLookAt(), new Vector3f(rotX+0.0001f, rotY, rotZ),
+					new Vector3f(.05f, .05f, .05f));
+		}
 	}
 
 	public void getHit() {
@@ -174,9 +177,13 @@ public class Camera {
 	}
 
 	public Vector3f getLookAt() {
-		return new Vector3f((float) (Math.cos(Math.toRadians(rotY + 90)) * Math.cos(Math.toRadians(rotX))),
+		Vector3f lookAt = new Vector3f((float) (Math.cos(Math.toRadians(rotY + 90)) * Math.cos(Math.toRadians(rotX))),
 				(float) (Math.sin(Math.toRadians(rotX))),
 				(float) (Math.cos(Math.toRadians(rotY)) * Math.cos(Math.toRadians(rotX))));
+		if(lookAt.length()>0){
+			return lookAt;
+		}
+		return new Vector3f(1,0,0);
 
 	}
 
