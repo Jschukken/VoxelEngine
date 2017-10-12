@@ -80,7 +80,7 @@ public class MapManager {
 			if(characteristics.get((int) characteristics.size()-1) == 1) {//check if map is valid
 				characteristics.remove(characteristics.size()-1);
 				valid = true;
-				//good = kNear.classify(characteristics); // use k-nearest
+				good = kNear.classify(characteristics); // use k-nearest
 			}
 			System.out.println(characteristics);
 			//disable this when k-nearest works

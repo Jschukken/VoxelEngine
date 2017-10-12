@@ -9,12 +9,13 @@ import Models.TexturedModel;
 public class PlayerAttack extends Entity {
 	private float projectileSpeed = 0.3f;
 	private float rise = 0.01f;
-	private int fade = 90;
+	private int fade = 70 - (int)(Math.random()*70);
 	private static final float ANGLE = (float) 90 / 3;
 	private Vector3f position;
 	// private Vector3f rotation;
 	private Vector3f direction;
 	private Vector3f scale;
+	private float scaler = (float)(0.009- Math.random()*0.003);
 
 	public PlayerAttack(TexturedModel model, Vector3f position, Vector3f rot, Vector3f direction, Vector3f scale) {
 		super(model, position, 0, (float) Math.toRadians(-direction.y), 0, scale);
@@ -62,9 +63,9 @@ public class PlayerAttack extends Entity {
 				direction.x = direction.x / 2;
 			}
 			projectileSpeed = projectileSpeed / 1.02f;
-			scale.x = scale.x + .009f;
-			scale.y = scale.y + .009f;
-			scale.z = scale.z + .009f;
+			scale.x = scale.x + scaler;
+			scale.y = scale.y + scaler;
+			scale.z = scale.z + scaler;
 			rise += 0.001f;
 
 		}
