@@ -46,7 +46,6 @@ public class CreatePath {
 						map[i][k] = 3;
 					}
 		// set vectors to 2D
-		// these get functions confuse the shit out of me -Chiel
 		Vector2f spawn = new Vector2f(s.getX(), s.getY());
 		Vector2f destination = new Vector2f(d.getX(), d.getY());
 		// obtain and return path
