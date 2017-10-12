@@ -62,9 +62,9 @@ public class MapManager {
 		int[][][] map = new int[Map.SIZE][Map.SIZE][Map.HEIGHT];
 
 		
-		while (!good && !valid) {
+		while (!good || !valid) {
 			errorCatch++;
-			if(errorCatch>500){
+			if(errorCatch>10){
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				System.exit(-1);
@@ -77,15 +77,18 @@ public class MapManager {
 			
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
-			if(characteristics.get((int) characteristics.size()-1) == 1) {//check if map is valid
+			System.out.println(characteristics.get( characteristics.size()-1));
+			if(characteristics.get( characteristics.size()-1) == 1.0) {//check if map is valid
 				characteristics.remove(characteristics.size()-1);
 				valid = true;
+				System.out.println("reached");
 				//good = kNear.classify(characteristics); // use k-nearest
 			}
 			System.out.println(characteristics);
 			//disable this when k-nearest works
 			//valid = true;
 			good = true;
+			characteristics.clear();
 		}
 		map = Map.mapTo3D();
 		int[][][] backUp = map; // backup for editing

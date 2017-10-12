@@ -13,8 +13,8 @@ public class MapEvaluation {
 	private static int[][] map; // 2D map currently being evaluated
 	private static int[][] lmap; // map but scaled slightly larger
 
-	private static int dx = 0; // end point x coordinate
-	private static int dy = 0; // end point y coordinate
+	private static int dx; // end point x coordinate
+	private static int dy; // end point y coordinate
 	private static int spawns; // amount of spawn points
 	private static boolean found; // ugly
 
@@ -122,7 +122,6 @@ public class MapEvaluation {
 		int deadEnd = 0; // number of found dead ends
 		int sidePath = 0; // number of found path diversions for one cell
 		int routeOption = 0; // number of total found path diversions
-
 		// loop over map to search
 		for (int i = 1; i < lmap.length - 1; i++)
 			for (int j = 1; j < lmap[0].length - 1; j++)
@@ -214,6 +213,7 @@ public class MapEvaluation {
 	 * @return the parameter list the class returns
 	 */
 	public static List<Double> characteristics(int[][] m) {
+		spawns = 0;
 		// load map into the class
 		map = m;
 
@@ -239,6 +239,7 @@ public class MapEvaluation {
 				}
 
 		// gather the different parameters
+		characteristics.clear();
 		pathTiles();
 		distances();
 		amountOfPaths();
