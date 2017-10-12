@@ -34,7 +34,7 @@ public class TexturedModelMaker {
 	 *            the loader with which to load the cube
 	 * @return the cube textured model
 	 */
-	public static TexturedModel cubeTexturedModel(Loader loader, String textureName) {
+	public static TexturedModel cubeTexturedModel(Loader loader) {
 
 		float[] vertices = { -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
 
@@ -59,7 +59,7 @@ public class TexturedModelMaker {
 		};
 		float[] normals = GetNormals(vertices, indices);
 		RawModel model = loader.loadToVao(vertices, indices, uv);
-		ModelTexture texture = new ModelTexture(loader.loadTexture(textureName));
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		basicCube = new TexturedModel(model, texture);
 		return basicCube;
 	}
