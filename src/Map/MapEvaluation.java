@@ -35,7 +35,9 @@ public class MapEvaluation {
 		if (found) {
 			return;
 		}
-		map[x][y] = 4;
+		if(map[x][y] ==1) {
+			map[x][y] =4;
+		}
 
 		// Check for edge, go down
 		if (x + 1 < map.length) {
