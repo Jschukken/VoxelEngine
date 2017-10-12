@@ -57,6 +57,7 @@ public class TexturedModelMaker {
 				0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0
 
 		};
+		
 		float[] normals = GetNormals(vertices, indices);
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));

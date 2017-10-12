@@ -1,5 +1,3 @@
-/Shaders/
-/res/
 /Entities/
 /Flashlight/
 /GameEngine/
@@ -9,6 +7,8 @@
 /Models/
 /PathFinding/
 /RenderEngine/
+/Shaders/
 /Textures/
 /ToolBox/
+/res/
 /song.wav
