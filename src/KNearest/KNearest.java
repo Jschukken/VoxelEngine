@@ -64,7 +64,6 @@ public class KNearest {
 		 * Get the classification from each point, and increment the correct counter
 		 */
 		for (Point q : kNearestPoints) {
-			System.out.println(q.toString());
 			if (q.getClassification()) {
 				goodCount++;
 			} else {
@@ -184,7 +183,7 @@ public class KNearest {
 		 * Loop k times to find the point with the smallest distance and add it to the
 		 * result
 		 */
-		for (int i = 0; i < k; i++) {
+		for (int i = 0; i < Math.min(k, distances.size()); i++) {
 
 			double minDist = Double.MAX_VALUE;
 			int indexOfSmallest = 0;
