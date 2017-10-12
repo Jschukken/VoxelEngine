@@ -3,6 +3,7 @@
 in vec2 texturePass;
 
 uniform sampler2D texSampler;
+uniform vec3 lightColour;
 
 out vec4 outColor;
 
