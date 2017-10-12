@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import Entities.Button;
 import GameEngine.AudioHandler;
 import GameEngine.MapManager;
+import KNearest.KNearestRendering;
 import Map.Map;
 import Menu.MenuHandler;
 import RenderEngine.DisplayManager;
@@ -47,6 +48,7 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		StaticShaderMenu menuShader = null;
 		MasterMenuRenderer menuRenderer = null;
+		KNearestRendering knr = new KNearestRendering();
 		AudioHandler ah = null;
 		mapManager = null;
 		//map = Map.createGoodMap();
@@ -86,6 +88,9 @@ public class MainGameLoop {
 				menuh.setState(state);
 				menuh.updateButtons(loader);
 				menuh.renderMenu(menuShader, menuRenderer);
+				if (Keyboard.isKeyDown(Keyboard.KEY_K)) {
+					state = "knearest";
+				}
 				break;
 				
 			case "mapMenu":
@@ -98,6 +103,11 @@ public class MainGameLoop {
 				mapManager = new MapManager();
 				mapManager.loadMap();
 				state = "game";
+				break;
+				
+			case "knearest":
+				knr.renderKNearestGraph(menuShader, menuRenderer);
+				knr.registerClicksButtons();
 				break;
 
 			case "game":
