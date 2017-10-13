@@ -77,11 +77,9 @@ public class MapManager {
 			
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
-			System.out.println(characteristics.get( characteristics.size()-1));
 			if(characteristics.get( characteristics.size()-1) == 1.0) {//check if map is valid
 				characteristics.remove(characteristics.size()-1);
 				valid = true;
-				System.out.println("reached");
 				//good = kNear.classify(characteristics); // use k-nearest
 			}
 			System.out.println(characteristics);
