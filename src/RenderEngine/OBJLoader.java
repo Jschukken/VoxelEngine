@@ -17,7 +17,7 @@ public class OBJLoader {
 	public static RawModel loadObjModel(String fileName, Loader loader){
 		FileReader fr = null;
 		try{
-		fr = new FileReader(new File("D:\\Users\\Jelle Schukken\\Desktop\\Programming\\TUe Workspace\\VoxelEngine\\resources\\res\\person.obj"));
+		fr = new FileReader(new File("resources/res/" + fileName + ".obj"));
 		}catch (FileNotFoundException e){
 			System.err.println("Couldn't load file!");
 			e.printStackTrace();
@@ -87,9 +87,13 @@ public class OBJLoader {
 		for(int i =0; i< indices.size(); i++){
 			indicesArray[i] = indices.get(i);
 		}
+		
+	//end of for
+		
 		return loader.loadToVao(verticesArray, indicesArray, textureArray);
 		
 	}
+	
 	private static void processVertex(String[] vertexData, List<Integer> indices, List<Vector2f> textures, List<Vector3f> normals, float[] textureArray, float[] normalsArray){
 		int currentVertexPointer = Integer.parseInt(vertexData[0]) - 1;
 		indices.add(currentVertexPointer);

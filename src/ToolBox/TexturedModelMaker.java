@@ -62,7 +62,7 @@ public class TexturedModelMaker {
 	
 	public static TexturedModel robotModel(Loader loader) {
 
-		RawModel model =  OBJLoader.loadObjModel("person", loader);
+		RawModel model =  OBJLoader.loadObjModel("torso", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		return new TexturedModel(model, texture);
 	}
