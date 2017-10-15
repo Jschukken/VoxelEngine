@@ -17,6 +17,7 @@ import Guis.GuiRenderer;
 import Guis.GuiTexture;
 import KNearest.KNearest;
 import KNearest.KNearestRendering;
+import Menu.MapMenuRenderer;
 import Menu.MenuHandler;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
@@ -58,6 +59,7 @@ public class MainGameLoop {
 		MasterMenuRenderer menuRenderer = null;
 		kn = new KNearest(5);
 		KNearestRendering knr = new KNearestRendering(kn);
+		MapMenuRenderer mapMenuRenderer = new MapMenuRenderer();
 		AudioHandler ah = null;
 		List<GuiTexture> guis = new ArrayList<GuiTexture>();
 		GuiRenderer guiRenderer = null;

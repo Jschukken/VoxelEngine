@@ -173,10 +173,10 @@ public class KNearestRendering {
 	 * @param y  the y coordinate of the lower left corner
 	 * @param h  the height of the rectangle
 	 * @param w  the width of the rectangle
-	 * @param color  a string representing the color
+	 * @param texture  a string representing the color
 	 * @return  a texturedmodel of a rectangle at (x,y) with height h, width w and color
 	 */
-	public TexturedModel createRectangle(float x, float y, float h, float w, float z, String color) {
+	public TexturedModel createRectangle(float x, float y, float h, float w, float z, String texture) {
 		
 		/**
 		 * Set vertices, indices and uv coordinates
@@ -187,8 +187,8 @@ public class KNearestRendering {
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 		
-		ModelTexture texture = new ModelTexture(this.loader.loadTexture(color));
-		return new TexturedModel(model, texture);
+		ModelTexture textureMod = new ModelTexture(this.loader.loadTexture(texture));
+		return new TexturedModel(model, textureMod);
 		
 	}
 	
