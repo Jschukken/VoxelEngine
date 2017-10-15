@@ -1,13 +1,3 @@
-/ToolBox/
-/Flashlight/
-/KNearest/
-/PathFinding/
-/res/
-/Guis/
-/RenderEngine/
-/Entities/
-/GameEngine/
-/Map/
 /Menu/
-/Models/
-/Shaders/
+/res/
+/ToolBox/

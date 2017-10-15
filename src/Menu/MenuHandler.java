@@ -81,7 +81,7 @@ public class MenuHandler {
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Start Button"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button Down"));
 		
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
@@ -97,7 +97,7 @@ public class MenuHandler {
 		model = loader.loadToVao(vertices, indices, uv);
 		
 		tex1 = new ModelTexture(loader.loadTexture("Settings Button"));
-		tex2 = new ModelTexture(loader.loadTexture("Settings Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Settings Button Down"));
 		
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
@@ -113,7 +113,7 @@ public class MenuHandler {
 		model = loader.loadToVao(vertices, indices, uv);
 
 		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
-		tex2 = new ModelTexture(loader.loadTexture("Quit Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Quit Button Down"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -140,7 +140,7 @@ public class MenuHandler {
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Start Button"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button Down"));
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -156,7 +156,7 @@ public class MenuHandler {
 		model = loader.loadToVao(vertices, indices, uv);
 
 		tex1 = new ModelTexture(loader.loadTexture("Back Button"));
-		tex2 = new ModelTexture(loader.loadTexture("Back Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Back Button Down"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -183,7 +183,7 @@ public class MenuHandler {
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Resume Button"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Resume Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Resume Button Down"));
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -199,7 +199,7 @@ public class MenuHandler {
 		model = loader.loadToVao(vertices, indices, uv);
 
 		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
-		tex2 = new ModelTexture(loader.loadTexture("Quit Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Quit Button Down"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -226,7 +226,7 @@ public class MenuHandler {
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Main menu Button"));
-		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Main menu Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Main menu Button Down"));
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -241,7 +241,7 @@ public class MenuHandler {
 		model = loader.loadToVao(vertices, indices, uv);
 
 		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
-		tex2 = new ModelTexture(loader.loadTexture("Quit Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Quit Button Down"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -256,7 +256,7 @@ public class MenuHandler {
 		model = loader.loadToVao(vertices, indices, uv);
 
 		tex1 = new ModelTexture(loader.loadTexture("Tick box"));
-		tex2 = new ModelTexture(loader.loadTexture("Tick box"));
+		tex2 = new ModelTexture(loader.loadTexture("Tick box Down"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
@@ -270,7 +270,7 @@ public class MenuHandler {
 		model = loader.loadToVao(vertices, indices, uv);
 
 		tex1 = new ModelTexture(loader.loadTexture("Cross box"));
-		tex2 = new ModelTexture(loader.loadTexture("Cross box"));
+		tex2 = new ModelTexture(loader.loadTexture("Cross box Down"));
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
