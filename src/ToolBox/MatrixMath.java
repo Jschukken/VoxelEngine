@@ -67,4 +67,15 @@ public class MatrixMath {
 		return matrix;
 		
 	}
+	
+	/**
+	 * takes vector of rotations and returns a vector
+	 * @param vec the vector of rotations
+	 * @return the direction vector
+	 */
+	public static Vector3f rotateVector(Vector3f vec){
+		 return new Vector3f((float) (Math.cos(Math.toRadians(vec.y + 90)) * Math.cos(Math.toRadians(vec.x))),
+					(float) (Math.sin(Math.toRadians(vec.x))),
+					(float) (Math.cos(Math.toRadians(vec.y)) * Math.cos(Math.toRadians(vec.x))));
+	}
 }
