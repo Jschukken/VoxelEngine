@@ -37,8 +37,8 @@ public class KNearestRendering {
 	/**
 	 * Constructor
 	 */
-	public KNearestRendering() {
-		this.kn = new KNearest(5);
+	public KNearestRendering(KNearest knear) {
+		this.kn = knear;
 		this.loader = new Loader();
 		this.wasDown = false;
 		this.alreadySaved = false;
@@ -67,7 +67,7 @@ public class KNearestRendering {
 		/**
 		 * Create background
 		 */
-		TexturedModel background = createRectangle(-1f, -1f, 2f, 2f, -2f, "white");
+		TexturedModel background = createRectangle(-1f, -1f, 2f, 2f, 0f, "Background");
 		renderer.render(background, shader);
 		
 		/**
@@ -181,9 +181,9 @@ public class KNearestRendering {
 		/**
 		 * Set vertices, indices and uv coordinates
 		 */
-		float[] vertices = { x, y, z, x+w, y, z, x+w, y+h, z, x, y+h, z};
+		float[] vertices = { x, y+h, z, x, y, z, x+w, y, z, x+w, y+h, z};
 		int[] indices = { 0, 1, 3, 3, 2, 1};
-		float[] uv = { 1, 1, 1, 1, 1, 1, 1, 1};
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 		

@@ -15,6 +15,7 @@ import GameEngine.AudioHandler;
 import GameEngine.MapManager;
 import Guis.GuiRenderer;
 import Guis.GuiTexture;
+import KNearest.KNearest;
 import KNearest.KNearestRendering;
 import Menu.MenuHandler;
 import RenderEngine.DisplayManager;
@@ -38,6 +39,7 @@ public class MainGameLoop {
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
 	public static MenuHandler menuh;
+	public static KNearest kn;
 	public static int[][][] map;
 	List<GuiTexture> guis = new ArrayList<GuiTexture>();
 	GuiRenderer guiRenderer = null;
@@ -54,7 +56,8 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		StaticShaderMenu menuShader = null;
 		MasterMenuRenderer menuRenderer = null;
-		KNearestRendering knr = new KNearestRendering();
+		kn = new KNearest(5);
+		KNearestRendering knr = new KNearestRendering(kn);
 		AudioHandler ah = null;
 		List<GuiTexture> guis = new ArrayList<GuiTexture>();
 		GuiRenderer guiRenderer = null;
@@ -90,13 +93,18 @@ public class MainGameLoop {
 				menuh.createMenus(loader);
 				state = "mainMenu";
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-				ModelTexture ducker = new ModelTexture(loader.loadTexture("potato"));
+				
+				// Difficulty level HUD
+				ModelTexture ducker = new ModelTexture(loader.loadTexture("Potato"));
 				GuiTexture gui = new GuiTexture(ducker , new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
-				ModelTexture ducker2 = new ModelTexture(loader.loadTexture("potato"));
+				// Timer HUD
+				ModelTexture ducker2 = new ModelTexture(loader.loadTexture("Potato"));
 				GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new Vector2f(0.15f, 0.1f));
-				ModelTexture ducker3 = new ModelTexture(loader.loadTexture("potato"));
+				// End Point HP HUD
+				ModelTexture ducker3 = new ModelTexture(loader.loadTexture("Potato"));
 				GuiTexture gui3 = new GuiTexture(ducker3 , new Vector2f(0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
-				ModelTexture ducker4 = new ModelTexture(loader.loadTexture("potato"));
+				// Player HP HUD
+				ModelTexture ducker4 = new ModelTexture(loader.loadTexture("Potato"));
 				GuiTexture gui4 = new GuiTexture(ducker4 , new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f));
 				guis.add(gui);
 				guis.add(gui2);
@@ -130,6 +138,9 @@ public class MainGameLoop {
 			case "knearest":
 				knr.renderKNearestGraph(menuShader, menuRenderer);
 				knr.registerClicksButtons();
+				if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
+					state = "mainMenu";
+				}
 				break;
 
 			case "game":
