@@ -8,7 +8,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
-import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
 
 /**
@@ -178,7 +177,9 @@ public class Camera {
 	}
 
 	public Vector3f getLookAt() {
-		Vector3f lookAt = MatrixMath.rotateVector(new Vector3f(rotX,rotY,rotZ));
+		Vector3f lookAt = new Vector3f((float) (Math.cos(Math.toRadians(rotY + 90)) * Math.cos(Math.toRadians(rotX))),
+				(float) (Math.sin(Math.toRadians(rotX))),
+				(float) (Math.cos(Math.toRadians(rotY)) * Math.cos(Math.toRadians(rotX))));
 		if(lookAt.length()>0){
 			return lookAt;
 		}
