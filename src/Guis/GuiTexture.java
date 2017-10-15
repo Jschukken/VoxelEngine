@@ -24,4 +24,8 @@ public class GuiTexture {
 		return scale;
 	}
 	
+	public void update() {
+		
+	}
+	
 }

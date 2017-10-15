@@ -37,8 +37,8 @@ public class KNearestRendering {
 	/**
 	 * Constructor
 	 */
-	public KNearestRendering() {
-		this.kn = new KNearest(5);
+	public KNearestRendering(KNearest knear) {
+		this.kn = knear;
 		this.loader = new Loader();
 		this.wasDown = false;
 		this.alreadySaved = false;

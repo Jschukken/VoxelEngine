@@ -86,7 +86,7 @@ public class TexturedModelMaker {
 			};
 	
 			RawModel model = loader.loadToVao(vertices, indices, uv);
-			ModelTexture texture = new ModelTexture(loader.loadTexture("Skybox"));
+			ModelTexture texture = new ModelTexture(loader.loadTexture("Green Skybox"));
 			skyBox = new TexturedModel(model, texture);
 		}
 		return skyBox;

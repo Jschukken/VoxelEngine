@@ -16,6 +16,7 @@ public class GuiRenderer {
 
 	private RawModel quad;
 	private GuiShader guishader;
+	private List<GuiTexture> pauseMenu;
 	
 	public GuiRenderer(Loader loader){
 	float[] pos = {-1, 1, -1, -1, 1, 1, 1, -1};
@@ -47,6 +48,10 @@ public class GuiRenderer {
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		guishader.stop();
+	}
+	
+	public void createPauseMenu() {
+		
 	}
 
 public void cleanUp(){
