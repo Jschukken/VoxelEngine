@@ -57,7 +57,7 @@ public class MapManager {
 						int[] arr = { 1, 2, map[0][0].length - 2, map.length - 2, map[0].length, map[0][0].length - 2,
 								map.length - 2, map[0].length, 1, 1, map[0].length, 1 };
 						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
-								new Vector3f(1, 1, 1), tMod, arr));
+								new Vector3f(1, 1, 1), TexturedModelMaker.robotModel(loader), arr));
 
 					} else if (map[x][y][z] == 3) {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,

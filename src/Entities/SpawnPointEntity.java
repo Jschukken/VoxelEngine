@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import Models.TexturedModel;
+import ToolBox.TexturedModelMaker;
 
 public class SpawnPointEntity extends Entity {
 

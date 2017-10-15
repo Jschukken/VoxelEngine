@@ -15,7 +15,7 @@ public class EnemyEntity extends Entity {
 	private static final float ENEMY_SPEED = .1001f;
 	private Vector3f position;
 	private int hp;
-	private Rawmodel model= OBJLoader.loadObjModel("person", loader);
+	
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
 			int[] path) {

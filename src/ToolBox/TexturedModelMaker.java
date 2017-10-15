@@ -6,6 +6,7 @@ import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
 import RenderEngine.MasterMenuRenderer;
+import RenderEngine.OBJLoader;
 import RenderEngine.TexturedModelRenderer;
 import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
@@ -57,6 +58,13 @@ public class TexturedModelMaker {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		basicCube = new TexturedModel(model, texture);
 		return basicCube;
+	}
+	
+	public static TexturedModel robotModel(Loader loader) {
+
+		RawModel model =  OBJLoader.loadObjModel("person", loader);
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
+		return new TexturedModel(model, texture);
 	}
 
 }
