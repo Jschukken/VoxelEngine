@@ -189,6 +189,7 @@ public class MainGameLoop {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			state = "startup";
+			//apManager.cleanUp();
 		}
 
 	}

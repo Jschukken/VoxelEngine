@@ -140,6 +140,8 @@ public class CollisionHandler {
 					&& position.z >= entity.getPosition().z
 					&& position.z <= entity.getPosition().z + entity.getScale().z) {
 				return entity;
+			}else if((int)position.x == (int)entity.getPosition().x && (int)position.y == (int)entity.getPosition().y && (int)position.z == (int)entity.getPosition().z){
+				return entity;
 			}
 		}
 		return null;

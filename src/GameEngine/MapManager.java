@@ -49,6 +49,10 @@ public class MapManager {
 		loader = new Loader();
 		shader = new StaticShader();
 		renderer = new MasterGameRenderer(shader);
+		mapEntities.clear();
+		activeEntities.clear();
+		particleEntities.clear();
+		attackEntities.clear();
 	}
 	
 	/**
@@ -84,12 +88,12 @@ public class MapManager {
 			if(characteristics.get( characteristics.size()-1) == 1.0) {//check if map is valid
 				characteristics.remove(characteristics.size()-1);
 				valid = true;
-				//good = kNear.classify(characteristics); // use k-nearest
+				good = kNear.classify(characteristics); // use k-nearest
 			}
 			System.out.println(characteristics);
 			//disable this when k-nearest works
 			//valid = true;
-			good = true;
+			//good = true;
 			characteristics.clear();
 		}
 		map = Map.mapTo3D();
@@ -113,6 +117,7 @@ public class MapManager {
 	public void loadMap() {
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
+		addSkyBoxEntity(TexturedModelMaker.skyBoxModel(loader), new Vector3f(camera.getPosition()));
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
 				for (int z = 0; z < map[0][0].length; z++) {
@@ -242,16 +247,6 @@ public class MapManager {
 			System.out.println("destination is required");
 		}
 
-
-		TexturedModel tMod = TexturedModelMaker.skyBoxModel(loader);
-		addSkyBoxEntity(tMod, new Vector3f(camera.getPosition()));
-
-		// vector from the entity to the camera
-		toCamera = new Vector3f(camera.getPosition().x - skyBox.getPosition().x,
-				camera.getPosition().y - skyBox.getPosition().y,
-				camera.getPosition().z - skyBox.getPosition().z + 0.01f);
-		toCamera.normalise();
-
 		renderer.render(skyBox, shader);
 
 		shader.stop();
@@ -282,6 +277,7 @@ public class MapManager {
 			loader.cleanUp();
 			shader.cleanUp();
 			renderer.cleanUp();
+			
 		} catch (NullPointerException e) {
 			System.out.println("CleanUp error: its cool yo");
 		}
