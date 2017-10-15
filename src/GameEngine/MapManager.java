@@ -37,6 +37,7 @@ public class MapManager {
 	public List<Entity> activeEntities = new ArrayList<Entity>();
 	public List<Entity> particleEntities = new ArrayList<Entity>();
 	public List<Entity> attackEntities = new ArrayList<Entity>();
+	public Entity skyBox;
 	public Entity destination;
 	public Camera camera;
 
@@ -225,6 +226,8 @@ public class MapManager {
 			}
 		}
 
+		
+
 		try {
 			double dist = Math.sqrt(Math.pow(camera.getPosition().x - destination.getPosition().x, 2)
 					+ Math.pow(camera.getPosition().y - destination.getPosition().y, 2)
@@ -235,6 +238,18 @@ public class MapManager {
 		} catch (NullPointerException e) {
 			System.out.println("destination is required");
 		}
+
+
+		TexturedModel tMod = TexturedModelMaker.skyBoxModel(loader);
+		addSkyBoxEntity(tMod, new Vector3f(camera.getPosition()));
+
+		// vector from the entity to the camera
+		toCamera = new Vector3f(camera.getPosition().x - skyBox.getPosition().x,
+				camera.getPosition().y - skyBox.getPosition().y,
+				camera.getPosition().z - skyBox.getPosition().z + 0.01f);
+		toCamera.normalise();
+
+		renderer.render(skyBox, shader);
 
 		shader.stop();
 	}
@@ -300,6 +315,11 @@ public class MapManager {
 		if (attackEntities.size() > PARTICLE_COUNT) {
 			attackEntities.remove(0);
 		}
+	}
+	
+	public void addSkyBoxEntity(TexturedModel entity, Vector3f position) {
+//		skyBox = new Entity(entity, position, 0, 0, 0, new Vector3f(RENDER_DISTANCE,RENDER_DISTANCE,RENDER_DISTANCE));
+		skyBox = new Entity(entity, position, 0, 0, 0, new Vector3f(250,250,250));
 	}
 
 	/**
