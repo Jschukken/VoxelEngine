@@ -32,6 +32,8 @@ public class MapManager {
 	private StaticShader shader;
 	private KNearest kNear;
 	public int[][][] map;
+	
+	public int[][] twoDMap;
 
 	public List<Entity> mapEntities = new ArrayList<Entity>();
 	public List<Entity> activeEntities = new ArrayList<Entity>();
@@ -74,6 +76,7 @@ public class MapManager {
 			valid = false;
 			good = false;
 			Map.createMap();
+			twoDMap = Map.m;
 			Map.print2D();
 			
 			List<Double> characteristics = new ArrayList<>();
@@ -117,8 +120,8 @@ public class MapManager {
 						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if (map[x][y][z] == 2) {
 
-						int[] arr = { 1, 2, map[0][0].length - 2, map.length - 2, map[0].length, map[0][0].length - 2,
-								map.length - 2, map[0].length, 1, 1, map[0].length, 1 };
+						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2,
+								map.length - 2, 1, 1, 1 };
 						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1), tMod, arr));
 
