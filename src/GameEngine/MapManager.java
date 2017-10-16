@@ -40,12 +40,13 @@ public class MapManager {
 	public List<Entity> particleEntities = new ArrayList<Entity>();
 	public List<Entity> attackEntities = new ArrayList<Entity>();
 	public Entity skyBox;
-	public Entity destination;
+	public DestinationEntity destination;
 	public Camera camera;
 
 	public MapManager() {
 		kNear = new KNearest(5);
 		map = createGoodMap();
+//		tempMapCreator();
 		loader = new Loader();
 		shader = new StaticShader();
 		renderer = new MasterGameRenderer(shader);
@@ -125,8 +126,9 @@ public class MapManager {
 						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if (map[x][y][z] == 2) {
 
-						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2,
-								map.length - 2, 1, 1, 1 };
+						//int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2,
+						//		map.length - 2, 1, 1, 1 };
+						int[] arr = {10, 10};
 						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1), tMod, arr));
 
@@ -134,11 +136,11 @@ public class MapManager {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
 						camera.setPosition(new Vector3f(x,y+4,z));
-						// } else if (x == 0 || y == 0 || z == 0 || z ==
-						// map[0][0].length - 1 || x == map.length - 1) {
-						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
-						// z), 0, 0, 0, new Vector3f(1, 1, 1)));
-						// map[x][y][z] = 1;
+					//	 } else if (x == 0 || y == 0 || z == 0 || z ==
+					//	 map[0][0].length - 1 || x == map.length - 1) {
+					//	 mapEntities.add(new Entity(tMod, new Vector3f(x, y,
+					//	 z), 0, 0, 0, new Vector3f(1, 1, 1)));
+					//	 map[x][y][z] = 1;
 					}
 				}
 			}
@@ -348,6 +350,7 @@ public class MapManager {
 	 * can be used for debugging
 	 */
 	private void tempMapCreator() {
+		map = new int[20][20][20];
 		map[18][1][10] = 2;
 		map[2][1][10] = 2;
 		map[10][3][10] = 3;

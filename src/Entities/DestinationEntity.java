@@ -9,13 +9,15 @@ import Models.TexturedModel;
 public class DestinationEntity extends Entity{
 	
 	private int healthPoints;
+	private int maxHealthPoints;
 	private Vector3f position;
 
 	public DestinationEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
 			Vector3f scale) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.position = position;
-		healthPoints = 20;
+		maxHealthPoints = 20;
+		healthPoints = maxHealthPoints;
 	}
 	
 	public void update(){
@@ -32,5 +34,12 @@ public class DestinationEntity extends Entity{
 	public void setHealthPoints(int newHP){
 		healthPoints = newHP;
 	}
-
+	
+	public int getMaxHealthPoints() {
+		return maxHealthPoints;
+	}
+	
+	public int getHealthPoints() {
+		return healthPoints;
+	}
 }

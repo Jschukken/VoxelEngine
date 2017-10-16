@@ -34,6 +34,7 @@ public class Camera {
 	private float strafe;
 
 	private int hp;
+	private int maxhp;
 
 	private IntBuffer[] jumpSFX;
 
@@ -44,7 +45,8 @@ public class Camera {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		jumpSFX = MainGameLoop.audH.createSound("jump");
-		hp = 10;
+		maxhp = 10;
+		hp = maxhp;
 	}
 
 	/**
@@ -204,6 +206,14 @@ public class Camera {
 
 	public float getRotZ() {
 		return rotZ;
+	}
+	
+	public float getHp() {
+		return hp;
+	}
+	
+	public float getMaxhp() {
+		return maxhp;
 	}
 
 }

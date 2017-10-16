@@ -16,7 +16,6 @@ public class GuiRenderer {
 
 	private RawModel quad;
 	private GuiShader guishader;
-	private List<GuiTexture> pauseMenu;
 	
 	public GuiRenderer(Loader loader){
 	float[] pos = {-1, 1, -1, -1, 1, 1, 1, -1};
@@ -35,6 +34,7 @@ public class GuiRenderer {
 		//
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		for(GuiTexture gui: guis){
+			gui.update();
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, gui.getTexture());
 			Matrix4f matrix = MatrixMath.createTransformationMatrix(gui.getPosition(), gui.getScale());
@@ -50,10 +50,8 @@ public class GuiRenderer {
 		guishader.stop();
 	}
 	
-	public void createPauseMenu() {
-		
-	}
-
+	
+	
 public void cleanUp(){
 	guishader.cleanUp();
 }

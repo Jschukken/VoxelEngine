@@ -161,7 +161,7 @@ public class MenuHandler {
 		tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
-//				Something something, load a saved map.
+				//Something something generate new map
 			}
 		};
 		
