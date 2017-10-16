@@ -3,6 +3,7 @@ package Entities;
 import org.lwjgl.util.vector.Vector3f;
 
 import Models.TexturedModel;
+import ToolBox.MatrixMath;
 
 /**
  * Models a complete entity (shape texture location)
@@ -14,6 +15,7 @@ public class Entity {
 	private TexturedModel model;
 
 	private Vector3f position;
+	protected Vector3f direction;
 	private float rotX;
 	private float rotY;
 	private float rotZ;
@@ -26,6 +28,7 @@ public class Entity {
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
+		direction = MatrixMath.rotateVector(new Vector3f((float) Math.toDegrees(rotX), (float) Math.toDegrees(-rotY), (float) Math.toDegrees(-rotZ))); 
 		this.scale = scale;
 	}
 
@@ -79,7 +82,13 @@ public class Entity {
 	}
 	
 	public void update(){
+		direction = MatrixMath.rotateVector(new Vector3f((float) Math.toDegrees(rotX), (float) Math.toDegrees(-rotY), 0)); 
+		direction.normalise();
 		
+	}
+	
+	public Vector3f getDirection(){
+		return direction;
 	}
 	
 	public void getHit(){

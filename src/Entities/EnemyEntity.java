@@ -14,8 +14,9 @@ public class EnemyEntity extends Entity {
 
 	private int[] path;
 	private int pathPosition = 0;
-	private static final float ENEMY_SPEED = .1001f;
+	private static final float ENEMY_SPEED = .0801f;
 	private Vector3f position;
+	private Vector3f direction;
 	private float rotX, rotY, rotZ;
 	private int hp;
 	private boolean turnState = true;
@@ -29,6 +30,8 @@ public class EnemyEntity extends Entity {
 		this.rotX = rotX;
 		this.rotZ = rotZ;
 		this.rotY = rotY;
+		direction = super.getDirection();
+		direction.normalise();
 		turnSpeed = getTurnDir();
 		hp = 20;
 	}
@@ -37,6 +40,8 @@ public class EnemyEntity extends Entity {
 	 * updates the enemies position and moves it to the next point on its path
 	 */
 	public void update() {
+		
+		super.update();
 		if (turnState) {
 			turnState = needTurn();
 		} else {
@@ -113,14 +118,14 @@ public class EnemyEntity extends Entity {
 
 		if (position.x < path[pathPosition]) {
 			position.x += ENEMY_SPEED;
-			if (CollisionHandler.checkEnemyCollision(position)) {
+			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x -= ENEMY_SPEED;
 			} else {
 				check = true;
 			}
 		} else if (position.x > path[pathPosition]) {
 			position.x -= ENEMY_SPEED;
-			if (CollisionHandler.checkEnemyCollision(position)) {
+			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x += ENEMY_SPEED;
 			} else {
 				check = true;
@@ -128,7 +133,7 @@ public class EnemyEntity extends Entity {
 		}
 		if (position.z < path[pathPosition + 1]) {
 			position.z += ENEMY_SPEED;
-			if (CollisionHandler.checkEnemyCollision(position)) {
+			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z -= ENEMY_SPEED;
 			} else {
 				check = true;
@@ -136,7 +141,7 @@ public class EnemyEntity extends Entity {
 
 		} else if (position.z > path[pathPosition + 1]) {
 			position.z -= ENEMY_SPEED;
-			if (CollisionHandler.checkEnemyCollision(position)) {
+			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z += ENEMY_SPEED;
 			} else {
 				check = true;
@@ -152,7 +157,7 @@ public class EnemyEntity extends Entity {
 		}
 
 		position.y -= ENEMY_SPEED;
-		if (CollisionHandler.checkEnemyCollision(position)) {
+		if (CollisionHandler.checkEnemyCollision(this)) {
 			position.y += ENEMY_SPEED;
 		}
 
@@ -189,10 +194,17 @@ public class EnemyEntity extends Entity {
 	 * rounds the position to the 1nd decimal place
 	 */
 	private void roundPosition() {
-		position.x = ((int) (position.x * 10 + 0.5)) / 10.0f;
-		position.y = ((int) (position.y * 10 + 0.5)) / 10.0f;
-		position.z = ((int) (position.z * 10 + 0.5)) / 10.0f;
+		position.x = ((int) (position.x * 100 + 0.5)) / 100.0f;
+		position.y = ((int) (position.y * 100 + 0.5)) / 100.0f;
+		position.z = ((int) (position.z * 100 + 0.5)) / 100.0f;
 
+	}
+
+	public Vector3f getDirection() {
+		direction = MatrixMath
+				.rotateVector(new Vector3f((float) Math.toDegrees(rotX), (float) Math.toDegrees(-rotY), 0));
+		direction.normalise();
+		return direction;
 	}
 
 	/**
@@ -211,6 +223,10 @@ public class EnemyEntity extends Entity {
 
 	public float getRotY() {
 		return rotY;
+	}
+	
+	public Vector3f getScale(){
+		return new Vector3f(1f,1f,1f);
 	}
 
 	public float getRotZ() {

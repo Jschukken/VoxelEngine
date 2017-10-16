@@ -25,7 +25,7 @@ public class MapManager {
 
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
-	private static final int PARTICLE_COUNT = 300;
+	private static final int PARTICLE_COUNT = 1000;
 
 	private Loader loader;
 	private MasterGameRenderer renderer;
@@ -133,7 +133,7 @@ public class MapManager {
 					} else if (map[x][y][z] == 3) {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
-						camera.setPosition(new Vector3f(x,y+4,z));
+						camera.setPosition(new Vector3f(x,y+6,z));
 						// } else if (x == 0 || y == 0 || z == 0 || z ==
 						// map[0][0].length - 1 || x == map.length - 1) {
 						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
