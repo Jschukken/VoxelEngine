@@ -13,6 +13,7 @@ import Flashlight.MainGameLoop;
 
 /**
  * manages the display
+ * 
  * @author Jelle Schukken
  *
  */
@@ -21,57 +22,62 @@ public class DisplayManager {
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
 	private static final int FPS_CAP = 60;
-	
+
 	/**
 	 * creates a display
 	 */
-	public static void createDisplay(){
-		
-		ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
-		
+	public static void createDisplay() {
+
+		ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
+
 		try {
-			//Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT)); //uncomment for windowed version
+			// Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
+			// //uncomment for windowed version
 			Display.setVSyncEnabled(true);
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("Flashlight");
 			Display.setFullscreen(true);
-			GL11.glViewport(0,0, Display.getWidth(), Display.getHeight());
-		} catch (LWJGLException e){
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
-		
+
 		Mouse.setGrabbed(true);
 	}
-	
+
 	/**
 	 * updates the display
 	 */
-	public static void updateDisplay(){
+	public static void updateDisplay() {
 		Display.sync(FPS_CAP);
 		Display.update();
-		
-		while(Keyboard.next()){
-			if(Keyboard.getEventKeyState()){
-				
-				if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
+
+		while (Keyboard.next()) {
+			if (Keyboard.getEventKeyState()) {
+
+				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 					closeDisplay();
-				} 
-				
-				if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && Mouse.isGrabbed()){
+				}
+
+				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && Mouse.isGrabbed()) {
 					Mouse.setGrabbed(false);
-				} else if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && !Mouse.isGrabbed()){
+				} else if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && !Mouse.isGrabbed()) {
 					Mouse.setGrabbed(true);
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * closes the display and cleans up loose memory
 	 */
-	public static void closeDisplay(){
-		MainGameLoop.mapManager.cleanUp();
-		MainGameLoop.audH.cleanUp();
+	public static void closeDisplay() {
+		try {
+			MainGameLoop.mapManager.cleanUp();
+			MainGameLoop.audH.cleanUp();
+		} catch (NullPointerException e) {
+
+		}
 		Display.destroy();
 		System.exit(0);
 	}

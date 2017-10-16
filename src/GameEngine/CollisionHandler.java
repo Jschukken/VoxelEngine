@@ -69,9 +69,10 @@ public class CollisionHandler {
 		}
 	}
 
-	public static boolean checkFlameCollision(Vector3f position) {
+	public static boolean checkFlameCollision(Entity entity) {
 		try {
-			if (MainGameLoop.mapManager.map[(int) (position.x)][(int) (position.y)][(int) (position.z)] == 1) {
+			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x + .5)][(int) (entity
+					.getPosition().y)][(int) (entity.getPosition().z + .5)] == 1) {
 				return true;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
@@ -88,35 +89,43 @@ public class CollisionHandler {
 	 *            the position of the enemy
 	 * @return true if there is a collision, false otherwise
 	 */
-	public static boolean checkEnemyCollision(Vector3f position) {
+	public static boolean checkEnemyCollision(Entity entity) {
 
 		try {
 			// lower square
-			if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
-					+ .1)] == 1) {
+			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
-			} else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .1)][(int) (position.z
-					+ .9)] == 1) {
+			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
-			} else if (MainGameLoop.mapManager.map[(int) (position.x + .9)][(int) (position.y + .1)][(int) (position.z
-					+ .9)] == 1) {
+			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
-			} else if (MainGameLoop.mapManager.map[(int) (position.x + .9)][(int) (position.y + .1)][(int) (position.z
-					+ .1)] == 1) {
+			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			}
 			// middle square
-			else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
-					+ .1)] == 1) {
+			else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
-			} else if (MainGameLoop.mapManager.map[(int) (position.x + .1)][(int) (position.y + .9)][(int) (position.z
-					+ .9)] == 1) {
+			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
-			} else if (MainGameLoop.mapManager.map[(int) (position.x + .9)][(int) (position.y + .9)][(int) (position.z
-					+ .9)] == 1) {
+			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
-			} else if (MainGameLoop.mapManager.map[(int) (position.x + .9)][(int) (position.y + .9)][(int) (position.z
-					+ .1)] == 1) {
+			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
+					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else {
 				return false;
@@ -134,13 +143,10 @@ public class CollisionHandler {
 	 */
 	public static Entity hitDetectionSingleEnemy(Vector3f position) {
 		for (Entity entity : MainGameLoop.mapManager.activeEntities) {
-			if (position.x >= entity.getPosition().x && position.x <= entity.getPosition().x + entity.getScale().x
-					&& position.y >= entity.getPosition().y
-					&& position.y <= entity.getPosition().y + entity.getScale().y
-					&& position.z >= entity.getPosition().z
-					&& position.z <= entity.getPosition().z + entity.getScale().z) {
-				return entity;
-			}else if((int)position.x == (int)entity.getPosition().x && (int)position.y == (int)entity.getPosition().y && (int)position.z == (int)entity.getPosition().z){
+			double dist = Math.sqrt(
+					Math.pow(position.x - entity.getPosition().x, 2) + Math.pow(position.y - entity.getPosition().y, 2)
+							+ Math.pow(position.z - entity.getPosition().z, 2));
+			if (dist<.8) {
 				return entity;
 			}
 		}
