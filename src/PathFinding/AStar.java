@@ -79,10 +79,12 @@ public class AStar {
 		while (open.size() != 0) {
 			q = open.get(minimalF(open));
 			open.remove(q);
+			/*
 			// checking whether destination has been reached
 			if (q.x == DX && q.y == DY) {
 				break;
 			}
+			*/
 			// adding four possible parents
 			if (MAP[q.x + 1][q.y] == 1 || MAP[q.x+1][q.y] == 2)
 				successor.add(new Node(q.x + 1, q.y, q));
@@ -112,18 +114,39 @@ public class AStar {
 			successor.clear();
 			closed.add(q);
 		}
+		//finding the most effective point next to the end
+		double minF = Double.MAX_VALUE;
+		for (Node comp : closed) {
+			if(comp.x+1 == DX && comp.y == DY && comp.f < minF) {
+				minF = comp.f;
+				q = comp;
+			}
+			if(comp.x-1 == DX && comp.y == DY && comp.f < minF) {
+				minF = comp.f;
+				q = comp;
+			}
+			if(comp.x == DX && comp.y+1 == DY && comp.f < minF) {
+				minF = comp.f;
+				q = comp;
+			}
+			if(comp.x == DX && comp.y-1 == DY && comp.f < minF) {
+				minF = comp.f;
+				q = comp;
+			}
+		}
 		// from destination node track via parents back to spawn
 		while (q.p != null) {
 			pathNodes.add(q);
 			q = q.p;
 		}
-		System.out.println(pathNodes.size());
 		// turn node list to desired integer list
 		for (int i = pathNodes.size() - 1; i >= 0; i--) {
 			Node current = pathNodes.get(i);
 			path.add(current.x);
 			path.add(current.y);
 		}
+		path.add(DX);
+		path.add(DY);
 		return path;
 	}
 
