@@ -15,7 +15,6 @@ public class PlayerAttack extends Entity {
 	private int fade = 50 - (int)(Math.random()*30);
 	private static final float ANGLE = (float) 90 / 3;
 	private Vector3f position;
-	// private Vector3f rotation;
 	private Vector3f direction;
 	private Vector3f normDir;
 	private Vector3f scale;
@@ -24,7 +23,6 @@ public class PlayerAttack extends Entity {
 	public PlayerAttack(TexturedModel model, Vector3f position, Vector3f rot, Vector3f direction, Vector3f scale) {
 		super(model, position, 0, (float) Math.toRadians(-direction.y), 0, scale);
 		this.position = position;
-		// rotation = direction;
 		Vector3f newDir = new Vector3f((float) (direction.x + Math.random() * ANGLE - ANGLE / 2),
 				(float) (direction.y + Math.random() * ANGLE - ANGLE / 2),
 				(float) (direction.z + Math.random() * ANGLE - ANGLE / 2));
@@ -58,12 +56,14 @@ public class PlayerAttack extends Entity {
 				position.x -= (float) (projectileSpeedX * Math.sin(Math.toRadians(direction.y)));
 				projectileSpeedX /= 1.2f;
 				projectileSpeedZ /= 1.02f;
+				projectileSpeedY /= 1.02f;
 			}
 			position.z += (float) -(projectileSpeedZ * Math.cos(Math.toRadians(direction.y)));
 			if (CollisionHandler.checkFlameCollision(this)) {
 				position.z -= (float) -(projectileSpeedZ * Math.cos(Math.toRadians(direction.y)));
 				projectileSpeedX /= 1.02f;
 				projectileSpeedZ /= 1.2f;
+				projectileSpeedY /= 1.02f;
 			}
 			position.y += (float) -(projectileSpeedY * Math.sin(Math.toRadians(direction.x))) + rise;
 			if (CollisionHandler.checkFlameCollision(this)) {
