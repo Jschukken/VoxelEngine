@@ -106,7 +106,7 @@ public class MainGameLoop {
 				ModelTexture ducker3 = new ModelTexture(loader.loadTexture("Potato"));
 				GuiTexture gui3 = new GuiTexture(ducker3 , new Vector2f(0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
 				// Player HP HUD
-				ModelTexture ducker4 = new ModelTexture(loader.loadTexture("Potato"));
+				ModelTexture ducker4 = new ModelTexture(loader.loadTexture("red"));
 				GuiTexture gui4 = new GuiTexture(ducker4 , new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f));
 				guis.add(gui);
 				guis.add(gui2);
