@@ -117,13 +117,43 @@ public class GuiRenderer {
 		while (digits.length() < 4) {
 			digits = "0" + digits;
 		}
-		for (int i = i; i < digits.length(); i++) {
+		digits = digits.substring(0, 1) + ":" + digits.substring(2, 3);
+		for (int i = 0; i < digits.length(); i++) {
+			// TODO: Update pos vector
+			
 			switch (digits.charAt(i)) {
-				case 0:
-					timer.set(i, drawZero(loader, pos, new Vector2f(Vector2f.add(pos, new Vector2f(i,0), pos), 0.01f)));
+			// TODO: Call relevant draw function (Will still make those) template = drawNumber(loader, pos, scale);
+				case '0':
 					
-				case 1:
-					timer[i]
+					
+				case '1':
+					
+					
+				case '2':
+					
+					
+				case '3':
+					
+					
+				case '4':
+					
+					
+				case '5':
+					
+					
+				case '6':
+					
+					
+				case '7':
+					
+					
+				case '8':
+					
+					
+				case '9':
+					
+					
+				case ':':
 			}
 		}
 	}
