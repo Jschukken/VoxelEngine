@@ -84,13 +84,13 @@ public class AStar {
 				break;
 			}
 			// adding four possible parents
-			if (MAP[q.x + 1][q.y] != 0)
+			if (MAP[q.x + 1][q.y] == 1 || MAP[q.x+1][q.y] == 2)
 				successor.add(new Node(q.x + 1, q.y, q));
-			if (MAP[q.x - 1][q.y] != 0)
+			if (MAP[q.x - 1][q.y] == 1 || MAP[q.x-1][q.y] == 2)
 				successor.add(new Node(q.x - 1, q.y, q));
-			if (MAP[q.x][q.y + 1] != 0)
+			if (MAP[q.x][q.y + 1] == 1 || MAP[q.x][q.y + 1] == 2)
 				successor.add(new Node(q.x, q.y + 1, q));
-			if (MAP[q.x][q.y - 1] != 0)
+			if (MAP[q.x][q.y - 1] == 1 || MAP[q.x][q.y - 1] == 2)
 				successor.add(new Node(q.x, q.y - 1, q));
 			// check if parent can go to open
 			for (Node temp : successor) {
@@ -117,6 +117,7 @@ public class AStar {
 			pathNodes.add(q);
 			q = q.p;
 		}
+		System.out.println(pathNodes.size());
 		// turn node list to desired integer list
 		for (int i = pathNodes.size() - 1; i >= 0; i--) {
 			Node current = pathNodes.get(i);
@@ -146,7 +147,7 @@ public class AStar {
 		MAP = m;
 
 		// create and return path
-		// does not include spawn
+		// does not include spawn, but includes destination
 		return aStar(sx, sy);
 	}
 }

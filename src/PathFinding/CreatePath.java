@@ -38,8 +38,8 @@ public class CreatePath {
 					if (m[i][j][k] == 1) {
 						if (j == 0)
 							map[i][k] = 1;
-						if (j - 1 > 0 && j + 1 < m[0][0].length)
-							if (!(m[i][j - 1][k] == 1 || m[i][j + 1][k] == 1)) {
+						if (j + 1 < m[0][0].length)
+							if ( j == 1 && !(m[i][j + 1][k] == 1)) {
 								map[i][k] = 1;
 							}
 					} else if (m[i][j][k] == 2) {
@@ -48,21 +48,21 @@ public class CreatePath {
 						map[i][k] = 3;
 					}
 		// set vectors to 2D
-		Vector2f spawn = new Vector2f(s.getX(), s.getY());
-		Vector2f destination = new Vector2f(d.getX(), d.getY());
+		Vector2f destination = new Vector2f(d.getX(), d.getZ());
+		Vector2f spawn = new Vector2f(s.getX(), s.getZ());
+		path = AStar.startAStar(map, destination, spawn);
 		// obtain and return path
 		int[] ret = new int[path.size()];
-		for(int i = 0; i < path.size()-1; i++) {
-			ret[0] = path.get(i);
+		for(int i = 0; i < path.size(); i++) {
+			ret[i] = path.get(i);
 		}
 		return ret;
 	}
 
 	/**
-	 * just for testing
+	 * just for testing, not working anymore
 	 */
 	public static void main(String[] args) {
-		List<Integer> path = new ArrayList<>();
 		int[][][] map = new int[10][1][10];
 		map[5][0][5] = 2;
 		map[5][0][7] = 3;
@@ -91,13 +91,6 @@ public class CreatePath {
 						sz = j;
 					}
 				}
-		//removed since createPath was changed
-		//path = createPath(map, new Vector3f(dx, dy, dz), new Vector3f(sx, sy, sz));
-
-		// convert and print path
-		int[] print = new int[path.size()];
-		for (int i = 0; i < path.size(); i++)
-			print[i] = path.get(i);
-		System.out.println(Arrays.toString(print));
+		System.out.println(Arrays.toString(createPath(map, new Vector3f(dx, dy, dz), new Vector3f(sx, sy, sz))));
 	}
 }

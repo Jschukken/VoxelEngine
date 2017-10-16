@@ -81,7 +81,7 @@ public class MapManager {
 			good = false;
 			Map.createMap();
 			twoDMap = Map.m;
-			Map.print2D();
+			Map.print2D(twoDMap);
 			
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
@@ -112,7 +112,7 @@ public class MapManager {
 	}
 
 	/**
-	 * turns a map array into its corrisponding entities 
+	 * turns a map array into its corresponding entities 
 	 */
 	public void loadMap() {
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
@@ -124,21 +124,30 @@ public class MapManager {
 					if (map[x][y][z] == 1) {
 						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if (map[x][y][z] == 2) {
-
-						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2,
-								map.length - 2, 1, 1, 1 };
-						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
-								new Vector3f(1, 1, 1), tMod, arr));
-
-					} else if (map[x][y][z] == 3) {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
 						camera.setPosition(new Vector3f(x,y+4,z));
+						/*
+						 * creates wall and floor if you don't
+						 */
 						// } else if (x == 0 || y == 0 || z == 0 || z ==
 						// map[0][0].length - 1 || x == map.length - 1) {
 						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
 						// z), 0, 0, 0, new Vector3f(1, 1, 1)));
 						// map[x][y][z] = 1;
+					}
+				}
+			}
+		}
+		for (int x = 0; x < map.length; x++) {
+			for (int y = 0; y < map[0].length; y++) {
+				for (int z = 0; z < map[0][0].length; z++) {
+					if (map[x][y][z] == 3) {
+						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2,
+								map.length - 2, 1, 1, 1 };
+						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
+								new Vector3f(1, 1, 1), tMod, arr));
+
 					}
 				}
 			}
