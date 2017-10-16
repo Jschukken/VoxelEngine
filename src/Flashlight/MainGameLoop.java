@@ -97,43 +97,8 @@ public class MainGameLoop {
 				menuh.createMenus(loader);
 				state = "mainMenu";
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-				
-				// Difficulty level HUD
-				ModelTexture ducker = new ModelTexture(loader.loadTexture("Potato"));
-				GuiTexture gui = new GuiTexture(ducker , new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f)) {
-					@Override
-					public void update() {
-						
-					}
-				};
-				
-				// Timer HUD
-				ModelTexture ducker2 = new ModelTexture(loader.loadTexture("Potato"));
-				GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new Vector2f(0.15f, 0.1f));
-				
-				// End Point HP HUD
-				ModelTexture ducker3 = new ModelTexture(loader.loadTexture("Potato"));
-				GuiTexture gui3 = new GuiTexture(ducker3 , new Vector2f(0.6f, 0.9f), new Vector2f(0.4f, 0.1f)) {
-					@Override
-					public void update() {
-						this.setScale(new Vector2f(this.getMaxScale().x*((float) mapManager.destination.getHealthPoints() / (float) mapManager.destination.getMaxHealthPoints()), this.getScale().y));
-					}
-				};
-				
-				// Player HP HUD
-				ModelTexture ducker4 = new ModelTexture(loader.loadTexture("Potato"));
-				GuiTexture gui4 = new GuiTexture(ducker4 , new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f)) {
-					@Override
-					public void update() {
-						this.setScale(new Vector2f(this.getMaxScale().x*((float) mapManager.camera.getHp() / (float) mapManager.camera.getMaxhp()), this.getScale().y));
-					}
-				};
-				
-				guis.add(gui);
-				guis.add(gui2);
-				guis.add(gui3);
-				guis.add(gui4);
 				guiRenderer = new GuiRenderer(loader);
+				guiRenderer.createHUD();
 				break;
 
 			case "mainMenu":
@@ -171,7 +136,7 @@ public class MainGameLoop {
 				mapManager.update();
 				checkPause();
 				mapManager.render();
-				guiRenderer.render(guis);
+				guiRenderer.render();
 				DisplayManager.updateDisplay();
 				break;
 
