@@ -40,6 +40,7 @@ public class MainGameLoop {
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
 	public static MenuHandler menuh;
+	public static MapMenuRenderer mmr;
 	public static KNearest kn;
 	public static int[][][] map;
 	List<GuiTexture> guis = new ArrayList<GuiTexture>();
@@ -59,7 +60,7 @@ public class MainGameLoop {
 		MasterMenuRenderer menuRenderer = null;
 		kn = new KNearest(5);
 		KNearestRendering knr = new KNearestRendering(kn);
-		MapMenuRenderer mapMenuRenderer = new MapMenuRenderer();
+		MapMenuRenderer mmr = new MapMenuRenderer();
 		AudioHandler ah = null;
 		List<GuiTexture> guis = new ArrayList<GuiTexture>();
 		GuiRenderer guiRenderer = null;
@@ -125,6 +126,13 @@ public class MainGameLoop {
 				}
 				break;
 				
+			case "loadMapMenu":
+				mapManager = new MapManager();
+				mapManager.loadMap();
+				menuh.add2DMapToMapMenu(mapManager.twoDMap);
+				state = "mapMenu";
+				break;
+				
 			case "mapMenu":
 				menuh.setState(state);
 				menuh.updateButtons(loader);
@@ -132,8 +140,8 @@ public class MainGameLoop {
 				break;
 
 			case "loadmap":
-				mapManager = new MapManager();
-				mapManager.loadMap();
+//				mapManager = new MapManager();
+//				mapManager.loadMap();
 				state = "game";
 				break;
 				

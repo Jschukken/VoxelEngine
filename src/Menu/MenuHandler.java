@@ -87,7 +87,7 @@ public class MenuHandler {
 		Button tMod = new Button(model, tex1, tex2, vertices) {
 			@Override
 			public void onClick() {
-				MainGameLoop.setState("mapMenu");
+				MainGameLoop.setState("loadMapMenu");
 			}
 		};
 		
@@ -177,11 +177,36 @@ public class MenuHandler {
 			@Override
 			public void onClick() {
 				MainGameLoop.setState("mainMenu");
+				remove2DMapFromMapMenu();
 			}
 		};
 		
 		mapMenu.add(tMod);
+				
 	}	
+	
+	/**
+	 * Adds the tiles of the 2D map to the list of texturedmodels for the mapmenufluff
+	 * 
+	 * @param map  the map to add to the menu
+	 */
+	public void add2DMapToMapMenu(int[][] map) {
+		
+		List<TexturedModel> tiles = MapMenuRenderer.get2DMapTilesAtPosition(map, -0.5f, 0.8f, 0.8f, 1.4f);
+		mapMenuFluff.addAll(tiles);
+		
+	}
+	
+	/**
+	 * Removes the texturedmodel objects of the tiles that were added to the mapmenufluff
+	 */
+	public void remove2DMapFromMapMenu() {
+		
+		for (int i = mapMenuFluff.size()-1; i > 0; i--) {
+			mapMenuFluff.remove(i);
+		}
+		
+	}
 	
 	/**
 	 * creates all buttons and (TODO: fluff) for the pause menu
