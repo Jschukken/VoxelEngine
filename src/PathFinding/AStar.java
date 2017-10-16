@@ -79,20 +79,14 @@ public class AStar {
 		while (open.size() != 0) {
 			q = open.get(minimalF(open));
 			open.remove(q);
-			/*
-			// checking whether destination has been reached
-			if (q.x == DX && q.y == DY) {
-				break;
-			}
-			*/
 			// adding four possible parents
-			if (MAP[q.x + 1][q.y] == 1 || MAP[q.x+1][q.y] == 2)
+			if (MAP[q.x + 1][q.y] == 1)
 				successor.add(new Node(q.x + 1, q.y, q));
-			if (MAP[q.x - 1][q.y] == 1 || MAP[q.x-1][q.y] == 2)
+			if (MAP[q.x - 1][q.y] == 1)
 				successor.add(new Node(q.x - 1, q.y, q));
-			if (MAP[q.x][q.y + 1] == 1 || MAP[q.x][q.y + 1] == 2)
+			if (MAP[q.x][q.y + 1] == 1)
 				successor.add(new Node(q.x, q.y + 1, q));
-			if (MAP[q.x][q.y - 1] == 1 || MAP[q.x][q.y - 1] == 2)
+			if (MAP[q.x][q.y - 1] == 1)
 				successor.add(new Node(q.x, q.y - 1, q));
 			// check if parent can go to open
 			for (Node temp : successor) {
@@ -168,6 +162,8 @@ public class AStar {
 		DX = (int) d.getX();
 		DY = (int) d.getY();
 		MAP = m;
+
+		Map.print2D(MAP);
 
 		// create and return path
 		// does not include spawn, but includes destination
