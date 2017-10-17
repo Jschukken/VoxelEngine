@@ -49,8 +49,9 @@ public class GuiRenderer {
 	 * @return string giving time left in difficulty level as a string
 	 */
 	public String timeConversion() {
-		String sec = String.valueOf(time % 60); // number of seconds since game start
-		String min = String.valueOf(time / 60); // number of minutes since game start
+		int countdown = 300 - time;
+		String sec = String.valueOf(countdown % 60); // number of seconds since game start
+		String min = String.valueOf(countdown / 60); // number of minutes since game start
 
 		if (sec.length() == 1)
 			sec = "0" + sec;
