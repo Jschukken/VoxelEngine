@@ -16,6 +16,13 @@ import RenderEngine.Loader;
 import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 
+/**
+ * Renders the GUI
+ * 
+ * @author Berk Aksakal
+ * @edited Timo Aerts
+ * @edited Chiel Ton
+ */
 public class GuiRenderer {
 
 	private RawModel quad;
@@ -26,11 +33,6 @@ public class GuiRenderer {
 	private int countdown = 0;
 	
 	public GuiRenderer(Loader load){
-	timer.add(null);
-	timer.add(null);
-	timer.add(null);
-	timer.add(null);
-	timer.add(null);
 	float[] pos = {-1, 1, -1, -1, 1, 1, 1, -1};
 	quad = load.loadToVao(pos);
 	guishader = new GuiShader();
@@ -98,8 +100,13 @@ public class GuiRenderer {
 		ModelTexture ducker3 = new ModelTexture(loader.loadTexture("Potato"));
 		GuiTexture gui3 = new GuiTexture(ducker3 , new Vector2f(0.6f, 0.9f), new Vector2f(0.4f, 0.1f)) {
 			@Override
+			//adjusts scale and repositions to keep right edge in the same position
 			public void update() {
-				this.setScale(new Vector2f(this.getMaxScale().x*((float) MainGameLoop.mapManager.destination.getHealthPoints() / (float) MainGameLoop.mapManager.destination.getMaxHealthPoints()), this.getScale().y));
+				float scale = (float) MainGameLoop.mapManager.destination.getHealthPoints() / (float) MainGameLoop.mapManager.destination.getMaxHealthPoints();
+				float posX = (float) this.getStartPosition().x - this.getMaxScale().x*(1 - scale);
+				float posY = (float) this.getPosition().y;
+				this.setPosition (new Vector2f(posX, posY));
+				this.setScale (new Vector2f(this.getMaxScale().x*scale, this.getScale().y));
 			}
 		};
 		
@@ -108,7 +115,14 @@ public class GuiRenderer {
 		GuiTexture gui4 = new GuiTexture(ducker4 , new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f)) {
 			@Override
 			public void update() {
-				this.setScale(new Vector2f(this.getMaxScale().x*((float) MainGameLoop.mapManager.camera.getHp() / (float) MainGameLoop.mapManager.camera.getMaxhp()), this.getScale().y));
+				//adjusts scale and repositions to keep right edge in the same position
+				//copy from end point HD which is tested, this one is not though
+				float scale = (float) MainGameLoop.mapManager.camera.getHp() / (float) MainGameLoop.mapManager.camera.getMaxhp();
+				float posX = (float) this.getStartPosition().x - this.getMaxScale().x*(1 - scale);
+				float posY = (float) this.getPosition().y;
+				this.setPosition (new Vector2f(posX, posY));
+				this.setScale (new Vector2f(this.getMaxScale().x*scale, this.getScale().y));
+				
 			}
 		};
 		
@@ -117,12 +131,16 @@ public class GuiRenderer {
 		guis.add(gui3);
 		guis.add(gui4);
 		
+		timer.add(gui);
+		timer.add(gui);
+		timer.add(gui);
+		timer.add(gui);
+		timer.add(gui);
+		
 	}
 	
 	public void updateTimer() {
 		String digits = Integer.toString(countdown);
-		Vector2f pos = new Vector2f(-0.06f, 0.9f);
-		timer.clear();
 		ModelTexture ducker2;
 		GuiTexture gui;
 		while (digits.length() < 4) {
@@ -131,13 +149,10 @@ public class GuiRenderer {
 		digits = digits.substring(0, 2) + ":" + digits.substring(2);
 		for (int i = 0; i < digits.length(); i++) {
 			// TODO: Update pos vector
-			ducker2 = new ModelTexture(loader.loadTexture("Back Button"));
+			ducker2 = new ModelTexture(loader.loadTexture("Square nrEight"));
 			//GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new Vector2f(0.15f, 0.1f));
-			gui = new GuiTexture(ducker2 , pos, new Vector2f(0.03f, 0.1f));
-			timer.add(gui);
-			
-			pos.x = pos.x + 0.03f;
-			System.out.println(pos.x);
+			gui = new GuiTexture(ducker2 , new Vector2f (-0.120f+(i*0.06f), 0.9f), new Vector2f(0.03f, 0.1f));
+			timer.set(i, gui);
 			
 		/*	switch (digits.charAt(i)) {
 			// TODO: Call relevant draw function (Will still make those) template = drawNumber(loader, pos, scale);
