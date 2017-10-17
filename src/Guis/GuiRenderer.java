@@ -31,10 +31,10 @@ public class GuiRenderer {
 	private Loader loader;
 	private List<GuiTexture> guis = new ArrayList<GuiTexture>();
 	private List<GuiTexture> timer = new ArrayList<GuiTexture>();
-	private int countdown = 0;
 
 	private long old = 0; // timestamp in ms for comparison with current time
-	private int time = 0; // time that has passed ingame
+	private int time = 0; // time that has passed in the current level
+	private int lvl = 0; // current difficulty level
 
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
@@ -49,13 +49,13 @@ public class GuiRenderer {
 	 * @return string giving time left in difficulty level as a string
 	 */
 	public String timeConversion() {
-		String sec = String.valueOf(time%60);	//number of seconds since game start
-		String min = String.valueOf(time/60);	//number of minutes since game start
-		
-		if(sec.length() == 1)
-			sec = "0"+sec;
-		if(min.length() == 1)
-			min = "0"+min;
+		String sec = String.valueOf(time % 60); // number of seconds since game start
+		String min = String.valueOf(time / 60); // number of minutes since game start
+
+		if (sec.length() == 1)
+			sec = "0" + sec;
+		if (min.length() == 1)
+			min = "0" + min;
 
 		return min + ":" + sec;
 	}
@@ -179,8 +179,14 @@ public class GuiRenderer {
 	}
 
 	public void updateTimer() {
+		//set all variables related to time and difficulty
 		timeUpdate();
 		String digits = timeConversion();
+		if (digits == "05:00") {
+			time = 0;
+			lvl++;
+		}
+		
 		ModelTexture ducker2;
 		GuiTexture gui;
 
