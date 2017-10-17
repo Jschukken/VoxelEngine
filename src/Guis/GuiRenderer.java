@@ -23,8 +23,14 @@ public class GuiRenderer {
 	private Loader loader;
 	private List<GuiTexture> guis = new ArrayList<GuiTexture>();
 	private List<GuiTexture> timer = new ArrayList<GuiTexture>();
+	private int countdown = 0;
 	
 	public GuiRenderer(Loader load){
+	timer.add(null);
+	timer.add(null);
+	timer.add(null);
+	timer.add(null);
+	timer.add(null);
 	float[] pos = {-1, 1, -1, -1, 1, 1, 1, -1};
 	quad = load.loadToVao(pos);
 	guishader = new GuiShader();
@@ -84,8 +90,9 @@ public class GuiRenderer {
 		};
 		
 		// Timer HUD
-		ModelTexture ducker2 = new ModelTexture(loader.loadTexture("Potato"));
-		GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new Vector2f(0.15f, 0.1f));
+		ModelTexture ducker2 = new ModelTexture(loader.loadTexture("Back Button"));
+		//GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new Vector2f(0.15f, 0.1f));
+		GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(-0.075f, 0.9f), new Vector2f(0.03f, 0.1f));
 		
 		// End Point HP HUD
 		ModelTexture ducker3 = new ModelTexture(loader.loadTexture("Potato"));
@@ -106,22 +113,33 @@ public class GuiRenderer {
 		};
 		
 		guis.add(gui);
+		//guis.add(gui2);
 		guis.add(gui3);
 		guis.add(gui4);
 		
 	}
 	
 	public void updateTimer() {
-		String digits = timer.toString();
-		Vector2f pos = new Vector2f(0f, 0.9f);
+		String digits = Integer.toString(countdown);
+		Vector2f pos = new Vector2f(-0.06f, 0.9f);
+		timer.clear();
+		ModelTexture ducker2;
+		GuiTexture gui;
 		while (digits.length() < 4) {
 			digits = "0" + digits;
 		}
-		digits = digits.substring(0, 1) + ":" + digits.substring(2, 3);
+		digits = digits.substring(0, 2) + ":" + digits.substring(2);
 		for (int i = 0; i < digits.length(); i++) {
 			// TODO: Update pos vector
+			ducker2 = new ModelTexture(loader.loadTexture("Back Button"));
+			//GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new Vector2f(0.15f, 0.1f));
+			gui = new GuiTexture(ducker2 , pos, new Vector2f(0.03f, 0.1f));
+			timer.add(gui);
 			
-			switch (digits.charAt(i)) {
+			pos.x = pos.x + 0.03f;
+			System.out.println(pos.x);
+			
+		/*	switch (digits.charAt(i)) {
 			// TODO: Call relevant draw function (Will still make those) template = drawNumber(loader, pos, scale);
 				case '0':
 					
@@ -154,7 +172,7 @@ public class GuiRenderer {
 					
 					
 				case ':':
-			}
+			}*/
 		}
 	}
 	
