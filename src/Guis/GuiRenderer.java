@@ -16,6 +16,13 @@ import RenderEngine.Loader;
 import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 
+/**
+ * Renders the GUI
+ * 
+ * @author Berk Aksakal
+ * @edited Timo Aerts
+ * @edited Chiel Ton
+ */
 public class GuiRenderer {
 
 	private RawModel quad;
@@ -91,8 +98,13 @@ public class GuiRenderer {
 		ModelTexture ducker3 = new ModelTexture(loader.loadTexture("Potato"));
 		GuiTexture gui3 = new GuiTexture(ducker3 , new Vector2f(0.6f, 0.9f), new Vector2f(0.4f, 0.1f)) {
 			@Override
+			//adjusts scale and repositions to keep right edge in the same position
 			public void update() {
-				this.setScale(new Vector2f(this.getMaxScale().x*((float) MainGameLoop.mapManager.destination.getHealthPoints() / (float) MainGameLoop.mapManager.destination.getMaxHealthPoints()), this.getScale().y));
+				float scale = (float) MainGameLoop.mapManager.destination.getHealthPoints() / (float) MainGameLoop.mapManager.destination.getMaxHealthPoints();
+				float posX = (float) this.getStartPosition().x - this.getMaxScale().x*(1 - scale);
+				float posY = (float) this.getPosition().y;
+				this.setPosition (new Vector2f(posX, posY));
+				this.setScale (new Vector2f(this.getMaxScale().x*scale, this.getScale().y));
 			}
 		};
 		
@@ -101,7 +113,14 @@ public class GuiRenderer {
 		GuiTexture gui4 = new GuiTexture(ducker4 , new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f)) {
 			@Override
 			public void update() {
-				this.setScale(new Vector2f(this.getMaxScale().x*((float) MainGameLoop.mapManager.camera.getHp() / (float) MainGameLoop.mapManager.camera.getMaxhp()), this.getScale().y));
+				//adjusts scale and repositions to keep right edge in the same position
+				//copy from end point HD which is tested, this one is not though
+				float scale = (float) MainGameLoop.mapManager.camera.getHp() / (float) MainGameLoop.mapManager.camera.getMaxhp();
+				float posX = (float) this.getStartPosition().x - this.getMaxScale().x*(1 - scale);
+				float posY = (float) this.getPosition().y;
+				this.setPosition (new Vector2f(posX, posY));
+				this.setScale (new Vector2f(this.getMaxScale().x*scale, this.getScale().y));
+				
 			}
 		};
 		
