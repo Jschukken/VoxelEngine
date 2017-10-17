@@ -14,7 +14,7 @@ public class EnemyEntity extends Entity {
 
 	private int[] path;
 	private int pathPosition = 0;
-	private static final float ENEMY_SPEED = .0801f;
+	private static final float ENEMY_SPEED = .0601f;
 	private Vector3f position;
 	private Vector3f direction;
 	private float rotX, rotY, rotZ;

@@ -92,6 +92,7 @@ public class AudioHandler {
 				.put(new float[] { listenerP.x, listenerP.y, listenerP.z }).rewind();
 
 		AL10.alListener(AL10.AL_POSITION, listenerPos);
+		AL10.alSourcef(audioID[0].get(0), AL10.AL_GAIN, 2f);
 
 		AL10.alSourcePlay(audioID[0].get(0));
 	}
@@ -102,6 +103,7 @@ public class AudioHandler {
 	 */
 	public void startSong(IntBuffer[] audioID) {
 		AL10.alSourcei(audioID[0].get(0), AL10.AL_LOOPING, AL10.AL_TRUE);
+		AL10.alSourcef(audioID[0].get(0), AL10.AL_GAIN, 0.05f);
 		AL10.alSourcePlay(audioID[0].get(0));
 	}
 

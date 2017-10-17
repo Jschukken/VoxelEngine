@@ -123,14 +123,14 @@ public class MapManager {
 				for (int z = 0; z < map[0][0].length; z++) {
 					if (map[x][y][z] == 1) {
 						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
-					} else if (map[x][y][z] == 2) {
+					} else if (map[x][y][z] == 3) {
 
 						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2,
 								map.length - 2, 1, 1, 1 };
 						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1), tMod, arr));
 
-					} else if (map[x][y][z] == 3) {
+					} else if (map[x][y][z] == 2) {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
 						camera.setPosition(new Vector3f(x,y+6,z));

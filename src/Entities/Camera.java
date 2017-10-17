@@ -40,6 +40,7 @@ public class Camera {
 	private int hp;
 
 	private IntBuffer[] jumpSFX;
+	private IntBuffer[] getHitSFX;
 
 	public Camera(Vector3f position, float rotX, float rotY, float rotZ) {
 		super();
@@ -48,6 +49,7 @@ public class Camera {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		jumpSFX = MainGameLoop.audH.createSound("jump");
+		getHitSFX = MainGameLoop.audH.createSound("hurt");
 		lastHit = System.nanoTime();
 		hp = MAX_HP;
 	}
@@ -168,7 +170,7 @@ public class Camera {
 	 */
 	private void checkHit() {
 		Entity ent = CollisionHandler.hitDetectionSingleEnemy(position);
-		if(ent!= null && System.nanoTime()-lastHit>ONE_SECOND/4){
+		if(ent!= null && System.nanoTime()-lastHit>ONE_SECOND/3){
 			lastHit = System.nanoTime();
 			getHit();
 		}
@@ -191,7 +193,7 @@ public class Camera {
 	 * checks for and applied health regen
 	 */
 	private void checkRegen(){
-		if(hp<MAX_HP && System.nanoTime()-lastHit > 2*ONE_SECOND && System.nanoTime()-lastRegen > ONE_SECOND){
+		if(hp<MAX_HP && System.nanoTime()-lastHit > 5*ONE_SECOND && System.nanoTime()-lastRegen > ONE_SECOND){
 			hp++;
 			//maybe play a sound
 		}
@@ -202,7 +204,7 @@ public class Camera {
 	 */
 	public void getHit() {
 		hp--;
-		MainGameLoop.audH.playAudio(jumpSFX, position, position);
+		MainGameLoop.audH.playAudio(getHitSFX, position, position);
 		for(int i = 0; i < 30; i++){
 			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y,position.z));
 		}
