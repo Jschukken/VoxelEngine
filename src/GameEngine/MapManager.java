@@ -253,7 +253,7 @@ public class MapManager {
 	}
 
 	public void update() {
-		camera.move();
+		camera.update();
 		try {
 			destination.update();
 		} catch (NullPointerException e) {

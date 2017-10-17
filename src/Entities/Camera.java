@@ -20,7 +20,9 @@ import ToolBox.TexturedModelMaker;
 public class Camera {
 
 	private static float FRICTION = 4;
+	public static int MAX_HP = 10;
 	public static final boolean GRAVITY = true;
+	private static final long ONE_SECOND = 1000000000;
 
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
@@ -32,6 +34,8 @@ public class Camera {
 	private float turnSpeed = 0.1f;
 	private float currSpeed;
 	private float strafe;
+	private long lastHit;
+	private long lastRegen;
 
 	private int hp;
 
@@ -44,123 +48,164 @@ public class Camera {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		jumpSFX = MainGameLoop.audH.createSound("jump");
-		hp = 10;
+		lastHit = System.nanoTime();
+		hp = MAX_HP;
+	}
+
+	public void update() {
+		if (Mouse.isGrabbed()) {
+			checkJump();
+			calculateMove();
+			applieMove();
+			applieGravity();
+			checkHit();
+			checkRegen();
+			attack();
+		}
 	}
 
 	/**
-	 * takes user input to move the position and rotation of camera
+	 * calculates the velocity and rotation of the camera from input
 	 */
-	public void move() {
+	private void calculateMove() {
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			maxSpeed = 0.4f;
+		if (Keyboard.isKeyDown(Keyboard.KEY_W) && !Keyboard.isKeyDown(Keyboard.KEY_S)) {
+			currSpeed = -acceleration;
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_S) && !Keyboard.isKeyDown(Keyboard.KEY_W)) {
+			currSpeed = acceleration;
 		} else {
-			maxSpeed = 0.09f;
+			currSpeed = 0;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_A) && !Keyboard.isKeyDown(Keyboard.KEY_D)) {
+			strafe = -acceleration;
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_D) && !Keyboard.isKeyDown(Keyboard.KEY_A)) {
+			strafe = acceleration;
+		} else {
+			strafe = 0;
 		}
 
-		if (Mouse.isGrabbed()) {
+		rotX += -Mouse.getDY() * turnSpeed;
+		rotY += Mouse.getDX() * turnSpeed;
 
-			if (Keyboard.isKeyDown(Keyboard.KEY_W) && !Keyboard.isKeyDown(Keyboard.KEY_S)) {
-				currSpeed = -acceleration;
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_S) && !Keyboard.isKeyDown(Keyboard.KEY_W)) {
-				currSpeed = acceleration;
-			} else {
-				currSpeed = 0;
-			}
-			if (Keyboard.isKeyDown(Keyboard.KEY_A) && !Keyboard.isKeyDown(Keyboard.KEY_D)) {
-				strafe = -acceleration;
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_D) && !Keyboard.isKeyDown(Keyboard.KEY_A)) {
-				strafe = acceleration;
-			} else {
-				strafe = 0;
-			}
+		if (rotX > 80) {
+			rotX = 80;
+		} else if (rotX < -80) {
+			rotX = -80;
+		}
 
-			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && (CollisionHandler
-					.checkPlayerCollision(new Vector3f(position.x, position.y + dy, position.z))
-					|| CollisionHandler.protectedZones(new Vector3f(position.x, position.y + dy, position.z)))) {
-				dy = jumpHeight;
-				MainGameLoop.audH.playAudio(jumpSFX, position, position);
-			}
+		// dy = (float)(currSpeed*Math.sin(Math.toRadians(rotX)));
+		dx += (float) -(currSpeed * Math.sin(Math.toRadians(rotY)));
+		dz += (float) (currSpeed * Math.cos(Math.toRadians(rotY)));
 
-			rotX += -Mouse.getDY() * turnSpeed;
-			rotY += Mouse.getDX() * turnSpeed;
+		dx += (float) (strafe * Math.sin(Math.toRadians(rotY + 90)));
+		dz += (float) -(strafe * Math.cos(Math.toRadians(rotY + 90)));
 
-			if (rotX > 80) {
-				rotX = 80;
-			} else if (rotX < -80) {
-				rotX = -80;
-			}
+		// maths to make sure the vector of movement is at most max speed
+		double dx2 = Math.pow(dx, 2);
+		double dz2 = Math.pow(dz, 2);
+		double o = dx2 + dz2 - Math.pow(maxSpeed, 2);
 
-			// dy = (float)(currSpeed*Math.sin(Math.toRadians(rotX)));
-			dx += (float) -(currSpeed * Math.sin(Math.toRadians(rotY)));
-			dz += (float) (currSpeed * Math.cos(Math.toRadians(rotY)));
-
-			dx += (float) (strafe * Math.sin(Math.toRadians(rotY + 90)));
-			dz += (float) -(strafe * Math.cos(Math.toRadians(rotY + 90)));
-
-			// maths to make sure the hypotinus of movement is at most max speed
-			// this was a massive pain in the ass btw
-			double dx2 = Math.pow(dx, 2);
-			double dz2 = Math.pow(dz, 2);
-			double o = dx2 + dz2 - Math.pow(maxSpeed, 2);
-
-			if (o > 0) {
-				dx = Math.signum(dx) * (float) Math.sqrt(dx2 - (o * dx2 / (dx2 + dz2)));
-				dz = Math.signum(dz) * (float) Math.sqrt(dz2 - (o * dz2 / (dx2 + dz2)));
-			}
-
-			// collision handeling
-			position.x += dx;
-			for (int i = 0; i < 4 && (CollisionHandler.checkPlayerCollision(position)
-					|| CollisionHandler.protectedZones(position)); i++) {
-				position.x -= dx / 4;
-
-			}
-			position.z += dz;
-			for (int i = 0; i < 4 && (CollisionHandler.checkPlayerCollision(position)
-					|| CollisionHandler.protectedZones(position)); i++) {
-				position.z -= dz / 4;
-
-			}
-			position.y += dy;
-			if (CollisionHandler.checkPlayerCollision(position) || CollisionHandler.protectedZones(position)) {
-
-				position.y -= dy;
-				if (dy < 0 && currSpeed == 0 && strafe == 0) {
-					dx -= dx / FRICTION;
-					dz -= dz / FRICTION;
-				}
-				dy = 0;
-
-			}
-
-			if (GRAVITY) {
-				dy = Math.max(dy - 0.01f, -maxSpeed * 4);
-			}
-
-			fallCheck();
-
-			if (Mouse.isButtonDown(0)) {
-				attack();
-			}
-
-			// System.out.println("\f (" + position.x + ", " + position.z + ",
-			// "+ position.y + ") ");
-
+		if (o > 0) {
+			dx = Math.signum(dx) * (float) Math.sqrt(dx2 - (o * dx2 / (dx2 + dz2)));
+			dz = Math.signum(dz) * (float) Math.sqrt(dz2 - (o * dz2 / (dx2 + dz2)));
 		}
 
 	}
 
+	/**
+	 * applies movement calculated to camera
+	 */
+	private void applieMove() {
+		position.x += dx;
+		for (int i = 0; i < 4 && (CollisionHandler.checkPlayerCollision(position)
+				|| CollisionHandler.protectedZones(position)); i++) {
+			position.x -= dx / 4;
+
+		}
+		position.z += dz;
+		for (int i = 0; i < 4 && (CollisionHandler.checkPlayerCollision(position)
+				|| CollisionHandler.protectedZones(position)); i++) {
+			position.z -= dz / 4;
+
+		}
+		position.y += dy;
+		if (CollisionHandler.checkPlayerCollision(position) || CollisionHandler.protectedZones(position)) {
+
+			position.y -= dy;
+			if (dy < 0 && currSpeed == 0 && strafe == 0) {
+				dx -= dx / FRICTION;
+				dz -= dz / FRICTION;
+			}
+			dy = 0;
+		}
+	}
+
+	/**
+	 * checks for and applies jump
+	 */
+	private void checkJump() {
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)
+				&& (CollisionHandler.checkPlayerCollision(new Vector3f(position.x, position.y + dy, position.z))
+						|| CollisionHandler.protectedZones(new Vector3f(position.x, position.y + dy, position.z)))) {
+			dy = jumpHeight;
+			MainGameLoop.audH.playAudio(jumpSFX, position, position);
+		}
+	}
+
+	/**
+	 * applies gravity to camera
+	 */
+	private void applieGravity() {
+		if (GRAVITY) {
+			dy = Math.max(dy - 0.01f, -maxSpeed * 4);
+		}
+
+		fallCheck();
+	}
+
+	/**
+	 * checks if the camera should take dmg
+	 */
+	private void checkHit() {
+		Entity ent = CollisionHandler.hitDetectionSingleEnemy(position);
+		if(ent!= null && System.nanoTime()-lastHit>ONE_SECOND/4){
+			lastHit = System.nanoTime();
+			getHit();
+		}
+	}
+
+	/**
+	 * attacks if button 0 is pressed
+	 */
 	private void attack() {
-		for (int i = 0; i < 2; i++) {
-			MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
-					new Vector3f(position.x, position.y + .7f, position.z), getLookAt(), new Vector3f(rotX+0.0001f, rotY, rotZ),
-					new Vector3f(.05f, .05f, .05f));
+		if (Mouse.isButtonDown(0)) {
+			for (int i = 0; i < 2; i++) {
+				MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
+						new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),
+						new Vector3f(rotX + 0.0001f, rotY, rotZ), new Vector3f(.05f, .05f, .05f));
+			}
+		}
+	}
+	
+	/**
+	 * checks for and applied health regen
+	 */
+	private void checkRegen(){
+		if(hp<MAX_HP && System.nanoTime()-lastHit > 2*ONE_SECOND && System.nanoTime()-lastRegen > ONE_SECOND){
+			hp++;
+			//maybe play a sound
 		}
 	}
 
+	/**
+	 * simulates getting hit
+	 */
 	public void getHit() {
 		hp--;
+		MainGameLoop.audH.playAudio(jumpSFX, position, position);
+		for(int i = 0; i < 30; i++){
+			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y,position.z));
+		}
 		if (hp <= 0) {
 			MainGameLoop.setState("gameover");
 		}
@@ -178,11 +223,11 @@ public class Camera {
 	}
 
 	public Vector3f getLookAt() {
-		Vector3f lookAt = MatrixMath.rotateVector(new Vector3f(rotX,rotY,rotZ));
-		if(lookAt.length()>0){
+		Vector3f lookAt = MatrixMath.rotateVector(new Vector3f(rotX, rotY, rotZ));
+		if (lookAt.length() > 0) {
 			return lookAt;
 		}
-		return new Vector3f(1,0,0);
+		return new Vector3f(1, 0, 0);
 
 	}
 
