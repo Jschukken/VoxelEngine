@@ -48,7 +48,7 @@ public class MapManager {
 	public List<Entity> particleEntities = new ArrayList<Entity>();
 	public List<Entity> attackEntities = new ArrayList<Entity>();
 	public Entity skyBox;
-	public Entity destination;
+	public DestinationEntity destination;
 	public Camera camera;
 
 	public MapManager() {
@@ -119,6 +119,7 @@ public class MapManager {
 	public void loadMap() {
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
+		TexturedModel texMod = TexturedModelMaker.destinationModel(loader);
 		addSkyBoxEntity(TexturedModelMaker.skyBoxModel(loader), new Vector3f(camera.getPosition()));
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
@@ -126,7 +127,7 @@ public class MapManager {
 					if (map[x][y][z] == 1) {
 						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if (map[x][y][z] == 2) {
-						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
+						destination = new DestinationEntity(texMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
 						camera.setPosition(new Vector3f(x, y + 6, z));
 						// } else if (x == 0 || y == 0 || z == 0 || z ==
