@@ -1,7 +1,5 @@
 package Entities;
 
-import java.util.Arrays;
-
 import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
@@ -20,7 +18,6 @@ public class SpawnPointEntity extends Entity {
 	public SpawnPointEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale, TexturedModel enemy, int[] path) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.enemy = enemy;
-		//this.path = path;
 		this.path = CreatePath.createPath(position);
 		this.position = position;
 		spawnTimer = (int)(Math.random()*spawnRate);
