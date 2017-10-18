@@ -95,8 +95,10 @@ public class CreatePath {
 		// obtain, scale and return path
 		int[] ret = new int[path.size()];
 		for (int i = 0; i < path.size(); i++) {
-			ret[i] = path.get(i);
+			ret[i] = 5*(path.get(i)-1)+3;
+			
 		}
+		
 		System.out.println(Arrays.toString(ret));
 		return ret;
 	}

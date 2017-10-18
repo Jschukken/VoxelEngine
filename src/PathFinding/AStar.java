@@ -91,16 +91,20 @@ public class AStar {
 			// check if parent can go to open
 			for (Node temp : successor) {
 				temp.g = q.g + 1;
-				temp.h = Math.abs(temp.x - DX) + Math.abs(temp.y - DY);
+				temp.h = calculateH(temp.x, temp.y);
 				temp.f = temp.g + temp.h;
 
 				boolean add = true;
 				for (Node comp : open)
-					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f)
+					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f) {
 						add = false;
+						continue;
+					}
 				for (Node comp : closed)
-					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f)
+					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f) {
 						add = false;
+						continue;
+					}
 				if (add) {
 					open.add(temp);
 				}
