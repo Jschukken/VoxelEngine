@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
+import GameEngine.MapManager;
 import Models.TexturedModel;
 import RenderEngine.OBJLoader;
 import ToolBox.TexturedModelMaker;
@@ -95,6 +96,7 @@ public class EnemyEntity extends Entity {
 			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube, new Vector3f(position.x,position.y,position.z));
 		}
 		hp--;
+		setModel(MapManager.hitModel); 
 		if(hp<=0){
 			destroy();
 		}
