@@ -90,7 +90,7 @@ public class CreatePath {
 				}
 		// set vectors to 2D
 		Vector2f destination = new Vector2f(dx, dy);
-		Vector2f spawn = new Vector2f(s.getX() / 5 + 3, s.getZ() / 5 + 3);
+		Vector2f spawn = new Vector2f(s.getX() / Map.SCALE + 1, s.getZ() / Map.SCALE + 1);
 		path = AStar.startAStar(lmap, destination, spawn);
 		// obtain, scale and return path
 		int[] ret = new int[path.size()];
