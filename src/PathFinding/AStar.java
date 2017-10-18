@@ -4,30 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-
-import Map.Map;
 
 /**
  * Finds a path for the enemies to follow using A*
  * 
  * @author Chiel Ton
- *
+ * @edited Frouke Hekker
  */
 public class AStar {
-	private static int DX;// end point x coordinate
-	private static int DY;// end point y coordinate
-	private static int[][] MAP;// 2D version of current map
+	private static int DX; // end point x coordinate
+	private static int DY; // end point y coordinate
+	private static int[][] MAP; // 2D version of current map
 
 	/**
 	 * Calculates the heuristic value for the given node (Manhattan distance)
 	 * 
-	 * @param a
-	 *            Node for which the h value must be calculated
-	 * @return h
+	 * @param x
+	 *            x coordinate from the node
+	 * @param y
+	 *            y coordinate from the node
+	 * @return h estimated 'distance' to the end point
 	 */
 	public static double calculateH(int x, int y) {
-		// calculate manhattan distance
+		// calculate Manhattan distance
 		return Math.abs(x - DX) + Math.abs(y - DY);
 	}
 
@@ -77,34 +76,32 @@ public class AStar {
 
 		// run the actual algorithm
 		while (open.size() != 0) {
+			// next working node
 			q = open.get(minimalF(open));
 			open.remove(q);
-			// checking whether destination has been reached
-			if (q.x == DX && q.y == DY) {
-				break;
-			}
+
 			// adding four possible parents
-			if (MAP[q.x + 1][q.y] != 0)
+			if (MAP[q.x + 1][q.y] == 1)
 				successor.add(new Node(q.x + 1, q.y, q));
-			if (MAP[q.x - 1][q.y] != 0)
+			if (MAP[q.x - 1][q.y] == 1)
 				successor.add(new Node(q.x - 1, q.y, q));
-			if (MAP[q.x][q.y + 1] != 0)
+			if (MAP[q.x][q.y + 1] == 1)
 				successor.add(new Node(q.x, q.y + 1, q));
-			if (MAP[q.x][q.y - 1] != 0)
+			if (MAP[q.x][q.y - 1] == 1)
 				successor.add(new Node(q.x, q.y - 1, q));
 			// check if parent can go to open
 			for (Node temp : successor) {
-				temp.g = q.g + 1;
-				temp.h = Math.abs(temp.x - DX) + Math.abs(temp.y - DY);
-				temp.f = temp.g + temp.h;
-
 				boolean add = true;
 				for (Node comp : open)
-					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f)
+					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f) {
 						add = false;
+						continue;
+					}
 				for (Node comp : closed)
-					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f)
+					if (comp.x == temp.x && comp.y == temp.y && comp.f < temp.f) {
 						add = false;
+						continue;
+					}
 				if (add) {
 					open.add(temp);
 				}
@@ -112,6 +109,17 @@ public class AStar {
 			successor.clear();
 			closed.add(q);
 		}
+
+		// finding the most effective point next to the end
+		double minF = Double.MAX_VALUE;
+		for (Node comp : closed) {
+			if (((comp.x + 1 == DX && comp.y == DY) || (comp.x - 1 == DX && comp.y == DY)
+					|| (comp.x == DX && comp.y + 1 == DY) || (comp.x == DX && comp.y - 1 == DY)) && comp.f < minF) {
+				minF = comp.f;
+				q = comp;
+			}
+		}
+
 		// from destination node track via parents back to spawn
 		while (q.p != null) {
 			pathNodes.add(q);
@@ -119,15 +127,16 @@ public class AStar {
 		}
 		// turn node list to desired integer list
 		for (int i = pathNodes.size() - 1; i >= 0; i--) {
-			Node current = pathNodes.get(i);
-			path.add(current.x);
-			path.add(current.y);
+			path.add(pathNodes.get(i).x);
+			path.add(pathNodes.get(i).y);
 		}
+		path.add(DX);
+		path.add(DY);
 		return path;
 	}
 
 	/**
-	 * starts the execution of A*
+	 * starts the execution of A* does not include spawn, but includes destination
 	 * 
 	 * @param m
 	 *            the current 3D map
@@ -146,7 +155,6 @@ public class AStar {
 		MAP = m;
 
 		// create and return path
-		// does not include spawn
 		return aStar(sx, sy);
 	}
 }
