@@ -37,6 +37,7 @@ public class MapManager {
 	public Entity destination;
 	public Camera camera;
 	public static TexturedModel hitModel;
+	public static TexturedModel runModel;
 
 	public MapManager() {
 		map = Map.createGoodMap();
@@ -49,6 +50,7 @@ public class MapManager {
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
 		hitModel = TexturedModelMaker.robotHitModel(loader);
+		runModel = TexturedModelMaker.robotRunModel(loader);
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
 				for (int z = 0; z < map[0][0].length; z++) {

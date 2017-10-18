@@ -1,14 +1,11 @@
 package ToolBox;
 
-import Entities.Button;
+import org.lwjgl.util.Color;
+
 import Models.RawModel;
 import Models.TexturedModel;
-import RenderEngine.DisplayManager;
 import RenderEngine.Loader;
-import RenderEngine.MasterMenuRenderer;
 import RenderEngine.OBJLoader;
-import RenderEngine.TexturedModelRenderer;
-import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
 
 /**
@@ -62,13 +59,19 @@ public class TexturedModelMaker {
 	
 	public static TexturedModel robotModel(Loader loader) {
 
-		RawModel model =  OBJLoader.loadObjModel("torso", loader);
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
+		RawModel model =  OBJLoader.loadObjModel("person", loader);
+		ModelTexture texture =  new ModelTexture(loader.loadTexture("Tile"));
 		return new TexturedModel(model, texture);
 	}
 	
 	public static TexturedModel robotHitModel(Loader loader) {
 		RawModel model =  OBJLoader.loadObjModel("person", loader);
+		ModelTexture texture = new ModelTexture(loader.loadTexture("test"));
+		return new TexturedModel(model, texture);
+	}
+	
+	public static TexturedModel robotRunModel(Loader loader) {
+		RawModel model =  OBJLoader.loadObjModel("torso", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
 		return new TexturedModel(model, texture);
 	}
