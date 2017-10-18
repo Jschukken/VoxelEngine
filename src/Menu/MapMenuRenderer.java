@@ -53,7 +53,7 @@ public class MapMenuRenderer {
 				} else if (tileType == 1) { // Path
 					tileTexture = "white";
 				} else if (tileType == 2) { // Destination
-					tileTexture = "blue";
+					tileTexture = "Companion Cube";
 				} else if (tileType == 3) { // Spawn
 					tileTexture = "red";
 				}
