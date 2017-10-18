@@ -252,5 +252,13 @@ public class Camera {
 	public float getRotZ() {
 		return rotZ;
 	}
+	
+	public float getHP() {
+		return hp;
+	}
+	
+	public float getMaxHP() {
+		return MAX_HP;
+	}
 
 }
