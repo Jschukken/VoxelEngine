@@ -21,13 +21,6 @@ import RenderEngine.MasterGameRenderer;
 import Shaders.StaticShader;
 import ToolBox.TexturedModelMaker;
 
-/**
- * Manages and loads the map
- * 
- * @author Jelle Schukken
- * @edited Chiel Ton
- * @edited Frouke Hekker
- */
 public class MapManager {
 
 	private static final int RENDER_DISTANCE = 30;
@@ -88,6 +81,7 @@ public class MapManager {
 			good = false;
 			Map.createMap();
 			twoDMap = Map.m;
+			Map.print2D(twoDMap);
 			
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
@@ -96,6 +90,10 @@ public class MapManager {
 				valid = true;
 				good = kNear.classify(characteristics); // use k-nearest
 			}
+			System.out.println(characteristics);
+			//disable this when k-nearest works
+			//valid = true;
+			//good = true;
 			characteristics.clear();
 		}
 		map = Map.mapTo3D();
