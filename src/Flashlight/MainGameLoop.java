@@ -144,9 +144,11 @@ public class MainGameLoop {
 				menuh.setState(state);
 				menuh.updateButtons(loader);
 				menuh.renderMenu(menuShader, menuRenderer);
+				Mouse.setGrabbed(false);
 				break;
 
 			case "pause":
+				Mouse.setGrabbed(false);
 				manageMusic();
 				menuh.setState(state);
 				menuh.updateButtons(loader);

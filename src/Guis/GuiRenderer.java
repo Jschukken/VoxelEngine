@@ -31,6 +31,7 @@ public class GuiRenderer {
 	private Loader loader;
 	private List<GuiTexture> guis = new ArrayList<GuiTexture>();
 	private List<GuiTexture> timer = new ArrayList<GuiTexture>();
+	private List<GuiTexture> levels = new ArrayList<GuiTexture>();
 
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
@@ -111,32 +112,16 @@ public class GuiRenderer {
 		guishader.stop();
 	}
 
-	public GuiTexture drawZero(Loader loader, Vector2f pos, Vector2f scale) {
-		ModelTexture mTex = new ModelTexture(loader.loadTexture("Potato"));
-		GuiTexture number = new GuiTexture(mTex, pos, scale);
-		return number;
-	}
-
 	public void createHUD() {
 
-		// Difficulty level HUD
-		ModelTexture ducker = new ModelTexture(loader.loadTexture("Potato"));
-		GuiTexture gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f)) {
-			@Override
-			public void update() {
-
-			}
-		};
-
-		// Timer HUD
-		ModelTexture ducker2 = new ModelTexture(loader.loadTexture("Back Button"));
-		// GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new
-		// Vector2f(0.15f, 0.1f));
-		GuiTexture gui2 = new GuiTexture(ducker2, new Vector2f(-0.075f, 0.9f), new Vector2f(0.03f, 0.1f));
-
+		ModelTexture modelTex = new ModelTexture(loader.loadTexture("blue"));
+		GuiTexture gui2 = new GuiTexture(modelTex, new Vector2f(0.6f, 0.9f), new Vector2f (0.4f, 0.1f));
+		guis.add(gui2);
+		gui2 = new GuiTexture(modelTex, new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f));
+		guis.add(gui2);
 		// End Point HP HUD
-		ModelTexture ducker3 = new ModelTexture(loader.loadTexture("Potato"));
-		GuiTexture gui3 = new GuiTexture(ducker3, new Vector2f(0.6f, 0.9f), new Vector2f(0.4f, 0.1f)) {
+		ModelTexture ducker3 = new ModelTexture(loader.loadTexture("red"));
+		GuiTexture gui3 = new GuiTexture(ducker3, new Vector2f(0.6f, 0.9f), new Vector2f(0.399f, 0.099f)) {
 			@Override
 			// adjusts scale and repositions to keep right edge in the same position
 			public void update() {
@@ -150,8 +135,8 @@ public class GuiRenderer {
 		};
 
 		// Player HP HUD
-		ModelTexture ducker4 = new ModelTexture(loader.loadTexture("Potato"));
-		GuiTexture gui4 = new GuiTexture(ducker4, new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f)) {
+		ModelTexture ducker4 = new ModelTexture(loader.loadTexture("red"));
+		GuiTexture gui4 = new GuiTexture(ducker4, new Vector2f(-0.6f, -0.9f), new Vector2f(0.399f, 0.099f)) {
 			@Override
 			public void update() {
 				// adjusts scale and repositions to keep right edge in the same position
@@ -166,73 +151,155 @@ public class GuiRenderer {
 			}
 		};
 
+		ModelTexture ducker = new ModelTexture(loader.loadTexture("diffLevelOne"));
+		GuiTexture gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+
 		guis.add(gui);
-		// guis.add(gui2);
 		guis.add(gui3);
 		guis.add(gui4);
+		
+		levels.add(gui);
 
-		timer.add(gui);
-		timer.add(gui);
-		timer.add(gui);
-		timer.add(gui);
-		timer.add(gui);
+		ducker = new ModelTexture(loader.loadTexture("diffLevelTwo"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+		
+		ducker = new ModelTexture(loader.loadTexture("diffLevelThree"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
 
+		ducker = new ModelTexture(loader.loadTexture("diffLevelFour"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelFive"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelSix"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelSeven"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelEight"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelNine"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelTen"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelEleven"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelTwelve"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelThirteen"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelFourteen"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelFifteen"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+/*
+		ducker = new ModelTexture(loader.loadTexture("diffLevelSixteen"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelSeventeen"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);
+
+		ducker = new ModelTexture(loader.loadTexture("diffLevelEighteen"));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		levels.add(gui);*/
+
+		
+		// create 5 slots in the timer list to be overwritten by the proper textures.
+		timer.add(gui);
+		timer.add(gui);
+		timer.add(gui);
+		timer.add(gui);
+		timer.add(gui);
 	}
 
 	public void updateTimer() {
 		//set all variables related to time and difficulty
 		timeUpdate();
 		String digits = timeConversion();
-		if (digits == "05:00") {
+		if (digits == "5:00") {
 			time = 0;
-			lvl++;
+			if (lvl < levels.size()-1) {
+				lvl++;
+				guis.set(0, levels.get(lvl));
+			}
 		}
 		
-		ModelTexture ducker2;
+		ModelTexture mTex;
 		GuiTexture gui;
 
 		for (int i = 0; i < digits.length(); i++) {
 			// TODO: Update pos vector
-			ducker2 = new ModelTexture(loader.loadTexture("Square nrEight"));
 			// GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new
 			// Vector2f(0.15f, 0.1f));
-			gui = new GuiTexture(ducker2, new Vector2f(-0.120f + (i * 0.06f), 0.9f), new Vector2f(0.03f, 0.1f));
-			timer.set(i, gui);
 
-			/*
-			 * switch (digits.charAt(i)) { // TODO: Call relevant draw function (Will still
-			 * make those) template = drawNumber(loader, pos, scale); case '0':
-			 * 
-			 * 
-			 * case '1':
-			 * 
-			 * 
-			 * case '2':
-			 * 
-			 * 
-			 * case '3':
-			 * 
-			 * 
-			 * case '4':
-			 * 
-			 * 
-			 * case '5':
-			 * 
-			 * 
-			 * case '6':
-			 * 
-			 * 
-			 * case '7':
-			 * 
-			 * 
-			 * case '8':
-			 * 
-			 * 
-			 * case '9':
-			 * 
-			 * 
-			 * case ':': }
-			 */
+			
+			  switch (digits.charAt(i)) {
+			  case '0':
+				  mTex = new ModelTexture(loader.loadTexture("nrZero"));
+				  break;
+			  case '1':
+				  mTex = new ModelTexture(loader.loadTexture("nrOne"));
+				  break;
+			  case '2':
+				  mTex = new ModelTexture(loader.loadTexture("nrTwo"));
+				  break;
+			  case '3':
+				  mTex = new ModelTexture(loader.loadTexture("nrThree"));
+				  break;
+			  case '4':
+				  mTex = new ModelTexture(loader.loadTexture("nrFour"));
+				  break;
+			  case '5':
+				  mTex = new ModelTexture(loader.loadTexture("nrFive"));
+				  break;
+			  case '6':
+				  mTex = new ModelTexture(loader.loadTexture("nrSix"));
+				  break;
+			  case '7':
+				  mTex = new ModelTexture(loader.loadTexture("nrSeven"));
+				  break;
+			  case '8':
+				  mTex = new ModelTexture(loader.loadTexture("nrEight"));
+				  break;
+			  case '9':
+				  mTex = new ModelTexture(loader.loadTexture("nrNine"));
+				  break;
+			  case ':': 
+				  mTex = new ModelTexture(loader.loadTexture("symColon"));
+				  break;
+			  default:
+				  mTex = new ModelTexture(loader.loadTexture("duck"));
+				  break;
+			}
+			//mTex = new ModelTexture(loader.loadTexture("Quit Button"));
+			gui = new GuiTexture(mTex, new Vector2f(-0.120f + (i * 0.06f), 0.9f), new Vector2f(0.03f, 0.1f));
+			timer.set(i, gui);
+			  
 		}
 	}
 

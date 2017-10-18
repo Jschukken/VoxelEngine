@@ -50,4 +50,7 @@ public class GuiTexture {
 	public void update() {
 		
 	}
+	public void setTexture(ModelTexture tex) {
+		this.texture = tex;
+	}
 }

@@ -133,7 +133,8 @@ public class MapManager {
 								new Vector3f(1, 1, 1), tMod, arr));
 
 					} else if (map[x][y][z] == 3) {
-						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
+						TexturedModel texMod = TexturedModelMaker.destinationModel(loader);
+						destination = new DestinationEntity(texMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
 						camera.setPosition(new Vector3f(x,y+4,z));
 					//	 } else if (x == 0 || y == 0 || z == 0 || z ==
