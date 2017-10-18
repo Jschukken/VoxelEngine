@@ -36,6 +36,7 @@ public class GuiRenderer {
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
 	private int lvl = 0; // current difficulty level
+	private final int DURATION = 300;
 
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
@@ -50,7 +51,7 @@ public class GuiRenderer {
 	 * @return string giving time left in difficulty level as a string
 	 */
 	public String timeConversion() {
-		int countdown = 300 - time;
+		int countdown = DURATION - time;
 		String sec = String.valueOf(countdown % 60); // number of seconds since game start
 		String min = String.valueOf(countdown / 60); // number of minutes since game start
 
@@ -241,11 +242,12 @@ public class GuiRenderer {
 		//set all variables related to time and difficulty
 		timeUpdate();
 		String digits = timeConversion();
-		if (digits == "5:00") {
+		if (digits.equals("00:00")) {
 			time = 0;
 			if (lvl < levels.size()-1) {
 				lvl++;
-				guis.set(0, levels.get(lvl));
+				System.out.println(lvl);
+				guis.set(2, levels.get(lvl));
 			}
 		}
 		
