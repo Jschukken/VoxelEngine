@@ -4,14 +4,15 @@ package PathFinding;
  * nodes in the A* algorithm
  * 
  * @author Chiel Ton
+ *
  */
 public class Node {
-	Node p; // parent node
-	int x; // x coordinate
-	int y; // y coordinate
-	double g; // accumulated till this point
-	double h; // estimated cost till end
-	double f; // g+h
+	Node p;
+	int x;
+	int y;
+	double g;
+	double h;
+	double f;
 
 	/**
 	 * constructor for a starting node (no parent)
