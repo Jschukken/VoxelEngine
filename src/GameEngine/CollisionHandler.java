@@ -94,38 +94,38 @@ public class CollisionHandler {
 		try {
 			// lower square
 			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .1)][(int) (entity.getCollisionPosition().y
+							+ .1)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
+					+ .1)][(int) (entity.getCollisionPosition().y
+							+ .1)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y
+							+ .1)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y
+							+ .1)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			}
 			// middle square
 			else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .1)][(int) (entity.getCollisionPosition().y
+							+ .9)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
 					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y
+							+ .9)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y
+							+ .9 )][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else {
 				return false;
