@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import Entities.Camera;
+import Entities.Light;
 import RenderEngine.MasterRenderer;
 
 /**
@@ -32,6 +33,7 @@ public class ShadowBox {
 	private float minY, maxY;
 	private float minZ, maxZ;
 	private Matrix4f lightViewMatrix;
+	private Light light;
 	private Camera cam;
 
 	private float farHeight, farWidth, nearHeight, nearWidth;
@@ -49,9 +51,9 @@ public class ShadowBox {
 	 * @param camera
 	 *            - the in-game camera.
 	 */
-	public ShadowBox(Matrix4f lightViewMatrix, Camera camera) {
+	public ShadowBox(Matrix4f lightViewMatrix, Camera cam) {
 		this.lightViewMatrix = lightViewMatrix;
-		this.cam = camera;
+		this.cam = cam;
 		calculateWidthsAndHeights();
 	}
 
@@ -61,16 +63,16 @@ public class ShadowBox {
 	 * possible while still ensuring that everything inside the camera's view
 	 * (within a certain range) will cast shadows.
 	 */
-	public void update() {
+	public void update(Light light) {
 		Matrix4f rotation = calculateCameraRotationMatrix();
-		Vector3f forwardVector = cam.getLookAt();
+		Vector3f forwardVector = new Vector3f(0, 0, 1.0f);
 
 		Vector3f toFar = new Vector3f(forwardVector);
 		toFar.scale(SHADOW_DISTANCE);
 		Vector3f toNear = new Vector3f(forwardVector);
 		toNear.scale(MasterRenderer.NEAR_PLANE);
-		Vector3f centerNear = Vector3f.add(toNear, cam.getPosition(), null);
-		Vector3f centerFar = Vector3f.add(toFar, cam.getPosition(), null);
+		Vector3f centerNear = Vector3f.add(toNear, light.getPosition(), null);
+		Vector3f centerFar = Vector3f.add(toFar, light.getPosition(), null);
 
 		Vector4f[] points = calculateFrustumVertices(rotation, forwardVector, centerNear,
 				centerFar);
@@ -212,8 +214,8 @@ public class ShadowBox {
 	 */
 	private Matrix4f calculateCameraRotationMatrix() {
 		Matrix4f rotation = new Matrix4f();
-		rotation.rotate((float) Math.toRadians(-cam.getRotX()), new Vector3f(0, 1, 0));
-		rotation.rotate((float) Math.toRadians(-cam.getRotY()), new Vector3f(1, 0, 0));
+		rotation.rotate((float) Math.toRadians(0.0f), new Vector3f(0, 1, 0));
+		rotation.rotate((float) Math.toRadians(0.0f), new Vector3f(1, 0, 0));
 		return rotation;
 	}
 

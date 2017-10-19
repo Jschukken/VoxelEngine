@@ -73,7 +73,7 @@ public class ShadowMapMasterRenderer {
 	 *            - the light acting as the sun in the scene.
 	 */
 	public void render(List<Entity> entities, Light sun) {
-		shadowBox.update();
+		shadowBox.update(sun);
 		Vector3f sunPosition = sun.getPosition();
 		Vector3f lightDirection = new Vector3f(-sunPosition.x, -sunPosition.y, -sunPosition.z);
 		prepare(lightDirection, shadowBox);
