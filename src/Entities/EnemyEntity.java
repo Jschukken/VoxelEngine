@@ -1,13 +1,12 @@
 package Entities;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
 import GameEngine.MapManager;
 import Models.TexturedModel;
-import RenderEngine.MasterGameRenderer;
+import PathFinding.AStar;
 import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
 
@@ -185,6 +184,9 @@ public class EnemyEntity extends Entity {
 	 * removes enemy from the game
 	 */
 	public void destroy() {
+		//saves the position of the enemy for later use in A*
+		AStar.upDeaths((int) position.x/5+1, (int) position.z/5+1);
+		//destroys the enemy
 		for (int i = 0; i < 100; i++) {
 			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,
 					new Vector3f(position.x, position.y, position.z));

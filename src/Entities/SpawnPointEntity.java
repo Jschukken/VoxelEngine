@@ -5,11 +5,16 @@ import org.lwjgl.util.vector.Vector3f;
 import Flashlight.MainGameLoop;
 import Models.TexturedModel;
 import PathFinding.CreatePath;
+import PathFinding.AStar;
+import Map.Map;
+import java.util.Arrays;
 
 public class SpawnPointEntity extends Entity {
 
 	private int spawnTimer = 0;
 	public static int spawnRate = 240;
+	private int pathTimer = 0;
+	public static int pathRate = 5 * spawnRate;
 	
 	private Vector3f position;
 	private TexturedModel enemy;
@@ -23,12 +28,19 @@ public class SpawnPointEntity extends Entity {
 		spawnTimer = (int)(Math.random()*spawnRate);
 	}
 	
-	public void update(){
+	public void update() {
 		spawnTimer++;
-		if(spawnTimer >= spawnRate){
+		pathTimer++;
+		// spawn enemy if sufficient time has passed
+		if (spawnTimer >= spawnRate) {
 			spawnTimer = 0;
-			Vector3f p = new Vector3f(position.x,position.y,position.z);
-			MainGameLoop.mapManager.addActiveEntity(enemy, p, path);		
+			Vector3f p = new Vector3f(position.x, position.y, position.z);
+			MainGameLoop.mapManager.addActiveEntity(enemy, p, path);
+		}
+		// update path if sufficient time has passed
+		if (pathTimer >= pathRate) {
+			pathTimer = 0;
+			this.path = CreatePath.createPath(position);
 		}
 	}
 }
