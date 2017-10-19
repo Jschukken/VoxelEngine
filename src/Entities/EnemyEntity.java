@@ -266,6 +266,6 @@ public class EnemyEntity extends Entity {
 	if(time > 10){
 		time = 0;
 	}
-	System.out.println("Time is: "+time);
+	//System.out.println("Time is: "+time);
 	}
 }
