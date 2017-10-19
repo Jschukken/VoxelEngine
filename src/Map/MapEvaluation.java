@@ -92,27 +92,6 @@ public class MapEvaluation {
 	private static void checkValid() {
 		int spawnacces = 0; // amount of spawns that can reach the end point via paths
 		found = false;
-
-		// run lee to check if the map is valid
-		for (int i = 0; i < map.length; i++)
-			for (int j = 0; j < map[0].length; j++)
-				if (map[i][j] == 3) {
-					lee(i, j);
-					if (found) {
-						spawnacces++;
-					}
-					// set values back to basic
-					found = false;
-					for (int k = 0; k < map.length; k++)
-						for (int l = 0; l < map[0].length; l++)
-							if (map[k][l] == 4)
-								map[k][l] = 1;
-				}
-
-		// check if all spawns worked
-		if (spawnacces == spawns) {
-			characteristics.add((double) 1);
-		} else {
 			characteristics.add((double) 0);
 		}
 	}
@@ -213,7 +192,6 @@ public class MapEvaluation {
 			}
 		}
 		normpathtile = (pathtile / (map.length * map[0].length)) * weightpathtile;
-		characteristics.add( normpathtile);
 	}
 
 	/**
@@ -262,7 +240,6 @@ public class MapEvaluation {
 		distances();
 		amountOfPaths();
 		checkValid();
-		
 
 		return characteristics;
 	}

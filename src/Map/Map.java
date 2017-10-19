@@ -458,7 +458,6 @@ public class Map {
 			for (int j = 0; j < m[0].length; j++)
 				if (m[i][j] < 0)
 					m[i][j] = Math.abs(m[i][j]);
-
 	}
 
 }

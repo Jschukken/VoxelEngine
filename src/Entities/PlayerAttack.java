@@ -46,6 +46,7 @@ public class PlayerAttack extends Entity {
 		Entity ent = CollisionHandler.hitDetectionSingleEnemy(
 				new Vector3f(position.x, position.y, position.z));
 		if (ent != null && fade > 30) {
+		if (ent != null && fade > 10) {
 			ent.getHit();
 			destroy();
 		} else if (fade < 0) {
