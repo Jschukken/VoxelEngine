@@ -218,8 +218,8 @@ public class ShadowMapMasterRenderer {
 		float offset_value = 0.5f-5*offsetFix;
 
 		Matrix4f offset = new Matrix4f();
-		offset.translate(new Vector3f(0.5f+offsetFix*2.5f, 0.5f, 0.5f+offsetFix*2.5f));
-		offset.scale(new Vector3f(offset_value, 0.5f, offset_value));
+		offset.translate(new Vector3f(0.5f+offsetFix*2f, 0.5f, 0.5f+offsetFix*2f));
+		offset.scale(new Vector3f(offset_value, offset_value, offset_value));
 		return offset;
 	}
 }

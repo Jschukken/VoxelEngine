@@ -17,7 +17,7 @@ public class Map {
 	public static final int HEIGHT = 7; // z size of the map
 	public static final int THRESHOLD = 80; // threshold for randomly turning 0's into 1's
 	public static final int SCALE = 5; // size of 3D map compared to 2D map
-	public static final int LIGHTS = 2; // number of lights on the map
+	public static final int LIGHTS = 4; // number of lights on the map
 
 	public static int[][] m; // 2D map currently being worked on
 
