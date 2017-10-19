@@ -119,14 +119,14 @@ public class EnemyEntity extends Entity {
 			return;
 		}
 
-		if (position.x < path[pathPosition]) {
+		if (position.x - path[pathPosition] < -.1) {
 			position.x += ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x -= ENEMY_SPEED;
 			} else {
 				check = true;
 			}
-		} else if (position.x > path[pathPosition]) {
+		} else if (position.x - path[pathPosition] > .1) {
 			position.x -= ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x += ENEMY_SPEED;
@@ -134,7 +134,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 		}
-		if (position.z < path[pathPosition + 1]) {
+		if (position.z - path[pathPosition + 1]<-.1) {
 			position.z += ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z -= ENEMY_SPEED;
@@ -142,7 +142,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 
-		} else if (position.z > path[pathPosition + 1]) {
+		} else if (position.z - path[pathPosition + 1]>.1) {
 			position.z -= ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z += ENEMY_SPEED;
@@ -217,7 +217,8 @@ public class EnemyEntity extends Entity {
 	 */
 	private boolean checkPath() {
 		roundPosition();
-		return position.x == path[pathPosition] && position.z == path[pathPosition + 1];
+		System.out.println(position.x + " " + path[pathPosition] + " " + position.z + " " + path[pathPosition+1]);
+		return Math.abs(position.x - path[pathPosition])<.1 && Math.abs(position.z - path[pathPosition + 1])<.1;
 	}
 
 	public float getRotX() {
@@ -266,6 +267,6 @@ public class EnemyEntity extends Entity {
 	if(time > 10){
 		time = 0;
 	}
-	System.out.println("Time is: "+time);
+	//System.out.println("Time is: "+time);
 	}
 }

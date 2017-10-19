@@ -86,7 +86,7 @@ public class MapManager {
 
 		while (!good || !valid) {
 			errorCatch++;
-			if (errorCatch > 10) {
+			if (errorCatch > 100) {
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				System.exit(-1);
