@@ -17,7 +17,7 @@ public class AStar {
 	private static int DX; // end point x coordinate
 	private static int DY; // end point y coordinate
 	private static int[][] MAP; // 2D version of current map
-	public static int[][] DEATHS = new int[Map.m.length+2][Map.m[0].length+2]; //number of deaths in tile x y
+	public static int[][] DEATHS = new int[Map.m.length + 2][Map.m[0].length + 2]; // number of deaths per tile
 
 	/**
 	 * Calculates the heuristic value for the given node (Manhattan distance)
@@ -160,15 +160,19 @@ public class AStar {
 		// create and return path
 		return aStar(sx, sy);
 	}
-	
+
 	/**
 	 * Setters and getters for deaths at a certain position
-	 * @param x coordinate of the place where you want to set/get
-	 * @param y coordinate of the place where you want to set/get
+	 * 
+	 * @param x
+	 *            coordinate of the place where you want to set/get
+	 * @param y
+	 *            coordinate of the place where you want to set/get
 	 */
 	public static void upDeaths(int x, int y) {
 		DEATHS[x][y]++;
 	}
+
 	public static int getDeaths(int x, int y) {
 		return DEATHS[x][y];
 	}
