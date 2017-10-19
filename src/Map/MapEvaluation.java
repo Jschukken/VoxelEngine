@@ -92,8 +92,7 @@ public class MapEvaluation {
 	private static void checkValid() {
 		int spawnacces = 0; // amount of spawns that can reach the end point via paths
 		found = false;
-			characteristics.add((double) 0);
-		}
+		characteristics.add((double) 0);
 	}
 
 	/**

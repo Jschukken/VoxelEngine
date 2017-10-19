@@ -37,7 +37,6 @@ public class MapManager {
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
 	private static final int PARTICLE_COUNT = 1000;
-	private static final int PARTICLE_COUNT = 500;
 	private static final int GENERATE_LIMIT = 50;
 
 	private Loader loader;
@@ -340,8 +339,8 @@ public class MapManager {
 			Vector3f scale) {
 		Entity attack = new PlayerAttack(entity, position, rot, direction, scale);
 		attackEntities.add(attack);
-			attackEntities.remove(0);
-		}
+		attackEntities.remove(0);
+		
 	}
 
 	public void addSkyBoxEntity(TexturedModel entity, Vector3f position) {
