@@ -35,7 +35,7 @@ public class MapManager {
 
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
-	private static final int PARTICLE_COUNT = 1000;
+	private static final int PARTICLE_COUNT = 500;
 	private static final int GENERATE_LIMIT = 50;
 
 	private Loader loader;
@@ -337,7 +337,7 @@ public class MapManager {
 			Vector3f scale) {
 		Entity attack = new PlayerAttack(entity, position, rot, direction, scale);
 		attackEntities.add(attack);
-		if (attackEntities.size() > PARTICLE_COUNT) {
+		if (attackEntities.size() > PARTICLE_COUNT*2) {
 			attackEntities.remove(0);
 		}
 	}
