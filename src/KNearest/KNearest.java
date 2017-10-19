@@ -27,22 +27,25 @@ public class KNearest {
 	/* The k of this KNearest implementation */
 	int k;
 
-	/* The name of the file this object can save its training data in */
-	String fileName;
+	/* The names of the files this object can save its data in/get its training data from */
+	String trainingName;
+	String storedName;
 
 	/**
 	 * Constructor given a value for k
 	 */
 	public KNearest(int K) {
-		this(K, "resources\\res\\knTrainingData.txt");
+		this(K, "resources\\res\\knTrainingData.txt", "resources\\res\\knStoredData.txt");
 	}
 	
-	public KNearest(int K, String file) {
+	public KNearest(int K, String training, String stored) {
 		this.k = K;
 		this.points = new ArrayList<Point>();
-		this.fileName = file;
+		this.trainingName = training;
+		this.storedName = stored;
 		try {
 			readTrainingDataFromFile();
+			readStoredDataFromFile();
 		} catch (IOException e){
 			System.out.println("Could not read training data!");
 		};
@@ -224,10 +227,10 @@ public class KNearest {
 	 * 
 	 * @throws IOException  if some IO error occurs, prints stacktrace
 	 */
-	public void writeTrainingDataToFile() throws IOException {
+	public void writeDataToFile() throws IOException {
 		
 		/* Use standard file name */
-	    Path path = Paths.get(fileName);
+	    Path path = Paths.get(storedName);
 	    
 	    try (BufferedWriter writer = Files.newBufferedWriter(path)){
 	      
@@ -263,9 +266,31 @@ public class KNearest {
 	public void readTrainingDataFromFile() throws IOException {
 		
 		/* Use standard file name */
-		Path path = Paths.get(fileName);
+		Path path = Paths.get(trainingName);
+		readDataFromFile(path);		
 		
-		try (Scanner scanner = new Scanner(path)) {
+	}
+	
+	/**
+	 * Reads the stored data from a file, putting all points
+	 * in the file into the points list
+	 * 
+	 * @throws IOException  if an IO error occurs, prints stracktrace
+	 */
+	public void readStoredDataFromFile() throws IOException {
+		
+		/* Use standard file name */
+		Path path = Paths.get(storedName);
+		readDataFromFile(path);		
+		
+	}
+	
+	/**
+	 * Reads data from a file represented with the given path
+	 */
+	public void readDataFromFile(Path p) {
+		
+		try (Scanner scanner = new Scanner(p)) {
 			
 			/**
 			 * For each line, separate the numbers by spaces and
@@ -299,6 +324,6 @@ public class KNearest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }

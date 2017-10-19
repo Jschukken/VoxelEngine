@@ -59,7 +59,7 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		StaticShaderMenu menuShader = null;
 		MasterMenuRenderer menuRenderer = null;
-		kn = new KNearest(5, "resources\\res\\2DknTrainingData.txt");
+		kn = new KNearest(5, "resources\\res\\2DknTrainingData.txt", "resources\\res\\2DknStoredData.txt");
 		KNearestRendering knr = new KNearestRendering(kn);
 		MapMenuRenderer mmr = new MapMenuRenderer();
 		AudioHandler ah = null;
@@ -169,6 +169,7 @@ public class MainGameLoop {
 			case "loadmap":
 //				mapManager = new MapManager();
 //				mapManager.loadMap();
+				menuh.remove2DMapFromMapMenu();
 				state = "game";
 				break;
 				
@@ -204,6 +205,7 @@ public class MainGameLoop {
 				menuh.renderMenu(menuShader, menuRenderer);
 				mapManager.update();
 				break;
+				
 			default:
 				System.out.println("state error: " + state + " is an invalid state");
 				System.exit(-1);

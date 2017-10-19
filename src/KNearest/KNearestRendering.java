@@ -130,7 +130,7 @@ public class KNearestRendering {
 		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 			if (!alreadySaved) {
 				try {
-					kn.writeTrainingDataToFile();
+					kn.writeDataToFile();
 				} catch (IOException e) {
 					System.out.println("Could not store training data!");
 				}

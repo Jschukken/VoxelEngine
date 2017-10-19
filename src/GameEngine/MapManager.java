@@ -13,6 +13,7 @@ import Entities.Entity;
 import Entities.ParticleEntity;
 import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
+import Flashlight.MainGameLoop;
 import KNearest.KNearest;
 import KNearest.Point;
 import Map.Map;
@@ -90,7 +91,8 @@ public class MapManager {
 			if (errorCatch > GENERATE_LIMIT) {
 				System.out.println("cannot generate a good map");
 				cleanUp();
-				System.exit(-1);
+				MainGameLoop.setState("loadMapMenu");
+				//System.exit(-1);
 			}
 
 			valid = false;
@@ -397,7 +399,7 @@ public class MapManager {
 	 */
 	public void kNearestSave() {
 		try {
-			kNear.writeTrainingDataToFile();
+			kNear.writeDataToFile();
 		} catch (IOException e) {};
 	}
 	

@@ -31,7 +31,7 @@ public class DisplayManager {
 		ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
 
 		try {
-			 Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
+			//Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
 			// //uncomment for windowed version
 			Display.setVSyncEnabled(true);
 			Display.create(new PixelFormat(), attribs);
