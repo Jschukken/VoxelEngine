@@ -47,7 +47,7 @@ public class Node {
 	public Node(int startX, int startY, Node parent) {
 		x = startX;
 		y = startY;
-		g = parent.g + 1;
+		g = parent.g + 1 + AStar.getDeaths(x,y);
 		h = AStar.calculateH(x, y);
 		f = g + h;
 		p = parent;

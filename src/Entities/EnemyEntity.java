@@ -7,6 +7,7 @@ import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
 import GameEngine.MapManager;
 import Models.TexturedModel;
+import PathFinding.AStar;
 import RenderEngine.MasterGameRenderer;
 import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
@@ -185,12 +186,14 @@ public class EnemyEntity extends Entity {
 	 * removes enemy from the game
 	 */
 	public void destroy() {
+		//saves the position of the enemy for later use in Astar
+		AStar.upDeaths((int) position.z/5, (int) position.x/5);
+		//destroys the enemy
 		for (int i = 0; i < 100; i++) {
 			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,
 					new Vector3f(position.x, position.y, position.z));
 		}
 		MainGameLoop.mapManager.removeActiveEntity(this);
-
 	}
 
 	/**
