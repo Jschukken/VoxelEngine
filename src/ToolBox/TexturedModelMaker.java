@@ -1,5 +1,10 @@
 package ToolBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.lwjgl.util.vector.Vector3f;
+
 import Entities.Button;
 import Models.RawModel;
 import Models.TexturedModel;
@@ -29,7 +34,7 @@ public class TexturedModelMaker {
 	 *            the loader with which to load the cube
 	 * @return the cube textured model
 	 */
-	public static TexturedModel cubeTexturedModel(Loader loader) {
+	public static TexturedModel cubeTexturedModel(Loader loader, String textureFile) {
 
 		float[] vertices = { -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
 
@@ -52,9 +57,10 @@ public class TexturedModelMaker {
 				0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0
 
 		};
-
-		RawModel model = loader.loadToVao(vertices, indices, uv);
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Tile"));
+		float[] normals = MatrixMath.CreateNormals(vertices, indices);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
+		model.setNormals(normals);
+		ModelTexture texture = new ModelTexture(loader.loadTexture(textureFile));
 		basicCube = new TexturedModel(model, texture);
 		return basicCube;
 	}

@@ -16,6 +16,7 @@ import RenderEngine.MasterMenuRenderer;
 import RenderEngine.TexturedModelRenderer;
 import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
+import ToolBox.MatrixMath;
 
 public class KNearestRendering {
 	
@@ -185,7 +186,7 @@ public class KNearestRendering {
 		int[] indices = { 0, 1, 3, 3, 2, 1};
 		float[] uv = { 1, 1, 1, 1, 1, 1, 1, 1};
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 		
 		ModelTexture texture = new ModelTexture(this.loader.loadTexture(color));
 		return new TexturedModel(model, texture);

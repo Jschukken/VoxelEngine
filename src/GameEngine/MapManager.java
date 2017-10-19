@@ -2,6 +2,7 @@ package GameEngine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -9,6 +10,7 @@ import Entities.Camera;
 import Entities.DestinationEntity;
 import Entities.EnemyEntity;
 import Entities.Entity;
+import Entities.Light;
 import Entities.ParticleEntity;
 import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
@@ -17,8 +19,7 @@ import Map.Map;
 import Map.MapEvaluation;
 import Models.TexturedModel;
 import RenderEngine.Loader;
-import RenderEngine.MasterGameRenderer;
-import Shaders.StaticShader;
+import RenderEngine.MasterRenderer;
 import ToolBox.TexturedModelMaker;
 
 public class MapManager {
@@ -28,24 +29,28 @@ public class MapManager {
 	private static final int PARTICLE_COUNT = 300;
 
 	private Loader loader;
-	private MasterGameRenderer renderer;
-	private StaticShader shader;
+	private MasterRenderer renderer;
 	private KNearest kNear;
 	public int[][][] map;
 
 	public List<Entity> mapEntities = new ArrayList<Entity>();
+	public List<Entity> wallEntities = new ArrayList<Entity>();
 	public List<Entity> activeEntities = new ArrayList<Entity>();
 	public List<Entity> particleEntities = new ArrayList<Entity>();
 	public List<Entity> attackEntities = new ArrayList<Entity>();
+	public List<Light> actualLights = new ArrayList<Light>();
 	public Entity destination;
 	public Camera camera;
+	public List<Light> lights;
 
 	public MapManager() {
 		kNear = new KNearest(5);
 		map = createGoodMap();
+		//map = new int[Map.SIZE][Map.SIZE][Map.HEIGHT];
+		//tempMapCreator();
 		loader = new Loader();
-		shader = new StaticShader();
-		renderer = new MasterGameRenderer(shader);
+		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
+		renderer = new MasterRenderer(camera);
 	}
 	
 	/**
@@ -109,15 +114,19 @@ public class MapManager {
 	 * turns a map array into its corrisponding entities 
 	 */
 	public void loadMap() {
-		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
-		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
+		lights = new ArrayList<Light>();
+		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader, "Tile");
+		TexturedModel tWallMod = TexturedModelMaker.cubeTexturedModel(loader, "Tron Tile");
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
 				for (int z = 0; z < map[0][0].length; z++) {
 					if (map[x][y][z] == 1) {
-						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
+						if (y > 1)
+							wallEntities.add(new Entity(tWallMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
+						else
+							mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
+							
 					} else if (map[x][y][z] == 2) {
-
 						int[] arr = { 1, 2, map[0][0].length - 2, map.length - 2, map[0].length, map[0][0].length - 2,
 								map.length - 2, map[0].length, 1, 1, map[0].length, 1 };
 						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
@@ -126,24 +135,48 @@ public class MapManager {
 					} else if (map[x][y][z] == 3) {
 						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
-						camera.setPosition(new Vector3f(x,y+4,z));
-						// } else if (x == 0 || y == 0 || z == 0 || z ==
-						// map[0][0].length - 1 || x == map.length - 1) {
-						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
-						// z), 0, 0, 0, new Vector3f(1, 1, 1)));
-						// map[x][y][z] = 1;
+						camera.setPosition(new Vector3f(x,y+6,z));		//CREATE CAMERA
+					} else if (map[x][y][z] == 4){
+						Vector3f position = new Vector3f(x, y, z);
+						boolean toClose = false;
+						for (Light light : lights){
+							double dist = Math.sqrt(Math.pow((position).x - light.getPosition().x, 2)
+									+ Math.pow(position.y - light.getPosition().y, 2)
+									+ Math.pow(position.z - light.getPosition().z, 2));
+							if (dist < 10){
+								toClose = true;
+								break;
+							}
+						}
+						if (toClose)
+							continue;
+						Light light = new Light(position, new Vector3f(0.8f, 0.8f, 1.0f), new Vector3f(1f, 0.01f, 0.002f));
+						lights.add(light);
+						mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), light.getPosition(), 0, 0, 0, new Vector3f(1, 1, 1)));
 					}
 				}
 			}
 		}
-	}
 
+	}
+	
 	public void render() {
 
-		renderer.prepare();
+		//mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), light.getPosition(), 0, 0, 0, new Vector3f(1, 1, 1)));
+		 
+		actualLights = new ArrayList<Light>();
+		for (Light light : lights){
+			double dist = Math.sqrt(Math.pow(camera.getPosition().x - light.getPosition().x, 2)
+					+ Math.pow(camera.getPosition().y - light.getPosition().y, 2)
+					+ Math.pow(camera.getPosition().z - light.getPosition().z, 2));
+			if (dist > 25){
+				continue;
+			}
+			actualLights.add(light);
 
-		shader.start();
-		shader.loadViewMatrix(camera);
+			renderer.renderShadowMap(activeEntities, light);
+			//renderer.renderShadowMap(wallEntities, light);
+		}
 
 		// vector the camera is looking at
 		Vector3f lookAt = camera.getLookAt();
@@ -151,6 +184,25 @@ public class MapManager {
 		lookAt.normalise();
 
 		Vector3f toCamera;
+		for (Entity entity : wallEntities) {
+
+			// vector from the entity to the camera
+			toCamera = new Vector3f(camera.getPosition().x - entity.getPosition().x,
+					camera.getPosition().y - entity.getPosition().y,
+					camera.getPosition().z - entity.getPosition().z + 0.01f);
+
+			toCamera.normalise();
+
+			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
+					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
+					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
+
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV  + 5) || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
+				renderer.processMapEntity(entity);
+			}
+		}
+		
 		for (Entity entity : mapEntities) {
 
 			// vector from the entity to the camera
@@ -164,11 +216,10 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV  + 5) || dist < MIN_RENDER_DISTANCE)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV  + 5) || dist < MIN_RENDER_DISTANCE)
 					&& dist < RENDER_DISTANCE) {
-				renderer.render(entity, shader);
+				renderer.processMapEntity(entity);
 			}
-
 		}
 
 		for (Entity entity : activeEntities) {
@@ -184,9 +235,9 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV + 5)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
 					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
-				renderer.render(entity, shader);
+				renderer.processEntity(entity);
 			}
 
 		}
@@ -203,9 +254,9 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV + 5)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
 					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
-				renderer.render(entity, shader);
+				renderer.processEntity(entity);
 			}
 		}
 
@@ -221,9 +272,9 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV + 5)
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
 					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
-				renderer.render(entity, shader);
+				renderer.processEntity(entity);
 			}
 		}
 
@@ -232,13 +283,12 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - destination.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - destination.getPosition().z, 2));
 			if (dist < RENDER_DISTANCE) {
-				renderer.render(destination, shader);
+				renderer.processEntity(destination);
 			}
 		} catch (NullPointerException e) {
 			System.out.println("destination is required");
 		}
-
-		shader.stop();
+		renderer.render(actualLights, camera);
 	}
 
 	public void update() {
@@ -264,7 +314,6 @@ public class MapManager {
 	public void cleanUp() {
 		try {
 			loader.cleanUp();
-			shader.cleanUp();
 			renderer.cleanUp();
 		} catch (NullPointerException e) {
 			System.out.println("CleanUp error: its cool yo");

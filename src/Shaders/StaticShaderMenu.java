@@ -1,13 +1,18 @@
 package Shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+
+import Entities.Camera;
+import Entities.Light;
+import ToolBox.MatrixMath;
 
 
 public class StaticShaderMenu extends ShaderProgram {
 
 	
 	private static final String vertexFile = "/Shaders/vertexShaderMenu.txt";
-	private static final String fragmentFile = "/Shaders/fragmentShader.txt";
+	private static final String fragmentFile = "/Shaders/fragmentShaderMenu.txt";
 	
 	private int locationTransformationMatrix;
 	private int locationProjectionMatrix;
@@ -27,7 +32,6 @@ public class StaticShaderMenu extends ShaderProgram {
 		
 		locationTransformationMatrix = super.getUniformLocation("transformationMatrix");
 		locationProjectionMatrix = super.getUniformLocation("projectionMatrix");
-		
 	}
 	
 	public void loadTransformationMatrix(Matrix4f matrix){

@@ -9,6 +9,7 @@ public class RawModel {
 
 	int vaoID;
 	int vertexCount;
+	float[] normals;
 	
 	public RawModel(int vaoID, int vertexCount){
 		
@@ -23,5 +24,13 @@ public class RawModel {
 	
 	public int getVertexCount(){
 		return vertexCount;
+	}
+	
+	public float[] getNormals(){
+		return normals;
+	}
+	
+	public void setNormals(float[] normals){
+		this.normals = normals;
 	}
 }
