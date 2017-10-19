@@ -341,6 +341,52 @@ public class MenuHandler {
 		
 	}
 	
+	public void addLikeButtonMapMenu(Runnable func, Loader loader) {
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+		
+		float[] vertices = new float[] { -0.15f, -0.2f, -1f, -0.15f, -0.3f, -1f, -0.05f, -0.3f, -1f, -0.05f, -0.2f, -1f};
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tick box"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Tick box Down"));
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				func.run();
+			}
+		};
+		
+		mapMenu.add(tMod);
+		
+	}
+	
+	public void addDislikeButtonMapMenu(Runnable func, Loader loader) {
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+		
+		float[] vertices = new float[] { 0.15f, -0.2f, -1f, 0.15f, -0.3f, -1f, 0.05f, -0.3f, -1f, 0.05f, -0.2f, -1f};
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Cross box"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Cross box Down"));
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				func.run();
+			}
+		};
+		
+		mapMenu.add(tMod);
+		
+	}
+	
 	public void createBackground(Loader loader) {
 		
 		float[] vertices = { -1f, 1f, 0f, -1f, -1f, 0f, 1f, -1f, 0f, 1f, 1f, 0f };
