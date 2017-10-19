@@ -1,7 +1,6 @@
 package RenderEngine;
 
 import java.util.List;
-import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
@@ -214,9 +213,11 @@ public class ShadowMapMasterRenderer {
 	 * @return The offset as a matrix (so that it's easy to apply to other matrices).
 	 */
 	private static Matrix4f createOffset() {
-		float offset_value = 0.499f;//this is actually very specific, dont change
+		float offsetFix = 0.0001f*(1080.0f*1920.0f/(DisplayManager.WIDTH*DisplayManager.HEIGHT));
+		float offset_value = 0.5f-10*offsetFix;
+
 		Matrix4f offset = new Matrix4f();
-		offset.translate(new Vector3f(0.5f, 0.5f+0.0001f, 0.5f));
+		offset.translate(new Vector3f(0.5f+offsetFix, 0.5f+offsetFix, 0.5f+offsetFix));
 		offset.scale(new Vector3f(offset_value, offset_value, offset_value));
 		return offset;
 	}

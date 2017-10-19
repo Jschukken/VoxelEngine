@@ -18,8 +18,8 @@ import Flashlight.MainGameLoop;
  */
 public class DisplayManager {
 
-	private static final int WIDTH = 1920;
-	private static final int HEIGHT = 1080;
+	public static final int WIDTH = 1920;
+	public static final int HEIGHT = 1080;
 	private static final int FPS_CAP = 60;
 	
 	/**
@@ -30,11 +30,11 @@ public class DisplayManager {
 		ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
 		
 		try {
-			//Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT)); //uncomment for windowed version
+			Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT)); //uncomment for windowed version
 			Display.setVSyncEnabled(true);
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("Flashlight");
-			Display.setFullscreen(true);
+			//Display.setFullscreen(true);
 			GL11.glViewport(0,0, Display.getWidth(), Display.getHeight());
 		} catch (LWJGLException e){
 			e.printStackTrace();
