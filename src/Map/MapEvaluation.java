@@ -17,7 +17,12 @@ public class MapEvaluation {
 	private static int dy; // end point y coordinate
 	private static int spawns; // amount of spawn points
 	private static boolean found; // ugly
-
+	private static int weihtspawn = 5; // k-nearest weight for the amount of spawn points
+	private static int weightmean = 5; // k-nearest weight for the mean distance to the spawn points
+	private static int weightmax = 5; // k-nearest weight for the maximum distance to the spawn points
+	private static int weightmin = 5; // k-nearest weight for the minimum distance to the spawn points
+	private static int weightRoute = 5; // k-nearest weight for the amount of possible route/open space
+	private static int weightpathtile = 5; // k-nearest weight for the amount of path tiles there are in the map
 	private static List<Double> characteristics = new ArrayList<>(); // return list
 
 	/**
@@ -35,51 +40,47 @@ public class MapEvaluation {
 		if (found) {
 			return;
 		}
-		if(map[x][y] ==1) {
-			map[x][y] =4;
+		if (map[x][y] == 1) {
+			map[x][y] = 4;
 		}
 
 		// Check for edge, go down
 		if (x + 1 < map.length) {
-			if(map[x + 1][y] == 2) {
+			if (map[x + 1][y] == 2) {
 				found = true;
 				return;
-			}
-			else if (map[x + 1][y] == 1) {
+			} else if (map[x + 1][y] == 1) {
 				lee(x + 1, y);
 			}
 		}
 		// Check for edge, go up
 		if (x - 1 >= 0) {
-			if(map[x - 1][y] == 2) {
+			if (map[x - 1][y] == 2) {
 				found = true;
 				return;
-			}
-			else if (map[x - 1][y] == 1) {
+			} else if (map[x - 1][y] == 1) {
 				lee(x - 1, y);
 			}
 		}
 		// Check for edge, go right
 		if (y + 1 < map.length) {
-			if(map[x][y + 1] == 2) {
+			if (map[x][y + 1] == 2) {
 				found = true;
 				return;
-			}
-			else if (map[x][y + 1] == 1) {
+			} else if (map[x][y + 1] == 1) {
 				lee(x, y + 1);
 			}
-			
+
 		}
 		// Check for edge, go left
 		if (y - 1 >= 0) {
-			if(map[x][y - 1] == 2) {
+			if (map[x][y - 1] == 2) {
 				found = true;
 				return;
-			}
-			else if (map[x][y - 1] == 1) {
+			} else if (map[x][y - 1] == 1) {
 				lee(x, y - 1);
 			}
-			
+
 		}
 	}
 
@@ -93,7 +94,7 @@ public class MapEvaluation {
 		found = false;
 
 		// run lee to check if the map is valid
-		for (int i =0; i < map.length; i++)
+		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
 				if (map[i][j] == 3) {
 					lee(i, j);
@@ -118,12 +119,14 @@ public class MapEvaluation {
 
 	/**
 	 * calculates a parameter closely related to the amount of possible path choices
-	 * and thickness of the paths Dead ends should be zero as of recent updates
+	 * and thickness of the paths
 	 */
 	private static void amountOfPaths() {
 		int deadEnd = 0; // number of found dead ends
 		int sidePath = 0; // number of found path diversions for one cell
 		int routeOption = 0; // number of total found path diversions
+		int normRouteOption = 0;
+
 		// loop over map to search
 		for (int i = 1; i < lmap.length - 1; i++)
 			for (int j = 1; j < lmap[0].length - 1; j++)
@@ -141,15 +144,12 @@ public class MapEvaluation {
 						sidePath++;
 					}
 
-					if (sidePath == 1)
-						deadEnd++;
 					if (sidePath > 2)
 						routeOption = routeOption + (sidePath - 2);
 					sidePath = 0;
 				}
-
-		characteristics.add((double) routeOption);
-		characteristics.add((double) deadEnd);
+		normRouteOption = (routeOption / (map.length * map[0].length * 4)) * weightRoute;
+		characteristics.add((double) normRouteOption);
 	}
 
 	/**
@@ -163,6 +163,10 @@ public class MapEvaluation {
 		int maxDist = 0; // max distance
 		int minDist = Integer.MAX_VALUE; // minimal distance
 		double meanDist = 0; // average distance
+		int normSpawns = 0;
+		double normMeanDist = 0;
+		int normmaxDist = 0;
+		int normminDist = 0;
 
 		for (int i = 1; i < lmap.length - 1; i++)
 			for (int j = 1; j < lmap[0].length - 1; j++)
@@ -184,10 +188,14 @@ public class MapEvaluation {
 		meanDist = meanDist / spawns;
 
 		// save all calculated characteristics
-		characteristics.add((double) spawns);
-		characteristics.add((double) meanDist);
-		characteristics.add((double) maxDist);
-		characteristics.add((double) minDist);
+		normSpawns = (spawns / 5) * weihtspawn;
+		normMeanDist = (meanDist / (map.length + map[0].length)) * weightmean;
+		normmaxDist = (maxDist / (map.length + map[0].length)) * weightmax;
+		normminDist = (normmaxDist / (map.length + map[0].length)) * weightmin;
+		characteristics.add((double) normSpawns);
+		characteristics.add((double) normMeanDist);
+		characteristics.add((double) normmaxDist);
+		characteristics.add((double) normminDist);
 	}
 
 	/**
@@ -195,7 +203,7 @@ public class MapEvaluation {
 	 */
 	private static void pathTiles() {
 		int pathtile = 0; // amount of path tiles
-
+		int normpathtile = 0;
 		// calculate the amount of path tiles
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
@@ -204,7 +212,8 @@ public class MapEvaluation {
 				}
 			}
 		}
-		characteristics.add((double) pathtile);
+		normpathtile = (pathtile / (map.length * map[0].length)) * weightpathtile;
+		characteristics.add((double) normpathtile);
 	}
 
 	/**
@@ -212,7 +221,14 @@ public class MapEvaluation {
 	 * 
 	 * @param map
 	 *            the map passed to the class
-	 * @return the parameter list the class returns
+	 * @return an array of normalised values, in order: the amount of path tiles the
+	 *         map contains the amount of spawns there are the average manhattan
+	 *         distance between the spawn and and point the maximum manhattan
+	 *         distance between the spawn and and point the minimum manhattan
+	 *         distance between the spawn and and point a parameter closely related
+	 *         to the amount of possible path choices and thickness of the paths an
+	 *         parameter indicating if there are paths connecting all the spawns to
+	 *         the destination. outputs 1 if valid and 0 if not
 	 */
 	public static List<Double> characteristics(int[][] m) {
 		spawns = 0;
