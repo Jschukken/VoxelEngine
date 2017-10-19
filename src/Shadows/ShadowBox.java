@@ -18,7 +18,7 @@ import RenderEngine.MasterRenderer;
  * rendered to the shadow map in the shadow render pass. Everything outside the
  * area won't be.
  * 
- * @author Karl
+ * @author Lars Gevers
  *
  */
 public class ShadowBox {
