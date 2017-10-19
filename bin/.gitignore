@@ -5,7 +5,17 @@
 /Menu/
 /ToolBox/
 /res/
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+/RenderEngine/
+>>>>>>> dcb607f38f614b3866ff2dfe5d36c555f526576e
+=======
 /PathFinding/
 /Map/
 /RenderEngine/
+<<<<<<< HEAD
 /Guis/
+=======
+>>>>>>> f96ee6f7cbd7ab558f35a814166d3341dd344e2b
+>>>>>>> 915bbc7fabd679325c97f0e12aa398ead0823f67

@@ -293,35 +293,53 @@ public class MenuHandler {
 		
 		gameOverMenu.add(tMod);
 		
-		vertices = new float[] { -0.95f, -0.85f, -1f, -0.95f, -0.95f, -1f, -0.85f, -0.95f, -1f, -0.85f, -0.85f, -1f};
-
-		model = loader.loadToVao(vertices, indices, uv);
-
-		tex1 = new ModelTexture(loader.loadTexture("Tick box"));
-		tex2 = new ModelTexture(loader.loadTexture("Tick box Down"));
-		tMod = new Button(model, tex1, tex2, vertices) {
-			@Override
-			public void onClick() {
-//				DisplayManager.closeDisplay();
-			}
-		};
-		
-		gameOverMenu.add(tMod);
-		vertices = new float[] { -0.8f, -0.85f, -1f, -0.8f, -0.95f, -1f, -0.7f, -0.95f, -1f, -0.7f, -0.85f, -1f};
-
-		model = loader.loadToVao(vertices, indices, uv);
-
-		tex1 = new ModelTexture(loader.loadTexture("Cross box"));
-		tex2 = new ModelTexture(loader.loadTexture("Cross box Down"));
-		tMod = new Button(model, tex1, tex2, vertices) {
-			@Override
-			public void onClick() {
-//				DisplayManager.closeDisplay();
-			}
-		};
-		
-		gameOverMenu.add(tMod);
 	}	
+	
+	public void addLikeButton(Runnable func, Loader loader) {
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+		
+		float[] vertices = new float[] { -0.95f, -0.85f, -1f, -0.95f, -0.95f, -1f, -0.85f, -0.95f, -1f, -0.85f, -0.85f, -1f};
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tick box"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Tick box Down"));
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				func.run();
+			}
+		};
+		
+		gameOverMenu.add(tMod);
+		
+	}
+	
+	public void addDislikeButton(Runnable func, Loader loader) {
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+		
+		float[] vertices = new float[] { -0.8f, -0.85f, -1f, -0.8f, -0.95f, -1f, -0.7f, -0.95f, -1f, -0.7f, -0.85f, -1f};
+
+		RawModel model = loader.loadToVao(vertices, indices, uv);
+
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Cross box"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Cross box Down"));
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				func.run();
+			}
+		};
+		
+		gameOverMenu.add(tMod);
+		
+	}
 	
 	public void createBackground(Loader loader) {
 		

@@ -1,5 +1,6 @@
 package Flashlight;
 
+import java.io.IOException;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,10 @@ public class MainGameLoop {
 					System.out.println("CleanUp error: its cool yo");
 				}
 
+				try {
+					kn.readTrainingDataFromFile();
+				} catch (IOException e) {};
+				
 				ah = new AudioHandler();
 				audH = ah;
 				songID = ah.createSound("song");
@@ -92,8 +97,23 @@ public class MainGameLoop {
 				menuShader = new StaticShaderMenu();
 				menush = menuShader;
 				menuRenderer = new MasterMenuRenderer();
+				
 				menuh = new MenuHandler();
 				menuh.createMenus(loader);
+				Runnable likeMap = new Runnable() {
+					public void run() {
+						addCurrentMapToKNearest(true);
+					}
+				};
+				Runnable dislikeMap = new Runnable() {
+					public void run() {
+						addCurrentMapToKNearest(false);
+					}
+				};
+				menuh.addLikeButton(likeMap, loader);
+				menuh.addDislikeButton(dislikeMap, loader);
+				
+				
 				state = "mainMenu";
 				guiRenderer = new GuiRenderer(loader);
 				guiRenderer.createHUD();
@@ -184,6 +204,9 @@ public class MainGameLoop {
 			state = "startup";
 			//apManager.cleanUp();
 		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
+			state = "gameover";
+		}
 
 	}
 	
@@ -204,6 +227,15 @@ public class MainGameLoop {
 	 */
 	public static void setState(String newState) {
 		state = newState;
+	}
+	
+	/**
+	 * Adds the current map to the knearest object with the given class
+	 * 
+	 * @param c  the class of this map, chosen by the player
+	 */
+	public static void addCurrentMapToKNearest(boolean c) {
+		mapManager.addPointToKNearest(c);
 	}
 
 
