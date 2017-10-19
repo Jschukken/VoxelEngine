@@ -55,6 +55,7 @@ public class MapManager {
 	public Camera camera;
 
 	public MapManager() {
+		currentAttributes = new ArrayList<Double>();
 		kNear = new KNearest(5);
 		map = createGoodMap();
 		loader = new Loader();
@@ -64,12 +65,6 @@ public class MapManager {
 		activeEntities.clear();
 		particleEntities.clear();
 		attackEntities.clear();
-		currentAttributes = new ArrayList<Double>();
-	}
-	
-	public MapManager(KNearest kn) {
-		super();
-		kNear = kn;
 	}
 
 	/**
@@ -100,19 +95,17 @@ public class MapManager {
 
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
+			currentAttributes.clear();
 			if (characteristics.get(characteristics.size() - 1) == 1.0) {// check if map is valid
 				characteristics.remove(characteristics.size() - 1);
 				valid = true;
 				good = kNear.classify(characteristics); // use k-nearest
 			}
-<<<<<<< HEAD
 			System.out.println(characteristics);
-			currentAttributes = characteristics;
+			currentAttributes.addAll(characteristics);
 			//disable this when k-nearest works
 			//valid = true;
 			//good = true;
-=======
->>>>>>> f96ee6f7cbd7ab558f35a814166d3341dd344e2b
 			characteristics.clear();
 		}
 		map = Map.mapTo3D();

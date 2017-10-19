@@ -130,7 +130,7 @@ public class MainGameLoop {
 				break;
 				
 			case "loadMapMenu":
-				mapManager = new MapManager(kn);
+				mapManager = new MapManager();
 				mapManager.loadMap();
 				menuh.add2DMapToMapMenu(mapManager.twoDMap);
 				state = "mapMenu";
@@ -203,6 +203,9 @@ public class MainGameLoop {
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			state = "startup";
 			//apManager.cleanUp();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
+			state = "gameover";
 		}
 
 	}
