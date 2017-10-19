@@ -170,7 +170,7 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - light.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - light.getPosition().z, 2));
 			if (dist > 25){
-				continue;
+				//continue;
 			}
 			actualLights.add(light);
 			

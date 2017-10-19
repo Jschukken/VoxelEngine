@@ -27,7 +27,7 @@ import Shadows.ShadowFrameBuffer;
  */
 public class ShadowMapMasterRenderer {
 
-	private static final int SHADOW_MAP_SIZE = 2048;
+	private static final int SHADOW_MAP_SIZE = 2048*8;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
@@ -76,7 +76,7 @@ public class ShadowMapMasterRenderer {
 		for (Light sun : lights){
 			shadowBox.update(sun);
 			Vector3f sunPosition = sun.getPosition();
-			Vector3f lightDirection = new Vector3f(-sunPosition.x, -sunPosition.y, -sunPosition.z);
+			Vector3f lightDirection = sun.getDirection();
 			prepare(lightDirection, shadowBox);
 			entityRenderer.render(entities);
 		}
@@ -214,9 +214,9 @@ public class ShadowMapMasterRenderer {
 	 * @return The offset as a matrix (so that it's easy to apply to other matrices).
 	 */
 	private static Matrix4f createOffset() {
-		float offset_value = 0.5f;
+		float offset_value = 0.499f;//this is actually very specific, dont change
 		Matrix4f offset = new Matrix4f();
-		offset.translate(new Vector3f(offset_value, offset_value, offset_value));
+		offset.translate(new Vector3f(0.5f, 0.5f+0.0001f, 0.5f));
 		offset.scale(new Vector3f(offset_value, offset_value, offset_value));
 		return offset;
 	}
