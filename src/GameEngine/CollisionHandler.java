@@ -94,37 +94,37 @@ public class CollisionHandler {
 		try {
 			// lower square
 			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .1 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			}
 			// middle square
 			else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9 * entity.getDirection().x)][(int) (entity.getPosition().y
+					+ .9 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
 							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else {
@@ -144,8 +144,8 @@ public class CollisionHandler {
 	public static Entity hitDetectionSingleEnemy(Vector3f position) {
 		for (Entity entity : MainGameLoop.mapManager.activeEntities) {
 			double dist = Math.sqrt(
-					Math.pow(position.x - entity.getPosition().x, 2) + Math.pow(position.y - entity.getPosition().y, 2)
-							+ Math.pow(position.z - entity.getPosition().z, 2));
+					Math.pow(position.x - entity.getCollisionPosition().x, 2) + Math.pow(position.y - entity.getCollisionPosition().y, 2)
+							+ Math.pow(position.z - entity.getCollisionPosition().z, 2));
 			if (dist<.8) {
 				return entity;
 			}
