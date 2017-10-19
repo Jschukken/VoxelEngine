@@ -46,7 +46,6 @@ public class PlayerAttack extends Entity {
 		Entity ent = CollisionHandler.hitDetectionSingleEnemy(
 				new Vector3f(position.x, position.y, position.z));
 		if (ent != null && fade > 30) {
-		if (ent != null && fade > 10) {
 			ent.getHit();
 			destroy();
 		} else if (fade < 0) {
@@ -81,7 +80,6 @@ public class PlayerAttack extends Entity {
 			scale.z = scale.z + scaler;
 			position.z += scaler/2.0*normDir.z;
 			rise += 0.001f;
-
 		}
 
 	}
