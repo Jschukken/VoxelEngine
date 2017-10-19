@@ -59,7 +59,7 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		StaticShaderMenu menuShader = null;
 		MasterMenuRenderer menuRenderer = null;
-		kn = new KNearest(5);
+		kn = new KNearest(5, "resources\\res\\2DknTrainingData.txt");
 		KNearestRendering knr = new KNearestRendering(kn);
 		MapMenuRenderer mmr = new MapMenuRenderer();
 		AudioHandler ah = null;

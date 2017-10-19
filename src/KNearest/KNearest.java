@@ -28,14 +28,19 @@ public class KNearest {
 	int k;
 
 	/* The name of the file this object can save its training data in */
-	String fileName = "resources\\res\\knTrainingData.txt";
+	String fileName;
 
 	/**
 	 * Constructor given a value for k
 	 */
 	public KNearest(int K) {
+		this(K, "resources\\res\\knTrainingData.txt");
+	}
+	
+	public KNearest(int K, String file) {
 		this.k = K;
 		this.points = new ArrayList<Point>();
+		this.fileName = file;
 		try {
 			readTrainingDataFromFile();
 		} catch (IOException e){

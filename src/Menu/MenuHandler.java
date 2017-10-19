@@ -347,7 +347,7 @@ public class MenuHandler {
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 		
-		float[] vertices = new float[] { -0.15f, -0.2f, -1f, -0.15f, -0.3f, -1f, -0.05f, -0.3f, -1f, -0.05f, -0.2f, -1f};
+		float[] vertices = new float[] { -0.15f, -0.55f, -1f, -0.15f, -0.65f, -1f, -0.05f, -0.65f, -1f, -0.05f, -0.55f, -1f};
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
@@ -370,7 +370,7 @@ public class MenuHandler {
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 		
-		float[] vertices = new float[] { 0.15f, -0.2f, -1f, 0.15f, -0.3f, -1f, 0.05f, -0.3f, -1f, 0.05f, -0.2f, -1f};
+		float[] vertices = new float[] { 0.15f, -0.55f, -1f, 0.15f, -0.65f, -1f, 0.05f, -0.65f, -1f, 0.05f, -0.55f, -1f};
 
 		RawModel model = loader.loadToVao(vertices, indices, uv);
 
