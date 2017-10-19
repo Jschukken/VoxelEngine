@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import Map.Map;
+
 /**
  * Finds a path for the enemies to follow using A*
  * 
@@ -15,7 +17,7 @@ public class AStar {
 	private static int DX; // end point x coordinate
 	private static int DY; // end point y coordinate
 	private static int[][] MAP; // 2D version of current map
-	private static int[][] DEATHS; //number of deaths in tile x y
+	public static int[][] DEATHS = new int[Map.m.length+2][Map.m[0].length+2]; //number of deaths in tile x y
 
 	/**
 	 * Calculates the heuristic value for the given node (Manhattan distance)
@@ -154,7 +156,6 @@ public class AStar {
 		DX = (int) d.getX();
 		DY = (int) d.getY();
 		MAP = m;
-		DEATHS = new int[MAP.length][MAP[0].length];
 
 		// create and return path
 		return aStar(sx, sy);
