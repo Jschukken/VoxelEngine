@@ -75,7 +75,8 @@ public class ShadowMapMasterRenderer {
 		for (Light sun : lights){
 			shadowBox.update(sun);
 			Vector3f sunPosition = sun.getPosition();
-			Vector3f lightDirection = sun.getDirection();
+			Vector3f lightDirection = new Vector3f(-sunPosition.x,-sunPosition.y,-sunPosition.z);
+			//Vector3f lightDirection = sun.getDirection();
 			prepare(lightDirection, shadowBox);
 			entityRenderer.render(entities);
 		}
@@ -213,7 +214,7 @@ public class ShadowMapMasterRenderer {
 	 * @return The offset as a matrix (so that it's easy to apply to other matrices).
 	 */
 	private static Matrix4f createOffset() {
-		float offsetFix = 0.0005f*(1080.0f*1920.0f/(DisplayManager.WIDTH*DisplayManager.HEIGHT));
+		float offsetFix = 0.0003f*(1080.0f*1920.0f/(DisplayManager.WIDTH*DisplayManager.HEIGHT));
 		float offset_value = 0.5f-10*offsetFix;
 
 		Matrix4f offset = new Matrix4f();
