@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
+import GameEngine.MapManager;
 import Models.TexturedModel;
 import RenderEngine.MasterGameRenderer;
 import ToolBox.MatrixMath;
@@ -21,6 +22,8 @@ public class EnemyEntity extends Entity {
 	private int hp;
 	private boolean turnState = true;
 	private float turnSpeed;
+	private long old = 0; 
+	private int time = 0; 
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
 			int[] path) {
@@ -104,7 +107,7 @@ public class EnemyEntity extends Entity {
 	 */
 	private void move() {
 		boolean check = false;
-
+		timeUpdate();
 		if (checkPath()) {
 			pathPosition += 2;
 			turnSpeed = getTurnDir();
@@ -116,14 +119,14 @@ public class EnemyEntity extends Entity {
 			return;
 		}
 
-		if (position.x < path[pathPosition]) {
+		if (position.x - path[pathPosition] < -.1) {
 			position.x += ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x -= ENEMY_SPEED;
 			} else {
 				check = true;
 			}
-		} else if (position.x > path[pathPosition]) {
+		} else if (position.x - path[pathPosition] > .1) {
 			position.x -= ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x += ENEMY_SPEED;
@@ -131,7 +134,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 		}
-		if (position.z < path[pathPosition + 1]) {
+		if (position.z - path[pathPosition + 1]<-.1) {
 			position.z += ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z -= ENEMY_SPEED;
@@ -139,7 +142,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 
-		} else if (position.z > path[pathPosition + 1]) {
+		} else if (position.z - path[pathPosition + 1]>.1) {
 			position.z -= ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z += ENEMY_SPEED;
@@ -214,7 +217,8 @@ public class EnemyEntity extends Entity {
 	 */
 	private boolean checkPath() {
 		roundPosition();
-		return position.x == path[pathPosition] && position.z == path[pathPosition + 1];
+		System.out.println(position.x + " " + path[pathPosition] + " " + position.z + " " + path[pathPosition+1]);
+		return Math.abs(position.x - path[pathPosition])<.1 && Math.abs(position.z - path[pathPosition + 1])<.1;
 	}
 
 	public float getRotX() {
@@ -232,5 +236,37 @@ public class EnemyEntity extends Entity {
 	public float getRotZ() {
 		return rotZ;
 	}
+	public Vector3f getCollisionPosition(){
+		return position;
+	}
+	
+	public Vector3f getPosition(){
+		return new Vector3f(position.x,(float)(position.y-.5),position.z);
+	}
+	
+	public void timeUpdate() {
+		long current = System.currentTimeMillis();
+		if (current >= (old + 1000)) {
+			old = current;
+			time++;
+		}
+		if(hp == 20){
+			if(time % 2 == 0){
+				setModel(MapManager.normalModel);
+			}else{
+				setModel(MapManager.runModel);
+			}
+		}else{
+			if(time % 5 == 0){
+			setModel(MapManager.hitNormalModel);
+		}else{
 
+			setModel(MapManager.hitRunModel);
+		}
+			}
+	if(time > 10){
+		time = 0;
+	}
+	//System.out.println("Time is: "+time);
+	}
 }

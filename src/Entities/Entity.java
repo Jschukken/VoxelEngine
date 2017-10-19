@@ -64,6 +64,10 @@ public class Entity {
 	public Vector3f getPosition() {
 		return position;
 	}
+	
+	public Vector3f getCollisionPosition(){
+		return position;
+	}
 
 	public float getRotX() {
 		return rotX;

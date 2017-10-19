@@ -54,6 +54,10 @@ public class MapManager {
 	public Entity skyBox;
 	public DestinationEntity destination;
 	public Camera camera;
+	public static TexturedModel hitRunModel;
+	public static TexturedModel runModel;
+	public static TexturedModel hitNormalModel;
+	public static TexturedModel normalModel;
 
 	public MapManager() {
 		currentAttributes = new ArrayList<Double>();
@@ -83,7 +87,11 @@ public class MapManager {
 
 		while (!good || !valid) {
 			errorCatch++;
+<<<<<<< HEAD
 			if (errorCatch > GENERATE_LIMIT) {
+=======
+			if (errorCatch > 100) {
+>>>>>>> a01db8bef4e470b608cc597a027ffe6afd0ba3ea
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				System.exit(-1);
@@ -131,6 +139,10 @@ public class MapManager {
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
 		TexturedModel texMod = TexturedModelMaker.destinationModel(loader);
+		hitRunModel = TexturedModelMaker.robotHitRunModel(loader);
+		runModel = TexturedModelMaker.robotRunModel(loader);
+		hitNormalModel = TexturedModelMaker.robotHitNormalModel(loader);
+		normalModel = TexturedModelMaker.robotModel(loader);
 		addSkyBoxEntity(TexturedModelMaker.skyBoxModel(loader), new Vector3f(camera.getPosition()));
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
@@ -157,7 +169,7 @@ public class MapManager {
 						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2, map.length - 2, 1,
 								1, 1 };
 						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
-								new Vector3f(1, 1, 1), tMod, arr));
+								new Vector3f(1, 1, 1), normalModel, arr));
 
 					}
 				}
