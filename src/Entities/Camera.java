@@ -20,7 +20,7 @@ import ToolBox.TexturedModelMaker;
 public class Camera {
 
 	private static float FRICTION = 4;
-	public static int MAX_HP = 10;
+	public static int MAX_HP = 5;
 	public static final boolean GRAVITY = true;
 	private static final long ONE_SECOND = 1000000000;
 
@@ -170,7 +170,7 @@ public class Camera {
 	 */
 	private void checkHit() {
 		Entity ent = CollisionHandler.hitDetectionSingleEnemy(position);
-		if(ent!= null && System.nanoTime()-lastHit>ONE_SECOND/3){
+		if(ent!= null && System.nanoTime()-lastHit>ONE_SECOND/2){
 			lastHit = System.nanoTime();
 			getHit();
 		}
@@ -195,6 +195,7 @@ public class Camera {
 	private void checkRegen(){
 		if(hp<MAX_HP && System.nanoTime()-lastHit > 5*ONE_SECOND && System.nanoTime()-lastRegen > ONE_SECOND){
 			hp++;
+			lastRegen = System.nanoTime();
 			//maybe play a sound
 		}
 	}

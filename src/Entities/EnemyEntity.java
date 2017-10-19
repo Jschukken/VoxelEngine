@@ -217,7 +217,6 @@ public class EnemyEntity extends Entity {
 	 */
 	private boolean checkPath() {
 		roundPosition();
-		System.out.println(position.x + " " + path[pathPosition] + " " + position.z + " " + path[pathPosition+1]);
 		return Math.abs(position.x - path[pathPosition])<.1 && Math.abs(position.z - path[pathPosition + 1])<.1;
 	}
 
