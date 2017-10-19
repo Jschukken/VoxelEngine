@@ -187,7 +187,7 @@ public class EnemyEntity extends Entity {
 	 */
 	public void destroy() {
 		//saves the position of the enemy for later use in Astar
-		AStar.upDeaths((int) position.z/5+1, (int) position.x/5+1);
+		AStar.upDeaths((int) position.x/5+1, (int) position.z/5+1);
 		//destroys the enemy
 		for (int i = 0; i < 100; i++) {
 			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,

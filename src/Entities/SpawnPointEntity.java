@@ -40,6 +40,8 @@ public class SpawnPointEntity extends Entity {
 		if(pathTimer >= pathRate) {
 			pathTimer = 0;
 			this.path = CreatePath.createPath(position);
+			Map.print2D(AStar.DEATHS);
+			System.out.println(Arrays.toString(path));
 		}
 	}
 }
