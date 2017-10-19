@@ -92,7 +92,9 @@ public class MapEvaluation {
 	private static void checkValid() {
 		int spawnacces = 0; // amount of spawns that can reach the end point via paths
 		found = false;
-
+		if(spawns==0) {
+			characteristics.add((double) 0);
+		}else {
 		// run lee to check if the map is valid
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
@@ -115,6 +117,7 @@ public class MapEvaluation {
 		} else {
 			characteristics.add((double) 0);
 		}
+	}
 	}
 
 	/**
