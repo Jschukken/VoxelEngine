@@ -78,11 +78,9 @@ public class KNearest {
 		 */
 		if (goodCount >= badCount) {
 			p.setClassification(true);
-			points.add(p);
 			return true;
 		} else {
 			p.setClassification(false);
-			points.add(p);
 			return false;
 		}
 
@@ -102,6 +100,18 @@ public class KNearest {
 		Point p = new Point(coordsP);
 		return classify(p);
 
+	}
+	
+	/**
+	 * Classifies a point and also adds it to the list of points stored
+	 * 
+	 * @param p  the point to classify and add
+	 * @return  the class of p
+	 */
+	public boolean classifyAndAdd(Point p) {
+		classify(p);
+		points.add(p);
+		return p.getClassification();
 	}
 
 	/**
@@ -209,7 +219,7 @@ public class KNearest {
 	 * 
 	 * @throws IOException  if some IO error occurs, prints stacktrace
 	 */
-	void writeTrainingDataToFile() throws IOException {
+	public void writeTrainingDataToFile() throws IOException {
 		
 		/* Use standard file name */
 	    Path path = Paths.get(fileName);
@@ -245,7 +255,7 @@ public class KNearest {
 	 * 
 	 * @throws IOException  if an IO error occurs, prints stracktrace
 	 */
-	void readTrainingDataFromFile() throws IOException {
+	public void readTrainingDataFromFile() throws IOException {
 		
 		/* Use standard file name */
 		Path path = Paths.get(fileName);

@@ -1,5 +1,6 @@
 package GameEngine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import Entities.ParticleEntity;
 import Entities.PlayerAttack;
 import Entities.SpawnPointEntity;
 import KNearest.KNearest;
+import KNearest.Point;
 import Map.Map;
 import Map.MapEvaluation;
 import Models.TexturedModel;
@@ -34,6 +36,7 @@ public class MapManager {
 	public int[][][] map;
 	
 	public int[][] twoDMap;
+	public List<Double> currentAttributes;
 
 	public List<Entity> mapEntities = new ArrayList<Entity>();
 	public List<Entity> activeEntities = new ArrayList<Entity>();
@@ -53,6 +56,12 @@ public class MapManager {
 		activeEntities.clear();
 		particleEntities.clear();
 		attackEntities.clear();
+		currentAttributes = new ArrayList<Double>();
+	}
+	
+	public MapManager(KNearest kn) {
+		super();
+		kNear = kn;
 	}
 	
 	/**
@@ -91,6 +100,7 @@ public class MapManager {
 				good = kNear.classify(characteristics); // use k-nearest
 			}
 			System.out.println(characteristics);
+			currentAttributes = characteristics;
 			//disable this when k-nearest works
 			//valid = true;
 			//good = true;
@@ -362,6 +372,26 @@ public class MapManager {
 		map[11][1][9] = 1;
 		map[10][2][10] = 1;
 
+	}
+	
+	/**
+	 * Lets the kNearest this mapmanager has store its training data, used after a map
+	 * is completed/failed so the new data point is stored
+	 */
+	public void kNearestSave() {
+		try {
+			kNear.writeTrainingDataToFile();
+		} catch (IOException e) {};
+	}
+	
+	/**
+	 * Adds a given point to the knearest object and saves the data in the process
+	 * 
+	 * @param c  the class of the point
+	 */
+	public void addPointToKNearest(boolean c) {
+		kNear.addDataPoint(new Point(currentAttributes, c));
+		kNearestSave();
 	}
 
 }
