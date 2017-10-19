@@ -128,11 +128,11 @@ public class MasterRenderer {
 		projectionMatrix.m32 = (2 * FAR_PLANE * NEAR_PLANE) / zm;
 	}
 	
-	public void renderShadowMap(List<Entity> entityList, Light sun){
+	public void renderShadowMap(List<Entity> entityList, List<Light> lights){
 		for (Entity entity : entityList){
 			processMapEntity(entity);
 		}
-		shadowMapRenderer.render(mapEntities, sun);
+		shadowMapRenderer.render(mapEntities, lights);
 		mapEntities.clear();
 	}
 	

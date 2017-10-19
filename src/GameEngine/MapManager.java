@@ -173,10 +173,13 @@ public class MapManager {
 				continue;
 			}
 			actualLights.add(light);
+			
 
-			renderer.renderShadowMap(activeEntities, light);
 			//renderer.renderShadowMap(wallEntities, light);
 		}
+		List<Entity> total = new ArrayList<Entity>(activeEntities);
+		total.addAll(wallEntities);
+		renderer.renderShadowMap(total, actualLights);
 
 		// vector the camera is looking at
 		Vector3f lookAt = camera.getLookAt();
