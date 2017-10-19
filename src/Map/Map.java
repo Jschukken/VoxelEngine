@@ -284,7 +284,7 @@ public class Map {
 	/**
 	 * print the 2D map, prints the 2D map currently in the class variable
 	 */
-	public static void print2D() {
+	public static void print2D(int [][] m) {
 		// set everything to positive for readability
 		for (int k = 0; k < m.length; k++)
 			for (int l = 0; l < m[0].length; l++)
@@ -306,11 +306,12 @@ public class Map {
 	 * 
 	 * @param map
 	 *            the 3D map to be printed
+	 *            print in layers and doesn't work in right handed coordinate system
 	 */
 	public static void print3D(int[][][] map) {
-		for (int k = 0; k < HEIGHT; k++) {
+		for (int j = 0; j < map[0].length;j++) {
 			for (int i = 0; i < map.length; i++) {
-				for (int j = 0; j < map[0].length; j++) {
+				for (int k = 0; k < map[0][0].length; k++) {
 					System.out.print(map[i][j][k]);
 					System.out.print("\t");
 				}
@@ -339,7 +340,7 @@ public class Map {
 				if (m[i][j] == 1) {
 					for (int k = 0; k < SCALE; k++) {
 						for (int l = 0; l < SCALE; l++) {
-							map[i * SCALE + k + 1][j * SCALE + l + 1][0] = m[i][j];
+							map[i * SCALE + k + 1][j * SCALE + l + 1][0] = 1;
 						}
 					}
 				}

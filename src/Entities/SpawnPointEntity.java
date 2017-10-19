@@ -18,8 +18,7 @@ public class SpawnPointEntity extends Entity {
 	public SpawnPointEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale, TexturedModel enemy, int[] path) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.enemy = enemy;
-		//this.path = path;
-		this.path = path;//CreatePath.createPath(MainGameLoop.mapManager.map,MainGameLoop.mapManager.destination.getPosition(),position);
+		this.path = CreatePath.createPath(position);
 		this.position = position;
 		spawnTimer = (int)(Math.random()*spawnRate);
 	}

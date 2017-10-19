@@ -23,6 +23,14 @@ import RenderEngine.MasterGameRenderer;
 import Shaders.StaticShader;
 import ToolBox.TexturedModelMaker;
 
+/**
+ * Maneges and loads the map
+ * 
+ * @author Jelle Schukken
+ * @edited Chiel Ton
+ * @edited Frouke Hekker
+ *
+ */
 public class MapManager {
 
 	private static final int RENDER_DISTANCE = 30;
@@ -34,7 +42,7 @@ public class MapManager {
 	private StaticShader shader;
 	private KNearest kNear;
 	public int[][][] map;
-	
+
 	public int[][] twoDMap;
 	public List<Double> currentAttributes;
 
@@ -43,7 +51,7 @@ public class MapManager {
 	public List<Entity> particleEntities = new ArrayList<Entity>();
 	public List<Entity> attackEntities = new ArrayList<Entity>();
 	public Entity skyBox;
-	public Entity destination;
+	public DestinationEntity destination;
 	public Camera camera;
 
 	public MapManager() {
@@ -63,7 +71,7 @@ public class MapManager {
 		super();
 		kNear = kn;
 	}
-	
+
 	/**
 	 * creates a good map using the create map function and validating using
 	 * k-nearest
@@ -77,33 +85,34 @@ public class MapManager {
 		int errorCatch = 0;
 		int[][][] map = new int[Map.SIZE][Map.SIZE][Map.HEIGHT];
 
-		
 		while (!good || !valid) {
 			errorCatch++;
-			if(errorCatch>10){
+			if (errorCatch > 10) {
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				System.exit(-1);
 			}
-			
+
 			valid = false;
 			good = false;
 			Map.createMap();
 			twoDMap = Map.m;
-			Map.print2D();
-			
+
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
-			if(characteristics.get( characteristics.size()-1) == 1.0) {//check if map is valid
-				characteristics.remove(characteristics.size()-1);
+			if (characteristics.get(characteristics.size() - 1) == 1.0) {// check if map is valid
+				characteristics.remove(characteristics.size() - 1);
 				valid = true;
 				good = kNear.classify(characteristics); // use k-nearest
 			}
+<<<<<<< HEAD
 			System.out.println(characteristics);
 			currentAttributes = characteristics;
 			//disable this when k-nearest works
 			//valid = true;
 			//good = true;
+=======
+>>>>>>> f96ee6f7cbd7ab558f35a814166d3341dd344e2b
 			characteristics.clear();
 		}
 		map = Map.mapTo3D();
@@ -122,11 +131,12 @@ public class MapManager {
 	}
 
 	/**
-	 * turns a map array into its corrisponding entities 
+	 * turns a map array into its corresponding entities
 	 */
 	public void loadMap() {
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader);
+		TexturedModel texMod = TexturedModelMaker.destinationModel(loader);
 		addSkyBoxEntity(TexturedModelMaker.skyBoxModel(loader), new Vector3f(camera.getPosition()));
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[0].length; y++) {
@@ -134,21 +144,27 @@ public class MapManager {
 					if (map[x][y][z] == 1) {
 						mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if (map[x][y][z] == 2) {
-
-						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2,
-								map.length - 2, 1, 1, 1 };
-						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
-								new Vector3f(1, 1, 1), tMod, arr));
-
-					} else if (map[x][y][z] == 3) {
-						destination = new DestinationEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
+						destination = new DestinationEntity(texMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
-						camera.setPosition(new Vector3f(x,y+6,z));
+						camera.setPosition(new Vector3f(x, y + 6, z));
 						// } else if (x == 0 || y == 0 || z == 0 || z ==
 						// map[0][0].length - 1 || x == map.length - 1) {
 						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
 						// z), 0, 0, 0, new Vector3f(1, 1, 1)));
 						// map[x][y][z] = 1;
+					}
+				}
+			}
+		}
+		for (int x = 0; x < map.length; x++) {
+			for (int y = 0; y < map[0].length; y++) {
+				for (int z = 0; z < map[0][0].length; z++) {
+					if (map[x][y][z] == 3) {
+						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2, map.length - 2, 1,
+								1, 1 };
+						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
+								new Vector3f(1, 1, 1), tMod, arr));
+
 					}
 				}
 			}
@@ -181,8 +197,8 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV  + 5) || dist < MIN_RENDER_DISTANCE)
-					&& dist < RENDER_DISTANCE) {
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV + 5)
+					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
 				renderer.render(entity, shader);
 			}
 
@@ -244,8 +260,6 @@ public class MapManager {
 			}
 		}
 
-		
-
 		try {
 			double dist = Math.sqrt(Math.pow(camera.getPosition().x - destination.getPosition().x, 2)
 					+ Math.pow(camera.getPosition().y - destination.getPosition().y, 2)
@@ -263,7 +277,7 @@ public class MapManager {
 	}
 
 	public void update() {
-		camera.move();
+		camera.update();
 		try {
 			destination.update();
 		} catch (NullPointerException e) {
@@ -276,7 +290,7 @@ public class MapManager {
 		for (Entity particle : particleEntities) {
 			particle.update();
 		}
-		for (int i = 0; i < attackEntities.size();i++) {
+		for (int i = 0; i < attackEntities.size(); i++) {
 			attackEntities.get(i).update();
 		}
 
@@ -287,7 +301,7 @@ public class MapManager {
 			loader.cleanUp();
 			shader.cleanUp();
 			renderer.cleanUp();
-			
+
 		} catch (NullPointerException e) {
 			System.out.println("CleanUp error: its cool yo");
 		}
@@ -301,8 +315,7 @@ public class MapManager {
 	 * @param position
 	 *            the position of the entity
 	 * @param path
-	 *            the path the entity follows :TODO, make this better. it is
-	 *            silly
+	 *            the path the entity follows :TODO, make this better. it is silly
 	 */
 	public void addActiveEntity(TexturedModel entity, Vector3f position, int[] path) {
 		Entity enemy = new EnemyEntity(entity, position, 0, 0, 0, new Vector3f(1, 1, 1), path);
@@ -318,17 +331,19 @@ public class MapManager {
 		}
 	}
 
-	public void addAttackEntity(TexturedModel entity, Vector3f position, Vector3f rot, Vector3f direction, Vector3f scale) {
+	public void addAttackEntity(TexturedModel entity, Vector3f position, Vector3f rot, Vector3f direction,
+			Vector3f scale) {
 		Entity attack = new PlayerAttack(entity, position, rot, direction, scale);
 		attackEntities.add(attack);
 		if (attackEntities.size() > PARTICLE_COUNT) {
 			attackEntities.remove(0);
 		}
 	}
-	
+
 	public void addSkyBoxEntity(TexturedModel entity, Vector3f position) {
-//		skyBox = new Entity(entity, position, 0, 0, 0, new Vector3f(RENDER_DISTANCE,RENDER_DISTANCE,RENDER_DISTANCE));
-		skyBox = new Entity(entity, position, 0, 0, 0, new Vector3f(250,250,250));
+		// skyBox = new Entity(entity, position, 0, 0, 0, new
+		// Vector3f(RENDER_DISTANCE,RENDER_DISTANCE,RENDER_DISTANCE));
+		skyBox = new Entity(entity, position, 0, 0, 0, new Vector3f(250, 250, 250));
 	}
 
 	/**
@@ -354,8 +369,8 @@ public class MapManager {
 	}
 
 	/**
-	 * TEMPORARY, creates a simple map while the map generator is in progress,
-	 * can be used for debugging
+	 * TEMPORARY, creates a simple map while the map generator is in progress, can
+	 * be used for debugging
 	 */
 	private void tempMapCreator() {
 		map[18][1][10] = 2;
