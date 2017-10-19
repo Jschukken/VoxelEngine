@@ -212,9 +212,10 @@ public class ShadowMapMasterRenderer {
 	 * @return The offset as a matrix (so that it's easy to apply to other matrices).
 	 */
 	private static Matrix4f createOffset() {
+		float offset_value = 0.5f;
 		Matrix4f offset = new Matrix4f();
-		offset.translate(new Vector3f(0.5f, 0.5f, 0.5f));
-		offset.scale(new Vector3f(0.5f, 0.5f, 0.5f));
+		offset.translate(new Vector3f(offset_value, offset_value, offset_value));
+		offset.scale(new Vector3f(offset_value, offset_value, offset_value));
 		return offset;
 	}
 }

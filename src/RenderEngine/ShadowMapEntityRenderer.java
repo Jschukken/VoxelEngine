@@ -44,12 +44,13 @@ public class ShadowMapEntityRenderer {
 		for (Entity entity : entities){
 			RawModel rawModel = entity.getModel().getModel();
 			bindModel(entity);
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, entity.getModel().getTexture().getTextureID());
 			prepareInstance(entity);
 			GL11.glDrawElements(GL11.GL_TRIANGLES, rawModel.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 
 			GL20.glDisableVertexAttribArray(0);// disable position array
 			GL20.glDisableVertexAttribArray(1);// disable texture array
-			GL20.glDisableVertexAttribArray(2);// disable normal array
 			GL30.glBindVertexArray(0);
 		}
 	}
@@ -65,8 +66,8 @@ public class ShadowMapEntityRenderer {
 	private void bindModel(Entity model) {
 		GL30.glBindVertexArray(model.getModel().getModel().getVaoID());
 		GL20.glEnableVertexAttribArray(0);// enable position array
-		GL20.glEnableVertexAttribArray(1);// enable texture array
-		GL20.glEnableVertexAttribArray(2);// enable normal array
+		GL20.glEnableVertexAttribArray(1);// enable position array
+		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getModel().getTexture().getTextureID());
 	}
