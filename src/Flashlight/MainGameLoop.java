@@ -100,6 +100,11 @@ public class MainGameLoop {
 				
 				menuh = new MenuHandler();
 				menuh.createMenus(loader);
+				
+				/**
+				 * Add like and dislike buttons to the game over screen
+				 * with callable functions here
+				 */
 				Runnable likeMap = new Runnable() {
 					public void run() {
 						addCurrentMapToKNearest(true);
@@ -112,6 +117,29 @@ public class MainGameLoop {
 				};
 				menuh.addLikeButton(likeMap, loader);
 				menuh.addDislikeButton(dislikeMap, loader);
+				
+				/**
+				 * Add like and dislike buttons to the mapmenu
+				 * with callable functions here.
+				 * Used for quicker testing.
+				 */
+				Runnable likeMapMenu = new Runnable() {
+					public void run() {
+						addCurrentMapToKNearest(true);
+						menuh.remove2DMapFromMapMenu();
+						state = "loadMapMenu";
+					}
+				};
+				Runnable dislikeMapMenu = new Runnable() {
+					public void run() {
+						addCurrentMapToKNearest(false);
+						menuh.remove2DMapFromMapMenu();
+						state = "loadMapMenu";
+					}
+				};
+				menuh.addLikeButtonMapMenu(likeMapMenu, loader);
+				menuh.addDislikeButtonMapMenu(dislikeMapMenu, loader);
+				
 				
 				
 				state = "mainMenu";

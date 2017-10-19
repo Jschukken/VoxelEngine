@@ -36,6 +36,7 @@ public class MapManager {
 	private static final int RENDER_DISTANCE = 30;
 	private static final int MIN_RENDER_DISTANCE = 3;
 	private static final int PARTICLE_COUNT = 1000;
+	private static final int GENERATE_LIMIT = 50;
 
 	private Loader loader;
 	private MasterGameRenderer renderer;
@@ -82,7 +83,7 @@ public class MapManager {
 
 		while (!good || !valid) {
 			errorCatch++;
-			if (errorCatch > 10) {
+			if (errorCatch > GENERATE_LIMIT) {
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				System.exit(-1);
