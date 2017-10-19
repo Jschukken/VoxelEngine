@@ -84,10 +84,6 @@ public class MainGameLoop {
 				} catch (NullPointerException e) {
 					System.out.println("CleanUp error: its cool yo");
 				}
-
-				try {
-					kn.readTrainingDataFromFile();
-				} catch (IOException e) {};
 				
 				ah = new AudioHandler();
 				audH = ah;

@@ -160,7 +160,7 @@ public class KNearestRendering {
 			kn.addDataPoint(new Point(coords, false));
 			System.out.println("added blue point");
 		} else if (editState == 3) {
-			kn.classify(new Point(coords));
+			kn.classifyAndAdd(new Point(coords));
 		}
 		
 		
