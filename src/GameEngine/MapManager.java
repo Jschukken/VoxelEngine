@@ -152,7 +152,7 @@ public class MapManager {
 							continue;
 						Light light = new Light(position, new Vector3f(0.8f, 0.8f, 1.0f), new Vector3f(1f, 0.01f, 0.002f));
 						lights.add(light);
-						mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), light.getPosition(), 0, 0, 0, new Vector3f(1, 1, 1)));
+						//mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), light.getPosition(), 0, 0, 0, new Vector3f(1, 1, 1)));
 					}
 				}
 			}
