@@ -15,7 +15,7 @@ public class MapEvaluation {
 
 	private static int dx; // end point x coordinate
 	private static int dy; // end point y coordinate
-	private static int spawns; // amount of spawn points
+	private static double spawns; // amount of spawn points
 	private static boolean found; // ugly
 	private static int weihtspawn = 5; // k-nearest weight for the amount of spawn points
 	private static int weightmean = 5; // k-nearest weight for the mean distance to the spawn points
@@ -122,10 +122,9 @@ public class MapEvaluation {
 	 * and thickness of the paths
 	 */
 	private static void amountOfPaths() {
-		int deadEnd = 0; // number of found dead ends
 		int sidePath = 0; // number of found path diversions for one cell
-		int routeOption = 0; // number of total found path diversions
-		int normRouteOption = 0;
+		double routeOption = 0; // number of total found path diversions
+		double normRouteOption = 0;
 
 		// loop over map to search
 		for (int i = 1; i < lmap.length - 1; i++)
@@ -149,7 +148,8 @@ public class MapEvaluation {
 					sidePath = 0;
 				}
 		normRouteOption = (routeOption / (map.length * map[0].length * 4)) * weightRoute;
-		characteristics.add((double) normRouteOption);
+		System.out.println(normRouteOption);
+		characteristics.add(normRouteOption);
 	}
 
 	/**
@@ -160,13 +160,13 @@ public class MapEvaluation {
 		int sy = 0; // current spawn y coordinate
 
 		int distance; // distance from current spawn point to destination
-		int maxDist = 0; // max distance
-		int minDist = Integer.MAX_VALUE; // minimal distance
+		double maxDist = 0; // max distance
+		double minDist = Integer.MAX_VALUE; // minimal distance
 		double meanDist = 0; // average distance
-		int normSpawns = 0;
+		double normSpawns = 0;
 		double normMeanDist = 0;
-		int normmaxDist = 0;
-		int normminDist = 0;
+		double normmaxDist = 0;
+		double normminDist = 0;
 
 		for (int i = 1; i < lmap.length - 1; i++)
 			for (int j = 1; j < lmap[0].length - 1; j++)
@@ -192,18 +192,18 @@ public class MapEvaluation {
 		normMeanDist = (meanDist / (map.length + map[0].length)) * weightmean;
 		normmaxDist = (maxDist / (map.length + map[0].length)) * weightmax;
 		normminDist = (normmaxDist / (map.length + map[0].length)) * weightmin;
-		characteristics.add((double) normSpawns);
-		characteristics.add((double) normMeanDist);
-		characteristics.add((double) normmaxDist);
-		characteristics.add((double) normminDist);
+		characteristics.add(normSpawns);
+		characteristics.add(normMeanDist);
+		characteristics.add(normmaxDist);
+		characteristics.add(normminDist);
 	}
 
 	/**
 	 * Count the number of pathTiles
 	 */
 	private static void pathTiles() {
-		int pathtile = 0; // amount of path tiles
-		int normpathtile = 0;
+		double pathtile = 0; // amount of path tiles
+		double normpathtile = 0;
 		// calculate the amount of path tiles
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
@@ -213,7 +213,7 @@ public class MapEvaluation {
 			}
 		}
 		normpathtile = (pathtile / (map.length * map[0].length)) * weightpathtile;
-		characteristics.add((double) normpathtile);
+		characteristics.add( normpathtile);
 	}
 
 	/**
@@ -262,6 +262,7 @@ public class MapEvaluation {
 		distances();
 		amountOfPaths();
 		checkValid();
+		
 
 		return characteristics;
 	}
