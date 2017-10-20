@@ -118,7 +118,7 @@ public class MapEvaluation {
 			} else {
 				characteristics.add((double) 0);
 			}
-	}
+		}
 
 	/**
 	 * calculates a parameter closely related to the amount of possible path choices
@@ -133,26 +133,19 @@ public class MapEvaluation {
 		for (int i = 1; i < lmap.length - 1; i++)
 			for (int j = 1; j < lmap[0].length - 1; j++)
 				if (lmap[i][j] == 1) {
-					if (lmap[i + 1][j] == 1) {
-						sidePath++;
-					}
-					if (lmap[i][j + 1] == 1) {
-						sidePath++;
-					}
-					if (lmap[i - 1][j] == 1) {
-						sidePath++;
-					}
-					if (lmap[i][j - 1] == 1) {
-						sidePath++;
-					}
-
-					if (sidePath > 2)
+					if (lmap[i + 1][j] == 1) sidePath++;
+					if (lmap[i][j + 1] == 1) sidePath++;
+					if (lmap[i - 1][j] == 1) sidePath++;
+					if (lmap[i][j - 1] == 1) sidePath++;
+					if (sidePath > 2) {
 						routeOption = routeOption + (sidePath - 2);
 					sidePath = 0;
 				}
+				}	
 		normRouteOption = (routeOption / (map.length * map[0].length * 4)) * weightRoute;
-		System.out.println(normRouteOption);
 		characteristics.add(normRouteOption);
+		
+		
 	}
 
 	/**
@@ -162,7 +155,7 @@ public class MapEvaluation {
 		int sx = 0; // current spawn x coordinate
 		int sy = 0; // current spawn y coordinate
 
-		int distance; // distance from current spawn point to destination
+		double distance; // distance from current spawn point to destination
 		double maxDist = 0; // max distance
 		double minDist = Integer.MAX_VALUE; // minimal distance
 		double meanDist = 0; // average distance
@@ -194,7 +187,7 @@ public class MapEvaluation {
 		normSpawns = (spawns / 5) * weihtspawn;
 		normMeanDist = (meanDist / (map.length + map[0].length)) * weightmean;
 		normmaxDist = (maxDist / (map.length + map[0].length)) * weightmax;
-		normminDist = (normmaxDist / (map.length + map[0].length)) * weightmin;
+		normminDist = (minDist / (map.length + map[0].length)) * weightmin;
 		characteristics.add(normSpawns);
 		characteristics.add(normMeanDist);
 		characteristics.add(normmaxDist);
@@ -216,6 +209,8 @@ public class MapEvaluation {
 			}
 		}
 		normpathtile = (pathtile / (map.length * map[0].length)) * weightpathtile;
+		characteristics.add(normpathtile);
+		
 	}
 
 	/**
@@ -223,14 +218,14 @@ public class MapEvaluation {
 	 * 
 	 * @param map
 	 *            the map passed to the class
-	 * @return an array of normalised values, in order: the amount of path tiles the
-	 *         map contains the amount of spawns there are the average manhattan
-	 *         distance between the spawn and and point the maximum manhattan
-	 *         distance between the spawn and and point the minimum manhattan
-	 *         distance between the spawn and and point a parameter closely related
-	 *         to the amount of possible path choices and thickness of the paths an
-	 *         parameter indicating if there are paths connecting all the spawns to
-	 *         the destination. outputs 1 if valid and 0 if not
+	 * @return an array of normalised values, in order: 
+	 * 		    the amount of path tiles the map contains 
+	 * 			the amount of spawns there are 
+	 * 			the average manhattan distance between the spawn and and point 
+	 * 			the maximum manhattan distance between the spawn and and point 
+	 * 			the minimum manhattan distance between the spawn and and point 
+	 * 			a parameter closely related to the amount of possible path choices and thickness of the paths 
+	 * 			a parameter indicating if there are paths connecting all the spawns to the destination. outputs 1 if valid and 0 if not
 	 */
 	public static List<Double> characteristics(int[][] m) {
 		spawns = 0;
@@ -264,7 +259,7 @@ public class MapEvaluation {
 		distances();
 		amountOfPaths();
 		checkValid();
-
+		
 		return characteristics;
 	}
 }
