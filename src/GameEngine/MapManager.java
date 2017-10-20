@@ -108,11 +108,7 @@ public class MapManager {
 				valid = true;
 				good = kNear.classify(characteristics); // use k-nearest
 			}
-			System.out.println(characteristics);
 			currentAttributes.addAll(characteristics);
-			//disable this when k-nearest works
-			//valid = true;
-			//good = true;
 			characteristics.clear();
 		}
 		map = Map.mapTo3D();
