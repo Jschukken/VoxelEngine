@@ -144,9 +144,8 @@ public class CollisionHandler {
 	public static Entity hitDetectionSingleEnemy(Vector3f position) {
 		for (Entity entity : MainGameLoop.mapManager.activeEntities) {
 			double dist = Math.sqrt(
-					Math.pow(position.x - entity.getCollisionPosition().x, 2) + Math.pow(position.y - entity.getCollisionPosition().y, 2)
-							+ Math.pow(position.z - entity.getCollisionPosition().z, 2));
-			if (dist<.8) {
+					Math.pow(position.x - entity.getCollisionPosition().x, 2) + Math.pow(position.z - entity.getCollisionPosition().z, 2));
+			if (dist<.8 && entity.getCollisionPosition().y+1>position.y) {
 				return entity;
 			}
 		}

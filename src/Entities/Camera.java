@@ -29,7 +29,7 @@ public class Camera {
 	private float dx = 0, dy = 0, dz = 0;
 
 	private float acceleration = 0.01f;
-	private float maxSpeed = 0.09f;
+	private float maxSpeed = 0.12f;
 	private float jumpHeight = 0.15f;
 	private float turnSpeed = 0.1f;
 	private float currSpeed;
@@ -181,6 +181,7 @@ public class Camera {
 	 */
 	private void attack() {
 		if (Mouse.isButtonDown(0)) {
+			System.out.println("thrower check");
 			for (int i = 0; i < 2; i++) {
 				MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
 						new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),

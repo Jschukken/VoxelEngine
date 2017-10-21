@@ -335,7 +335,7 @@ public class MapManager {
 			Vector3f scale) {
 		Entity attack = new PlayerAttack(entity, position, rot, direction, scale);
 		attackEntities.add(attack);
-		attackEntities.remove(0);
+		//attackEntities.remove(0);
 		
 	}
 
