@@ -7,7 +7,7 @@ public class StaticShaderMenu extends ShaderProgram {
 
 	
 	private static final String vertexFile = "/Shaders/vertexShaderMenu.txt";
-	private static final String fragmentFile = "/Shaders/fragmentShader.txt";
+	private static final String fragmentFile = "/Shaders/fragmentShaderMenu.txt";
 	
 	private int locationTransformationMatrix;
 	private int locationProjectionMatrix;

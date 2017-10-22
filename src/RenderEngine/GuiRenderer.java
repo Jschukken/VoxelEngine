@@ -1,4 +1,4 @@
-package Guis;
+package RenderEngine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +12,9 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 
 import Flashlight.MainGameLoop;
+import Guis.GuiTexture;
 import Models.RawModel;
-import RenderEngine.Loader;
+import Shaders.GuiShader;
 import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 

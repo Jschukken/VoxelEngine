@@ -2,15 +2,46 @@
 
 in vec3 position;
 in vec2 textureCoords;
+in vec3 normal;
 
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 
+uniform mat4 toShadowMapSpace;
+
+const float density = 0.00;
+const float gradient = 3.0;
+const float shadowDistance = 100.0;
+const float transitionDistance = 10.0;
+
 out vec2 texturePass;
+out vec3 surfaceNormal;
+out vec3 toLightVector[25];
+out vec3 toCameraVector;
+out vec4 worldPosition;
+out float visibility;
+out vec4 shadowCoords;
 
 void main(void){
-	gl_Position = projectionMatrix*viewMatrix*transformationMatrix * vec4(position.x,position.y,position.z,1.0);
+	worldPosition = transformationMatrix * vec4(position,1.0);
+	shadowCoords = toShadowMapSpace * worldPosition;
+	
+	vec4 positionRelativeToCam = viewMatrix * worldPosition;
+	gl_Position = projectionMatrix * positionRelativeToCam;
 	texturePass = textureCoords;
-
+	
+	surfaceNormal = (transformationMatrix * vec4(normal,0.0)).xyz;
+	
+	toCameraVector = (inverse(viewMatrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldPosition.xyz;
+	
+	float distance = length(positionRelativeToCam.xyz);
+	visibility = exp(-pow((distance*density), gradient));
+	visibility = clamp(visibility, 0.0, 1.0);
+	
+	distance = distance - (shadowDistance - transitionDistance);
+	distance = distance / transitionDistance;
+	shadowCoords.w = clamp(1.0 - distance, 0.0, 1.0);
+	
+	
 }

@@ -10,7 +10,7 @@ uniform mat4 viewMatrix;
 
 uniform mat4 toShadowMapSpace;
 
-const float density = 0.00;
+const float density = 0.05;
 const float gradient = 3.0;
 const float shadowDistance = 100.0;
 const float transitionDistance = 10.0;
@@ -42,6 +42,4 @@ void main(void){
 	distance = distance - (shadowDistance - transitionDistance);
 	distance = distance / transitionDistance;
 	shadowCoords.w = clamp(1.0 - distance, 0.0, 1.0);
-	
-	
 }

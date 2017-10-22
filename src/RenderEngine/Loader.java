@@ -33,11 +33,12 @@ public class Loader {
 	 * @param indices the indices of the vertices
 	 * @return the raw model
 	 */
-		public RawModel loadToVao(float[] vertices, int[] indices, float[] uv){
+		public RawModel loadToVao(float[] vertices, int[] indices, float[] uv, float[] normals){
 			
 			int vaoID = createVao();
 			storeDataInAttributeList(vertices, 0, 3);
 			storeDataInAttributeList(uv, 1, 2);
+			storeDataInAttributeList(normals, 2, 3);
 			bindIndicesBuffer(indices);
 			GL30.glBindVertexArray(0);
 			return new RawModel(vaoID, indices.length);

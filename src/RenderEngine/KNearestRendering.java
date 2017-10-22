@@ -1,4 +1,4 @@
-package KNearest;
+package RenderEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,14 +8,13 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
+import KNearest.KNearest;
+import KNearest.Point;
 import Models.RawModel;
 import Models.TexturedModel;
-import RenderEngine.DisplayManager;
-import RenderEngine.Loader;
-import RenderEngine.MasterMenuRenderer;
-import RenderEngine.TexturedModelRenderer;
 import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
+import ToolBox.MatrixMath;
 
 public class KNearestRendering {
 	
@@ -185,7 +184,7 @@ public class KNearestRendering {
 		int[] indices = { 0, 1, 3, 3, 2, 1};
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 		
 		ModelTexture textureMod = new ModelTexture(this.loader.loadTexture(texture));
 		return new TexturedModel(model, textureMod);

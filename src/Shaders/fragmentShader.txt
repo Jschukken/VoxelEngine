@@ -1,12 +1,60 @@
 #version 400 core
 
 in vec2 texturePass;
+in vec3 surfaceNormal;
+in vec3 toCameraVector;
+in vec4 worldPosition;
+in float visibility;
+in vec4 shadowCoords;
 
 uniform sampler2D texSampler;
+uniform vec3 lightColour[100];
+uniform vec3 lightPosition[100];
+uniform vec3 attenuation[100];
+uniform float shineDamper;
+uniform float reflectivity;
+uniform vec3 skyColour;
+uniform int MAXLIGHTS;
+uniform float ambient;
+
+uniform sampler2D shadowMap;
 
 out vec4 outColor;
 
 void main(void){
 
-	outColor = texture(texSampler,texturePass);
+	float objectNearestLight = texture(shadowMap, shadowCoords.xy).r;
+	float lightFactor = 1.0;
+	if(shadowCoords.z > objectNearestLight){
+		lightFactor = 1.0 - (shadowCoords.w * 0.4);
+	}
+
+	vec3 unitNormal = normalize(surfaceNormal);
+	vec3 unitVectorToCamera = normalize(toCameraVector);
+	
+	vec3 totalDiffuse = vec3(0.0);
+	vec3 totalSpecular = vec3(0.0);
+	
+	for (int i = 0; i < MAXLIGHTS; i++){
+		vec3 toLightVector = lightPosition[i] - worldPosition.xyz;
+		
+		float distance = length(toLightVector);
+		float attFactor = attenuation[i].x + (attenuation[i].y * distance) + (attenuation[i].z * distance * distance);
+		
+		vec3 unitLightVector = normalize(toLightVector);
+		float nDotl = dot(unitNormal, unitLightVector);
+		float brightness = max(nDotl, 0.0);
+		vec3 lightDirection = -unitLightVector;
+		vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
+		float specularFactor = dot(reflectedLightDirection, unitVectorToCamera);
+		specularFactor = max(specularFactor, 0.2);
+		float dampedFactor = pow(specularFactor, shineDamper);
+		totalDiffuse = totalDiffuse + (brightness * lightColour[i])/attFactor;
+		totalSpecular = totalSpecular + (dampedFactor * lightColour[i])/attFactor;
+	}
+	
+	totalDiffuse = max(totalDiffuse, ambient) * lightFactor;
+	
+	outColor = vec4(totalDiffuse,1.0) * texture(texSampler,texturePass) + vec4(totalSpecular, 1.0);
+	outColor = mix(vec4(skyColour, 1.0), outColor, visibility);
 }

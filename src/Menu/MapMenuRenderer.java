@@ -10,6 +10,7 @@ import RenderEngine.Loader;
 import RenderEngine.MasterMenuRenderer;
 import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
+import ToolBox.MatrixMath;
 
 public class MapMenuRenderer {
 
@@ -89,7 +90,7 @@ public class MapMenuRenderer {
 		int[] indices = { 0, 1, 3, 3, 2, 1};
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 		
 		ModelTexture textureMod = new ModelTexture(loader.loadTexture(texture));
 		return new TexturedModel(model, textureMod);

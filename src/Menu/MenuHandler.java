@@ -17,6 +17,7 @@ import RenderEngine.Loader;
 import RenderEngine.MasterMenuRenderer;
 import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
+import ToolBox.MatrixMath;
 
 /* CHEAT SHEET
  * Z =  0 -> Background
@@ -79,7 +80,7 @@ public class MenuHandler {
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Start Button"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button Down"));
@@ -95,7 +96,7 @@ public class MenuHandler {
 		
 		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
 		
-		model = loader.loadToVao(vertices, indices, uv);
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 		
 		tex1 = new ModelTexture(loader.loadTexture("Clear Button"));
 		tex2 = new ModelTexture(loader.loadTexture("Clear Button Down"));
@@ -111,7 +112,7 @@ public class MenuHandler {
 		
 		vertices = new float[] {-0.3f, -0.5f, -1f, -0.3f, -0.8f, -1f, 0.3f, -0.8f, -1f, 0.3f, -0.5f, -1f};
 		
-		model = loader.loadToVao(vertices, indices, uv);
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
 		tex2 = new ModelTexture(loader.loadTexture("Quit Button Down"));
@@ -138,7 +139,7 @@ public class MenuHandler {
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Start Button"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Start Button Down"));
@@ -154,7 +155,7 @@ public class MenuHandler {
 		
 		vertices = new float[]{ -0.25f, -0.7f, -1f, -0.25f, -0.95f, -1f, 0.25f, -0.95f, -1f, 0.25f, -0.7f, -1f };
 		
-		model = loader.loadToVao(vertices, indices, uv);
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		tex1 = new ModelTexture(loader.loadTexture("Load Button"));
 		tex2 = new ModelTexture(loader.loadTexture("Load Button Down"));
@@ -170,7 +171,7 @@ public class MenuHandler {
 		
 		vertices = new float[]{ 0.4f, -0.7f, -1f, 0.4f, -0.95f, -1f, 0.9f, -0.95f, -1f, 0.9f, -0.7f, -1f };
 		
-		model = loader.loadToVao(vertices, indices, uv);
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		tex1 = new ModelTexture(loader.loadTexture("Back Button"));
 		tex2 = new ModelTexture(loader.loadTexture("Back Button Down"));
@@ -222,7 +223,7 @@ public class MenuHandler {
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Resume Button"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Resume Button Down"));
@@ -238,7 +239,7 @@ public class MenuHandler {
 		
 		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
 		
-		model = loader.loadToVao(vertices, indices, uv);
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
 		tex2 = new ModelTexture(loader.loadTexture("Quit Button Down"));
@@ -265,7 +266,7 @@ public class MenuHandler {
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Main menu Button"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Main menu Button Down"));
@@ -280,7 +281,7 @@ public class MenuHandler {
 		
 		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
 		
-		model = loader.loadToVao(vertices, indices, uv);
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		tex1 = new ModelTexture(loader.loadTexture("Quit Button"));
 		tex2 = new ModelTexture(loader.loadTexture("Quit Button Down"));
@@ -303,7 +304,7 @@ public class MenuHandler {
 		
 		float[] vertices = new float[] { -0.95f, -0.85f, -1f, -0.95f, -0.95f, -1f, -0.85f, -0.95f, -1f, -0.85f, -0.85f, -1f};
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tick box"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Tick box Down"));
@@ -326,7 +327,7 @@ public class MenuHandler {
 		
 		float[] vertices = new float[] { -0.8f, -0.85f, -1f, -0.8f, -0.95f, -1f, -0.7f, -0.95f, -1f, -0.7f, -0.85f, -1f};
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Cross box"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Cross box Down"));
@@ -349,7 +350,7 @@ public class MenuHandler {
 		
 		float[] vertices = new float[] { -0.15f, -0.55f, -1f, -0.15f, -0.65f, -1f, -0.05f, -0.65f, -1f, -0.05f, -0.55f, -1f};
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Tick box"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Tick box Down"));
@@ -372,7 +373,7 @@ public class MenuHandler {
 		
 		float[] vertices = new float[] { 0.15f, -0.55f, -1f, 0.15f, -0.65f, -1f, 0.05f, -0.65f, -1f, 0.05f, -0.55f, -1f};
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Cross box"));
 		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Cross box Down"));
@@ -395,7 +396,7 @@ public class MenuHandler {
 
 		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
 
-		RawModel model = loader.loadToVao(vertices, indices, uv);
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Background"));
 		TexturedModel tMod = new TexturedModel(model, tex1);

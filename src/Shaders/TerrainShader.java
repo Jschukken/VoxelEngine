@@ -9,11 +9,11 @@ import Entities.Camera;
 import Entities.Light;
 import ToolBox.MatrixMath;
 
-public class StaticShader extends ShaderProgram {
+public class TerrainShader extends ShaderProgram {
 
 	
-	private static final String vertexFile = "/Shaders/vertexShader.txt";
-	private static final String fragmentFile = "/Shaders/fragmentShader.txt";
+	private static final String vertexFile = "/Shaders/terrainVertexShader.txt";
+	private static final String fragmentFile = "/Shaders/terrainFragmentShader.txt";
 	
 	private int locationTransformationMatrix;
 	private int locationProjectionMatrix;
@@ -29,7 +29,7 @@ public class StaticShader extends ShaderProgram {
 	private int locationToShadowMapSpace;
 	private int locationShadowMap;
 	
-	public StaticShader(){
+	public TerrainShader(){
 		super(vertexFile, fragmentFile);
 	}
 	
@@ -54,21 +54,20 @@ public class StaticShader extends ShaderProgram {
 		
 		locationAmbient = super.getUniformLocation("ambient");
 		locationMAXLIGHTS = super.getUniformLocation("MAXLIGHTS");
-		locationLightPosition = new int[Map.Map.LIGHTS];
-		locationLightColour = new int[Map.Map.LIGHTS];
-		locationAttenuation = new int[Map.Map.LIGHTS];
+		locationLightPosition = new int[10];
+		locationLightColour = new int[10];
+		locationAttenuation = new int[10];
 		for (int i = 0; i < Map.Map.LIGHTS; i++){
 			locationLightPosition[i] = super.getUniformLocation("lightPosition[" + i + "]");
 			locationLightColour[i] = super.getUniformLocation("lightColour[" + i + "]");
 			locationAttenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
 		}
-		
 	}
 	
 	public void loadSkyColour(float r, float g, float b){
 		super.load3DVector(locationSkyColour, new Vector3f(r,g,b));
 	}
-
+	
 	public void loadAmbient(float ambient){
 		super.loadFloat(locationAmbient, ambient);
 	}
