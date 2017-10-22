@@ -130,6 +130,8 @@ public class MapManager {
 	 */
 	public void loadMap() {
 		Lights = new ArrayList<Light>();
+		Lights.add(new Light(new Vector3f((float)(map.length/2.0),(float)(map[0].length*3.0),(float)(map[0][0].length/2.0)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(.45f, 0, 0)));
+		mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), new Vector3f((float)(map.length/2.0),(float)(map[0].length*3.0),(float)(map[0][0].length/2.0)), 0, 0, 0, new Vector3f(1, 1, 1)));
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader, "Tile");
 		TexturedModel tWallMod = TexturedModelMaker.cubeTexturedModel(loader, "Tron Tile");
@@ -183,9 +185,9 @@ public class MapManager {
 						}
 						if (toClose)
 							continue;
-						Light light = new Light(position, new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f));
-						Lights.add(light);
-						mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), light.getPosition(), 0, 0, 0, new Vector3f(1, 1, 1)));
+						//Light light = new Light(position, new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f));
+						//Lights.add(light);
+						//mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), light.getPosition(), 0, 0, 0, new Vector3f(1, 1, 1)));
 					}
 				}
 			}
@@ -193,9 +195,11 @@ public class MapManager {
 	}
 
 	public void render() {
-		
+		List<Light> sun = new ArrayList<Light>();
+		sun.add(new Light(new Vector3f((float)(map.length/2),(float)map[0].length,(float)(map[0][0].length/2)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f)));
 		List<Entity> total = new ArrayList<Entity>(activeEntities);
 		total.addAll(wallEntities);
+		total.addAll(mapEntities);
 		renderer.renderShadowMap(total, Lights);
 
 		// vector the camera is looking at

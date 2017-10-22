@@ -26,7 +26,7 @@ import Shadows.ShadowFrameBuffer;
  */
 public class ShadowMapMasterRenderer {
 
-	private static final int SHADOW_MAP_SIZE = 2048*2;
+	private static final int SHADOW_MAP_SIZE = 2048*6;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
@@ -214,11 +214,11 @@ public class ShadowMapMasterRenderer {
 	 * @return The offset as a matrix (so that it's easy to apply to other matrices).
 	 */
 	private static Matrix4f createOffset() {
-		float offsetFix = 0.0003f*(1080.0f*1920.0f/(DisplayManager.WIDTH*DisplayManager.HEIGHT));
+		float offsetFix = 0.00006f*(1080.0f*1920.0f/(DisplayManager.WIDTH*DisplayManager.HEIGHT));
 		float offset_value = 0.5f-5*offsetFix;
 
 		Matrix4f offset = new Matrix4f();
-		offset.translate(new Vector3f(0.5f+offsetFix*2f, 0.5f, 0.5f+offsetFix*2f));
+		offset.translate(new Vector3f(0.5f+offsetFix*2.5f, 0.5f+offsetFix*2.5f, 0.5f+offsetFix*2.5f));
 		offset.scale(new Vector3f(offset_value, offset_value, offset_value));
 		return offset;
 	}

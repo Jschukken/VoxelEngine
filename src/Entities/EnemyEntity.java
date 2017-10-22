@@ -162,7 +162,7 @@ public class EnemyEntity extends Entity {
 			}
 		}
 
-		System.out.println(position.x + " " + path[pathPosition] + " : " + position.z+ " " + path[pathPosition+1]);
+		//System.out.println(position.x + " " + path[pathPosition] + " : " + position.z+ " " + path[pathPosition+1]);
 		position.y -= ENEMY_SPEED;
 		if (CollisionHandler.checkEnemyCollision(this)) {
 			position.y += ENEMY_SPEED;

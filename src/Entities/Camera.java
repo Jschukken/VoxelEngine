@@ -20,7 +20,7 @@ import ToolBox.TexturedModelMaker;
  */
 public class Camera {
 
-	private static float FRICTION = 4;
+	private static float FRICTION = 4* 60.0f/DisplayManager.FPS_CAP;
 	public static int MAX_HP = 5;
 	public static final boolean GRAVITY = true;
 	private static final long ONE_SECOND = 1000000000;
@@ -160,7 +160,7 @@ public class Camera {
 	 */
 	private void applieGravity() {
 		if (GRAVITY) {
-			dy = Math.max(dy - 0.01f * 60.0f/DisplayManager.FPS_CAP, -maxSpeed * 4);
+			dy = Math.max(dy - (0.01f * 60.0f/DisplayManager.FPS_CAP), -maxSpeed * 4);
 		}
 
 		fallCheck();
@@ -182,7 +182,6 @@ public class Camera {
 	 */
 	private void attack() {
 		if (Mouse.isButtonDown(0)) {
-			System.out.println("thrower check");
 			for (int i = 0; i < 2 * 60.0f/DisplayManager.FPS_CAP; i++) {
 				MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
 						new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),
