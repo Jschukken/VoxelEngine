@@ -134,8 +134,9 @@ public class MapManager {
 		mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), new Vector3f((float)(map.length/2.0),(float)(map[0].length*3.0),(float)(map[0][0].length/2.0)), 0, 0, 0, new Vector3f(1, 1, 1)));
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader, "Tile");
-		TexturedModel tWallMod = TexturedModelMaker.cubeTexturedModel(loader, "Tron Tile");
-		TexturedModel texMod = TexturedModelMaker.cubeTexturedModel(loader, "Companion Cube");
+		TexturedModel tWallMod = TexturedModelMaker.cubeTexturedModel(loader, "wallTile");
+		TexturedModel tDestMod = TexturedModelMaker.cubeTexturedModel(loader, "Companion Cube");
+		TexturedModel tSpawnMod = TexturedModelMaker.cubeTexturedModel(loader, "Antagonist Cube");
 		hitRunModel = TexturedModelMaker.robotHitRunModel(loader);
 		runModel = TexturedModelMaker.robotRunModel(loader);
 		hitNormalModel = TexturedModelMaker.robotHitNormalModel(loader);
@@ -150,7 +151,7 @@ public class MapManager {
 						else
 							mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if (map[x][y][z] == 2) {
-						destination = new DestinationEntity(texMod, new Vector3f(x, y, z), 0, 0, 0,
+						destination = new DestinationEntity(tDestMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
 						camera.setPosition(new Vector3f(x, y + 6, z));
 						// } else if (x == 0 || y == 0 || z == 0 || z ==
@@ -168,7 +169,7 @@ public class MapManager {
 					if (map[x][y][z] == 3) {
 						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2, map.length - 2, 1,
 								1, 1 };
-						activeEntities.add(new SpawnPointEntity(tMod, new Vector3f(x, y, z), 0, 0, 0,
+						activeEntities.add(new SpawnPointEntity(tSpawnMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1), normalModel, arr));
 
 					} else if (map[x][y][z] == 4){

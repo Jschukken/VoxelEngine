@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
+import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
@@ -37,6 +38,11 @@ public class Camera {
 	private float strafe;
 	private long lastHit;
 	private long lastRegen;
+	
+	private TexturedModel fire1 = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "red");
+	private TexturedModel fire2 = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader,"orange");
+	private TexturedModel fire3 = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "yellow");
+	private TexturedModel blood = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "bloodred");
 
 	private int hp;
 
@@ -53,6 +59,7 @@ public class Camera {
 		getHitSFX = MainGameLoop.audH.createSound("hurt");
 		lastHit = System.nanoTime();
 		hp = MAX_HP;
+		
 	}
 
 	public void update() {
@@ -182,10 +189,22 @@ public class Camera {
 	 */
 	private void attack() {
 		if (Mouse.isButtonDown(0)) {
+			int fireChooser;
 			for (int i = 0; i < 2 * 60.0f/DisplayManager.FPS_CAP; i++) {
-				MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
-						new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),
-						new Vector3f(rotX + 0.0001f, rotY, rotZ), new Vector3f(.05f, .05f, .05f));
+				fireChooser = (int) (Math.random()*3);
+				if (fireChooser == 0) {
+					MainGameLoop.mapManager.addAttackEntity(fire1,
+							new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),
+							new Vector3f(rotX + 0.0001f, rotY, rotZ), new Vector3f(.05f, .05f, .05f));
+				} else if (fireChooser == 1) {
+					MainGameLoop.mapManager.addAttackEntity(fire2,
+							new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),
+							new Vector3f(rotX + 0.0001f, rotY, rotZ), new Vector3f(.05f, .05f, .05f));
+				} else {
+					MainGameLoop.mapManager.addAttackEntity(fire3,
+							new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),
+							new Vector3f(rotX + 0.0001f, rotY, rotZ), new Vector3f(.05f, .05f, .05f));
+				}
 			}
 		}
 	}
@@ -208,7 +227,7 @@ public class Camera {
 		hp--;
 		MainGameLoop.audH.playAudio(getHitSFX, position, position);
 		for(int i = 0; i < 20; i++){
-			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y,position.z));
+			MainGameLoop.mapManager.addParticleEntity(blood ,new Vector3f(position.x,position.y,position.z));
 		}
 		if (hp <= 0) {
 			MainGameLoop.setState("gameover");

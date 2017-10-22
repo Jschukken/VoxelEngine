@@ -26,7 +26,7 @@ import Shadows.ShadowFrameBuffer;
  */
 public class ShadowMapMasterRenderer {
 
-	private static final int SHADOW_MAP_SIZE = 2048*6;
+	private static final int SHADOW_MAP_SIZE = 2048*3;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;

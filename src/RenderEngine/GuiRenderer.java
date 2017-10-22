@@ -117,13 +117,13 @@ public class GuiRenderer {
 	public void createHUD() {
 
 		ModelTexture modelTex = new ModelTexture(loader.loadTexture("blue"));
-		GuiTexture gui2 = new GuiTexture(modelTex, new Vector2f(0.6f, 0.9f), new Vector2f (0.4f, 0.1f));
+		GuiTexture gui2 = new GuiTexture(modelTex, new Vector2f(0.6f, 0.950f), new Vector2f (0.4f, 0.050f));
 		guis.add(gui2);
-		gui2 = new GuiTexture(modelTex, new Vector2f(-0.6f, -0.9f), new Vector2f(0.4f, 0.1f));
+		gui2 = new GuiTexture(modelTex, new Vector2f(-0.6f, -0.950f), new Vector2f(0.4f, 0.050f));
 		guis.add(gui2);
 		// End Point HP HUD
 		ModelTexture ducker3 = new ModelTexture(loader.loadTexture("red"));
-		GuiTexture gui3 = new GuiTexture(ducker3, new Vector2f(0.6f, 0.9f), new Vector2f(0.399f, 0.099f)) {
+		GuiTexture gui3 = new GuiTexture(ducker3, new Vector2f(0.6f, 0.950f), new Vector2f(0.399f, 0.049f)) {
 			@Override
 			// adjusts scale and repositions to keep right edge in the same position
 			public void update() {
@@ -138,7 +138,7 @@ public class GuiRenderer {
 
 		// Player HP HUD
 		ModelTexture ducker4 = new ModelTexture(loader.loadTexture("red"));
-		GuiTexture gui4 = new GuiTexture(ducker4, new Vector2f(-0.6f, -0.9f), new Vector2f(0.399f, 0.099f)) {
+		GuiTexture gui4 = new GuiTexture(ducker4, new Vector2f(-0.6f, -0.950f), new Vector2f(0.399f, 0.049f)) {
 			@Override
 			public void update() {
 				// adjusts scale and repositions to keep right edge in the same position

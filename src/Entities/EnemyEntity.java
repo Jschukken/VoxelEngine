@@ -24,6 +24,7 @@ public class EnemyEntity extends Entity {
 	private float turnSpeed;
 	private long old = 0; 
 	private int time = 0; 
+	private TexturedModel shrapnel = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "black");
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
 			int[] path) {
@@ -176,7 +177,7 @@ public class EnemyEntity extends Entity {
 	 */
 	public void getHit() {
 		for (int i = 0; i < 5; i++) {
-			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,
+			MainGameLoop.mapManager.addParticleEntity(shrapnel,
 					new Vector3f(position.x, position.y, position.z));
 		}
 		hp--;
