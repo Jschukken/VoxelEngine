@@ -15,7 +15,6 @@ public class EnemyEntity extends Entity {
 
 	private int[] path;
 	private int pathPosition = 0;
-<<<<<<< HEAD
 	private static final float ENEMY_SPEED = .0601f * 60.0f/(float)DisplayManager.FPS_CAP;
 	private Vector3f position;
 	private Vector3f direction;
@@ -25,15 +24,11 @@ public class EnemyEntity extends Entity {
 	private float turnSpeed;
 	private long old = 0; 
 	private int time = 0; 
-=======
-	private static final float ENEMY_SPEED = .1001f;
->>>>>>> parent of c7ef24e... Defence map example
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
 			int[] path) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.path = path;
-<<<<<<< HEAD
 		this.position = position;
 		this.rotX = rotX;
 		this.rotZ = rotZ;
@@ -42,9 +37,6 @@ public class EnemyEntity extends Entity {
 		direction.normalise();
 		turnSpeed = getTurnDir();
 		hp = 20;
-=======
-		// TODO Auto-generated constructor stub
->>>>>>> parent of c7ef24e... Defence map example
 	}
 
 	/**

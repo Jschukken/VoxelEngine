@@ -40,16 +40,12 @@ public class MainGameLoop {
 	public static Loader loader = null;
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
-<<<<<<< HEAD
 	public static MenuHandler menuh;
 	public static MapMenuRenderer mmr;
 	public static KNearest kn;
 	public static int[][][] map;
 	List<GuiTexture> guis = new ArrayList<GuiTexture>();
 	GuiRenderer guiRenderer = null;
-=======
-	public static int[][][] map = new int[50][15][50];
->>>>>>> parent of c7ef24e... Defence map example
 
 	private static String state = "startup";
 
@@ -171,14 +167,9 @@ public class MainGameLoop {
 				break;
 
 			case "loadmap":
-<<<<<<< HEAD
 //				mapManager = new MapManager();
 //				mapManager.loadMap();
 				menuh.remove2DMapFromMapMenu();
-=======
-				camera = new Camera(new Vector3f(0, 50, 10), 0, 0, 0);
-				loadMap(loader);
->>>>>>> parent of c7ef24e... Defence map example
 				state = "game";
 				break;
 				
@@ -239,92 +230,8 @@ public class MainGameLoop {
 			state = "startup";
 			//apManager.cleanUp();
 		}
-<<<<<<< HEAD
 		if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
 			state = "gameover";
-=======
-
-	}
-
-	/**
-	 * TEMPORARY, creates a simple map while the map generator is in progress, can be used for debugging
-	 */
-	private static void tempMapCreator(){
-		for (int x = 0; x < map.length; x++) {
-			for (int z = 0; z < map[0].length; z++) {
-				for (int y = 0; y < map[0][0].length; y++) {
-					if((int)(Math.random()*10) == 1)
-						map[x][z][y] = 1;
-				}
-			}
-		}
-		map[1][1][1] = 2;
-		map[1][1][48] = 1;
-	}
-	/**
-	 * renders all entities within the render distance and visible to the camera to the screen
-	 * 
-	 * @param renderer
-	 *            the renderer that will be used
-	 * @param shader
-	 *            shader used for rendering TODO: like change this as well
-	 * @param camera
-	 *            the camera it will render to
-	 */
-	private static void renderGame(MasterGameRenderer renderer, StaticShader shader, Camera camera) {
-
-		renderer.prepare();
-
-		shader.start();
-		shader.loadViewMatrix(camera);
-		
-		//vector the camera is looking at
-		Vector3f lookAt = new Vector3f(
-				(float) (Math.cos(Math.toRadians(camera.getRotY()+90)) * Math.cos(Math.toRadians(camera.getRotX()))),
-				(float) (Math.sin(Math.toRadians(camera.getRotX()))),
-				(float) Math.sin(Math.toRadians(camera.getRotY()+90)));
-		
-		lookAt.normalise();
-		
-		Vector3f toCamera;
-		for (Entity entity : mapEntities) {
-			
-			//vector from the entity to the camera
-			toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
-					camera.getPosition().z - entity.getPosition().z + 0.01f);
-			
-			toCamera.normalise();
-			
-			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
-					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
-					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
-			
-			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
-					&& dist < RENDER_DISTANCE) {
-				renderer.render(entity, shader);
-			}
-
-		}
-		for (Entity entity : activeEntities) {
-			
-			//vector from the entity to the camera
-			toCamera = new Vector3f(camera.getPosition().x-entity.getPosition().x,  camera.getPosition().y-entity.getPosition().y,
-					camera.getPosition().z - entity.getPosition().z + 0.01f);
-			
-			toCamera.normalise();
-			
-			double dist = Math.sqrt(Math.pow(camera.getPosition().x - entity.getPosition().x, 2)
-					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
-					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
-			
-			
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterGameRenderer.FOV+5) || dist<MIN_RENDER_DISTANCE)
-					&& dist < RENDER_DISTANCE) {
-				renderer.render(entity, shader);
-			}
-
->>>>>>> parent of c7ef24e... Defence map example
 		}
 
 	}
