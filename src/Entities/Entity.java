@@ -14,12 +14,20 @@ public class Entity {
 
 	private TexturedModel model;
 
+<<<<<<< HEAD
 	private Vector3f position;
 	protected Vector3f direction;
 	private float rotX;
 	private float rotY;
 	private float rotZ;
 	private Vector3f scale;
+=======
+	protected Vector3f position;
+	protected float rotX;
+	protected float rotY;
+	protected float rotZ;
+	protected Vector3f scale;
+>>>>>>> parent of c7ef24e... Defence map example
 
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale) {
 		super();
