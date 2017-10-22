@@ -7,6 +7,7 @@ import GameEngine.CollisionHandler;
 import GameEngine.MapManager;
 import Models.TexturedModel;
 import PathFinding.AStar;
+import RenderEngine.DisplayManager;
 import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
 
@@ -14,7 +15,7 @@ public class EnemyEntity extends Entity {
 
 	private int[] path;
 	private int pathPosition = 0;
-	private static final float ENEMY_SPEED = .0601f;
+	private static final float ENEMY_SPEED = .0601f * 60.0f/(float)DisplayManager.FPS_CAP;
 	private Vector3f position;
 	private Vector3f direction;
 	private float rotX, rotY, rotZ;
@@ -69,9 +70,12 @@ public class EnemyEntity extends Entity {
 		Vector3f lookAt = MatrixMath
 				.rotateVector(new Vector3f((float) Math.toDegrees(rotX), (float) Math.toDegrees(-rotY), 0));
 		lookAt.normalise();
+		lookAt.x = -lookAt.x;
+		lookAt.y = -lookAt.y;
+		lookAt.z = -lookAt.z;
 		direction.normalise();
 		double angle = Vector3f.angle(lookAt, direction);
-		if (angle > Math.toRadians(2)) {
+		if (angle > Math.toRadians(2 * 60.0f/DisplayManager.FPS_CAP)) {
 			rotY += turnSpeed;
 			return true;
 		}
@@ -94,9 +98,9 @@ public class EnemyEntity extends Entity {
 		lookAt.normalise();
 		direction.normalise();
 		if (lookAt.x * direction.z - lookAt.z * direction.x > 0) {
-			return (float) -0.05;
+			return (float) 0.05 * 60.0f/DisplayManager.FPS_CAP;
 		} else {
-			return (float) 0.05;
+			return (float) -0.05 * 60.0f/DisplayManager.FPS_CAP;
 		}
 
 	}
@@ -118,14 +122,14 @@ public class EnemyEntity extends Entity {
 			return;
 		}
 
-		if (position.x - path[pathPosition] < -.1) {
+		if (position.x - path[pathPosition] < -ENEMY_SPEED) {
 			position.x += ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x -= ENEMY_SPEED;
 			} else {
 				check = true;
 			}
-		} else if (position.x - path[pathPosition] > .1) {
+		} else if (position.x - path[pathPosition] > ENEMY_SPEED) {
 			position.x -= ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.x += ENEMY_SPEED;
@@ -133,7 +137,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 		}
-		if (position.z - path[pathPosition + 1]<-.1) {
+		if (position.z - path[pathPosition + 1]<-ENEMY_SPEED) {
 			position.z += ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z -= ENEMY_SPEED;
@@ -141,7 +145,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 
-		} else if (position.z - path[pathPosition + 1]>.1) {
+		} else if (position.z - path[pathPosition + 1]>ENEMY_SPEED) {
 			position.z -= ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z += ENEMY_SPEED;
@@ -158,6 +162,7 @@ public class EnemyEntity extends Entity {
 			}
 		}
 
+		System.out.println(position.x + " " + path[pathPosition] + " : " + position.z+ " " + path[pathPosition+1]);
 		position.y -= ENEMY_SPEED;
 		if (CollisionHandler.checkEnemyCollision(this)) {
 			position.y += ENEMY_SPEED;
@@ -199,9 +204,9 @@ public class EnemyEntity extends Entity {
 	 * rounds the position to the 1nd decimal place
 	 */
 	private void roundPosition() {
-		position.x = ((int) (position.x * 100 + 0.5)) / 100.0f;
-		position.y = ((int) (position.y * 100 + 0.5)) / 100.0f;
-		position.z = ((int) (position.z * 100 + 0.5)) / 100.0f;
+		position.x = ((int) (position.x * (100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1)) + 0.5)) / (float)(100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1));
+		position.y = ((int) (position.y * (100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1)) + 0.5)) / (float)(100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1));
+		position.z = ((int) (position.z * (100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1)) + 0.5)) / (float)(100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1));
 
 	}
 
@@ -219,7 +224,7 @@ public class EnemyEntity extends Entity {
 	 */
 	private boolean checkPath() {
 		roundPosition();
-		return Math.abs(position.x - path[pathPosition])<.1 && Math.abs(position.z - path[pathPosition + 1])<.1;
+		return Math.abs(position.x - path[pathPosition])<ENEMY_SPEED*2.0 && Math.abs(position.z - path[pathPosition + 1])<ENEMY_SPEED*2.0;
 	}
 
 	public float getRotX() {

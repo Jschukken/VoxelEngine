@@ -5,13 +5,14 @@ import org.lwjgl.util.vector.Vector3f;
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
 import Models.TexturedModel;
+import RenderEngine.DisplayManager;
 import ToolBox.TexturedModelMaker;
 
 public class PlayerAttack extends Entity {
-	private float projectileSpeedX = 0.3f;
-	private float projectileSpeedY = 0.3f;
-	private float projectileSpeedZ = 0.3f;
-	private float rise = 0.01f;
+	private float projectileSpeedX = 0.3f* 60.0f/(float)DisplayManager.FPS_CAP;
+	private float projectileSpeedY = 0.3f* 60.0f/(float)DisplayManager.FPS_CAP;
+	private float projectileSpeedZ = 0.3f* 60.0f/(float)DisplayManager.FPS_CAP;
+	private float rise = 0.01f* 60.0f/(float)DisplayManager.FPS_CAP;
 	private int fade = 50 - (int)(Math.random()*30);
 	private static final float ANGLE = (float) 90 / 3;
 	private Vector3f position;
@@ -42,7 +43,7 @@ public class PlayerAttack extends Entity {
 
 	public void update() {
 		super.update();
-		fade--;
+		fade -= 60.0f/(float)DisplayManager.FPS_CAP;
 		Entity ent = CollisionHandler.hitDetectionSingleEnemy(
 				new Vector3f(position.x, position.y, position.z));
 		if (ent != null && fade > 10) {

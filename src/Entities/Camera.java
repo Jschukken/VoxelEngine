@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import Flashlight.MainGameLoop;
 import GameEngine.CollisionHandler;
+import RenderEngine.DisplayManager;
 import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
 
@@ -28,10 +29,10 @@ public class Camera {
 	private float rotX, rotY, rotZ;
 	private float dx = 0, dy = 0, dz = 0;
 
-	private float acceleration = 0.01f;
-	private float maxSpeed = 0.12f;
-	private float jumpHeight = 0.15f;
-	private float turnSpeed = 0.1f;
+	private float acceleration = 0.01f * 60.0f/DisplayManager.FPS_CAP;
+	private float maxSpeed = 0.12f * 60.0f/DisplayManager.FPS_CAP;
+	private float jumpHeight = 0.15f * 60.0f/DisplayManager.FPS_CAP;
+	private float turnSpeed = 0.1f * 60.0f/DisplayManager.FPS_CAP;
 	private float currSpeed;
 	private float strafe;
 	private long lastHit;
@@ -159,7 +160,7 @@ public class Camera {
 	 */
 	private void applieGravity() {
 		if (GRAVITY) {
-			dy = Math.max(dy - 0.01f, -maxSpeed * 4);
+			dy = Math.max(dy - 0.01f * 60.0f/DisplayManager.FPS_CAP, -maxSpeed * 4);
 		}
 
 		fallCheck();
@@ -182,7 +183,7 @@ public class Camera {
 	private void attack() {
 		if (Mouse.isButtonDown(0)) {
 			System.out.println("thrower check");
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 2 * 60.0f/DisplayManager.FPS_CAP; i++) {
 				MainGameLoop.mapManager.addAttackEntity(TexturedModelMaker.basicCube,
 						new Vector3f(position.x, position.y + .7f, position.z), getLookAt(),
 						new Vector3f(rotX + 0.0001f, rotY, rotZ), new Vector3f(.05f, .05f, .05f));
@@ -207,7 +208,7 @@ public class Camera {
 	public void getHit() {
 		hp--;
 		MainGameLoop.audH.playAudio(getHitSFX, position, position);
-		for(int i = 0; i < 30; i++){
+		for(int i = 0; i < 20; i++){
 			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,new Vector3f(position.x,position.y,position.z));
 		}
 		if (hp <= 0) {

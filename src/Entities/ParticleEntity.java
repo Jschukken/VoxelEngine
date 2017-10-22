@@ -3,6 +3,7 @@ package Entities;
 import org.lwjgl.util.vector.Vector3f;
 
 import Models.TexturedModel;
+import RenderEngine.DisplayManager;
 
 public class ParticleEntity extends Entity {
 
@@ -15,9 +16,9 @@ public class ParticleEntity extends Entity {
 		super(model, position, rotX, rotY, rotZ, scale);
 		// TODO Auto-generated constructor stub
 		this.position = position;
-		speed.x = (float) (Math.random() - .5) / 8f;
-		speed.y = (float) Math.random() / 8f;
-		speed.z = (float) (Math.random() - .5) / 8f;
+		speed.x = (float) ((Math.random() - .5) / 8f)* 60.0f/(float)DisplayManager.FPS_CAP;
+		speed.y = (float) (Math.random() / 8f)* 60.0f/(float)DisplayManager.FPS_CAP;
+		speed.z = (float) ((Math.random() - .5) / 8f)* 60.0f/(float)DisplayManager.FPS_CAP;
 	}
 
 	public void update() {
@@ -28,7 +29,7 @@ public class ParticleEntity extends Entity {
 		position.x += speed.x;
 		position.y += speed.y;
 		position.z += speed.z;
-		speed.y -= 0.05 / 8f;
+		speed.y -= (0.05 / 8f)* 60.0f/(float)DisplayManager.FPS_CAP;
 		// }
 	}
 
