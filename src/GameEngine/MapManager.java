@@ -196,8 +196,8 @@ public class MapManager {
 	}
 
 	public void render() {
-		List<Light> sun = new ArrayList<Light>();
-		sun.add(new Light(new Vector3f((float)(map.length/2),(float)map[0].length,(float)(map[0][0].length/2)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f)));
+		//List<Light> sun = new ArrayList<Light>();
+		//sun.add(new Light(new Vector3f((float)(map.length/2),(float)map[0].length,(float)(map[0][0].length/2)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f)));
 		List<Entity> total = new ArrayList<Entity>(activeEntities);
 		total.addAll(wallEntities);
 		total.addAll(mapEntities);
