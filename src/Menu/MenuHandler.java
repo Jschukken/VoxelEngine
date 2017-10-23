@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import Entities.Button;
 import Flashlight.MainGameLoop;
@@ -124,6 +125,30 @@ public class MenuHandler {
 		};
 		
 		mainMenu.add(tMod);
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
+		
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
+		
+		tex1 = new ModelTexture(loader.loadTexture("Clear Button"));
+		tex2 = new ModelTexture(loader.loadTexture("Clear Button Down"));
+		
+		tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				MainGameLoop.kn.clearPoints();
+			}
+		};
+		
+		mainMenu.add(tMod);
+		
+		vertices = new float[] {-0.38f, 0.77f, -1f, -0.38f, 0.4f, -1f, 0.38f, 0.4f, -1f, 0.38f, 0.77f, -1f};
+		
+		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
+
+		tex1 = new ModelTexture(loader.loadTexture("Title splash"));
+		tMod = new Button(model, tex1, tex2, vertices);
+		
+		mainMenuFluff.add(tMod);
 	}	
 	
 	/**
@@ -444,6 +469,7 @@ public class MenuHandler {
 	public void renderMenu(StaticShaderMenu shader, MasterMenuRenderer renderer) {
 		renderer.prepare();
 		shader.start();
+		
 		for (Button button : activeMenu) {
 			renderer.render(button, shader);
 		}
