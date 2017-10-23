@@ -96,7 +96,17 @@ public class MainGameLoop {
 				
 				menuh = new MenuHandler();
 				menuh.createMenus(loader);
+				mapManager = new MapManager();
 				
+				/**
+				 * Add clear saved maps button
+				 */
+				Runnable clearMaps = new Runnable() {
+					public void run() {
+						clearDataPoints();
+					}
+				};
+				menuh.addClearMapsButton(clearMaps, loader);				
 				/**
 				 * Add like and dislike buttons to the game over screen
 				 * with callable functions here
@@ -262,6 +272,10 @@ public class MainGameLoop {
 	 */
 	public static void addCurrentMapToKNearest(boolean c) {
 		mapManager.addPointToKNearest(c);
+	}
+	
+	public static void clearDataPoints() {
+		mapManager.clearDataPoints();
 	}
 
 
