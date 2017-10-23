@@ -15,6 +15,7 @@ import Entities.Camera;
 import Entities.Entity;
 import Entities.Light;
 import Models.TexturedModel;
+import Shaders.ParticleShader;
 import Shaders.SkyboxShader;
 import Shaders.StaticShader;
 import Shaders.TerrainShader;
@@ -48,9 +49,13 @@ public class MasterRenderer {
 	private TerrainShader terrainShader = new TerrainShader();
 	private TerrainRenderer terrainRenderer = null;
 	
+	private ParticleShader particleShader = new ParticleShader();
+	private ParticleRenderer particleRenderer = null;
+	
 	private ShadowMapMasterRenderer shadowMapRenderer = null;
 	
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
+	private Map<TexturedModel, List<Entity>> particleEntities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Entity> mapEntities = new ArrayList<Entity>();
 	private Entity skyBox = null;
 	
@@ -62,6 +67,7 @@ public class MasterRenderer {
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyBoxRenderer = new SkyboxRenderer(skyBoxShader, projectionMatrix);
+		particleRenderer = new ParticleRenderer(particleShader, projectionMatrix);
 		//Day - Night random generator
 		Random r = new Random();
 		ambient = r.nextFloat() * (0.3f - 0.01f) + 0.01f;
@@ -136,8 +142,12 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(mapEntities, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		terrainShader.stop();
+		particleShader.start();
+		particleShader.loadViewMatrix(camera);
+		particleRenderer.render(particleEntities);
 		entities.clear();
 		mapEntities.clear();
+		particleEntities.clear();
 	}
 	
 	public void processEntity(Entity entity){
@@ -154,6 +164,18 @@ public class MasterRenderer {
 	
 	public void processMapEntity(Entity entity){
 		mapEntities.add(entity);
+	}
+	
+	public void processParticle(Entity entity){
+		TexturedModel entityModel = entity.getModel();
+		List<Entity> batch = particleEntities.get(entityModel);
+		if (batch != null){
+			batch.add(entity);
+		}else{
+			List<Entity> newBatch = new ArrayList<Entity>();
+			newBatch.add(entity);
+			particleEntities.put(entityModel, newBatch);
+		}
 	}
 	
 	public void processSkyBox(Entity skyBox){

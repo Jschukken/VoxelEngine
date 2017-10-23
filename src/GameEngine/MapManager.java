@@ -282,7 +282,7 @@ public class MapManager {
 
 			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
 					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
-				renderer.processEntity(entity);
+				renderer.processParticle(entity);
 			}
 		}
 
