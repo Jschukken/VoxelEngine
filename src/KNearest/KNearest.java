@@ -167,6 +167,9 @@ public class KNearest {
 	 */
 	public void clearPoints() {
 		points = new ArrayList<Point>();
+		try {
+			writeDataToFile();
+		} catch (IOException e) {};
 	}
 
 	/**

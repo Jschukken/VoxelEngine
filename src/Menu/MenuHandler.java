@@ -95,22 +95,6 @@ public class MenuHandler {
 		
 		mainMenu.add(tMod);
 		
-		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
-		
-		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
-		
-		tex1 = new ModelTexture(loader.loadTexture("Clear Button"));
-		tex2 = new ModelTexture(loader.loadTexture("Clear Button Down"));
-		
-		tMod = new Button(model, tex1, tex2, vertices) {
-			@Override
-			public void onClick() {
-				MainGameLoop.kn.clearPoints();
-			}
-		};
-		
-		mainMenu.add(tMod);
-		
 		vertices = new float[] {-0.3f, -0.5f, -1f, -0.3f, -0.8f, -1f, 0.3f, -0.8f, -1f, 0.3f, -0.5f, -1f};
 		
 		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
@@ -125,21 +109,6 @@ public class MenuHandler {
 		};
 		
 		mainMenu.add(tMod);
-		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
-		
-		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
-		
-		tex1 = new ModelTexture(loader.loadTexture("Clear Button"));
-		tex2 = new ModelTexture(loader.loadTexture("Clear Button Down"));
-		
-		tMod = new Button(model, tex1, tex2, vertices) {
-			@Override
-			public void onClick() {
-				MainGameLoop.kn.clearPoints();
-			}
-		};
-		
-		mainMenu.add(tMod);
 		
 		vertices = new float[] {-0.38f, 0.77f, -1f, -0.38f, 0.4f, -1f, 0.38f, 0.4f, -1f, 0.38f, 0.77f, -1f};
 		
@@ -150,6 +119,38 @@ public class MenuHandler {
 		
 		mainMenuFluff.add(tMod);
 	}	
+	
+	/**
+	 * Adds the clear saved maps button to the menu with a given function
+	 * 
+	 * @param func  the function to run
+	 * @param loader  the loader
+	 */
+	public void addClearMapsButton(Runnable func, Loader loader) {
+				
+		float[] vertices = { -0.3f, 0.3f, -1f, -0.3f, 0.0f, -1f, 0.3f, 0.0f, -1f, 0.3f, 0.3f, -1f };
+
+		int[] indices = { 0, 1, 3, 3, 2, 1 };
+
+		float[] uv = { 0, 0, 0, 1, 1, 1, 1, 0 };
+		
+		vertices = new float[]{ -0.3f, -0.1f, -1f, -0.3f, -0.4f, -1f, 0.3f, -0.4f, -1f, 0.3f, -0.1f, -1f };
+		
+		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
+		
+		ModelTexture tex1 = new ModelTexture(loader.loadTexture("Clear Button"));
+		ModelTexture tex2 = new ModelTexture(loader.loadTexture("Clear Button Down"));
+		
+		Button tMod = new Button(model, tex1, tex2, vertices) {
+			@Override
+			public void onClick() {
+				func.run();
+			}
+		};
+		
+		mainMenu.add(tMod);
+		
+	}
 	
 	/**
 	 * creates all buttons and (TODO: fluff) for the map selection menu

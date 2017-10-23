@@ -448,5 +448,9 @@ public class MapManager {
 		kNear.addDataPoint(new Point(currentAttributes, c));
 		kNearestSave();
 	}
+	
+	public void clearDataPoints() {
+		kNear.clearPoints();
+	}
 
 }
