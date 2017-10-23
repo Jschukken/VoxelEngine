@@ -37,7 +37,7 @@ public class GuiRenderer {
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
 	private int lvl = 0; // current difficulty level
-	private final int DURATION = 300;
+	private final int DURATION = 5;
 
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
@@ -154,7 +154,7 @@ public class GuiRenderer {
 		};
 
 		ModelTexture ducker = new ModelTexture(loader.loadTexture("diffLevelOne"));
-		GuiTexture gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		GuiTexture gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 
 		guis.add(gui);
 		guis.add(gui3);
@@ -163,59 +163,59 @@ public class GuiRenderer {
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelTwo"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 		
 		ducker = new ModelTexture(loader.loadTexture("diffLevelThree"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFour"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFive"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelSix"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelSeven"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelEight"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelNine"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelTen"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelEleven"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelTwelve"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelThirteen"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFourteen"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFifteen"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
+		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 /*
 		ducker = new ModelTexture(loader.loadTexture("diffLevelSixteen"));
@@ -245,9 +245,9 @@ public class GuiRenderer {
 		String digits = timeConversion();
 		if (digits.equals("00:00")) {
 			time = 0;
+			lvl++;
 			if (lvl < levels.size()-1) {
-				lvl++;
-				System.out.println(lvl);
+				//System.out.println(lvl);
 				guis.set(2, levels.get(lvl));
 			}
 		}
@@ -300,7 +300,7 @@ public class GuiRenderer {
 				  break;
 			}
 			//mTex = new ModelTexture(loader.loadTexture("Quit Button"));
-			gui = new GuiTexture(mTex, new Vector2f(-0.120f + (i * 0.06f), 0.9f), new Vector2f(0.03f, 0.1f));
+			gui = new GuiTexture(mTex, new Vector2f(-0.120f + (i * 0.06f), 0.95f), new Vector2f(0.03f, 0.05f));
 			timer.set(i, gui);
 			  
 		}
