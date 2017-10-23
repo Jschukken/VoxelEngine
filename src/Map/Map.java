@@ -458,6 +458,25 @@ public class Map {
 			for (int j = 0; j < m[0].length; j++)
 				if (m[i][j] < 0)
 					m[i][j] = Math.abs(m[i][j]);
+		int[][] lmap = new int[m.length + 2][m[0].length + 2];
+		for (int i = 0; i < m.length; i++)
+			for (int j = 0; j < m[0].length; j++)
+				lmap[i + 1][j + 1] = m[i][j];
+		for (int i = 0; i < lmap.length; i++)
+			for (int j = 0; j < lmap[0].length; j++)
+				if (lmap[i][j] == 2) {
+					lmap[i+1][j+1] = 1;
+					lmap[i+1][j] = 1;
+					lmap[i+1][j-1] = 1;
+					lmap[i][j+1] = 1;
+					lmap[i][j-1] = 1;
+					lmap[i-1][j+1] = 1;
+					lmap[i-1][j] = 1;
+					lmap[i-1][j-1] = 1;
+				}
+		for (int i = 1; i < lmap.length-1; i++)
+			for (int j = 1; j < lmap[0].length-1; j++)
+				m[i-1][j-1] = lmap[i][j];
 	}
 
 }
