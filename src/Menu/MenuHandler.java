@@ -337,6 +337,7 @@ public class MenuHandler {
 			@Override
 			public void onClick() {
 				func.run();
+				MainGameLoop.setState("mainMenu");
 			}
 		};
 		
@@ -360,6 +361,7 @@ public class MenuHandler {
 			@Override
 			public void onClick() {
 				func.run();
+				MainGameLoop.setState("mainMenu");
 			}
 		};
 		
