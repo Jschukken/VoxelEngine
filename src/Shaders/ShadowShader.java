@@ -2,6 +2,11 @@ package Shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
 
+/**
+ * shader for shadows
+ * @author Jelle Schukken
+ *
+ */
 public class ShadowShader extends ShaderProgram {
 	
 	private static final String VERTEX_FILE = "/Shaders/shadowVertexShader.txt";
@@ -19,6 +24,10 @@ public class ShadowShader extends ShaderProgram {
 		
 	}
 	
+	/**
+	 * loads transformation matrix into shader
+	 * @param mvpMatrix the transformation matrix
+	 */
 	public void loadMvpMatrix(Matrix4f mvpMatrix){
 		super.loadMatrix(location_mvpMatrix, mvpMatrix);
 	}

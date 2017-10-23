@@ -14,8 +14,8 @@ import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 
 /**
- * renders entities
- * @author Jelle Schukken
+ * renders the skybox Lars please add comments
+ * @author Lars
  *
  */
 public class SkyboxRenderer {

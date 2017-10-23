@@ -2,6 +2,11 @@ package Entities;
 
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * simulates a light object
+ * @author Jelle Schukken
+ *
+ */
 public class Light {
 
 	private Vector3f position;
@@ -22,6 +27,8 @@ public class Light {
 		direction = new Vector3f((float)Math.random()*2f-2f,-1,(float)Math.random()*2f-2f);
 	}
 	
+	
+	//_______BASIC GETTERS AND SETTERS_________
 	public Vector3f getDirection(){
 		return direction;
 	}

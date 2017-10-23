@@ -228,6 +228,9 @@ public class MainGameLoop {
 	}
 
 
+	/**
+	 * checks if the game should be paused
+	 */
 	private static void checkPause(){
 		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
 			pauseCheck = true;
@@ -274,6 +277,9 @@ public class MainGameLoop {
 		mapManager.addPointToKNearest(c);
 	}
 	
+	/**
+	 * clears the data points in map manager
+	 */
 	public static void clearDataPoints() {
 		mapManager.clearDataPoints();
 	}

@@ -41,10 +41,16 @@ public class SkyboxShader extends ShaderProgram {
 		
 	}
 	
+	/**
+	 * loads the color of the sky into shader
+	 * @param r the red component
+	 * @param g the green component
+	 * @param b the blue component
+	 */
 	public void loadSkyColour(float r, float g, float b){
 		super.load3DVector(locationSkyColour, new Vector3f(r,g,b));
 	}
-	
+
 	public void loadTransformationMatrix(Matrix4f matrix){
 		super.loadMatrix(locationTransformationMatrix, matrix);
 	}

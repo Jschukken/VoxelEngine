@@ -35,6 +35,11 @@ public class EntityRenderer {
 		shader.stop();
 	}
 	
+	/**
+	 * renders entities with proper shading
+	 * @param entities the entities to render
+	 * @param toShadowSpace the transformation matrix to shadow map
+	 */
 	public void render(Map<TexturedModel, List<Entity>> entities, Matrix4f toShadowSpace){
 		shader.loadToShadowSpaceMatrix(toShadowSpace);
 		for (TexturedModel model : entities.keySet()){
@@ -48,6 +53,10 @@ public class EntityRenderer {
 		}
 	}
 	
+	/**
+	 * prepare model in gpu
+	 * @param the model to load
+	 */
 	private void prepareTexturedModel(TexturedModel model){
 		RawModel rawModel = model.getModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
@@ -63,6 +72,9 @@ public class EntityRenderer {
 		
 	}
 	
+	/**
+	 * unloads a model from gpu
+	 */
 	private void unbindTexturedModel(){
 		GL20.glDisableVertexAttribArray(0);// disable position array
 		GL20.glDisableVertexAttribArray(1);// disable texture array
@@ -70,6 +82,10 @@ public class EntityRenderer {
 		GL30.glBindVertexArray(0);
 	}
 	
+	/**
+	 * creates and loads transformation matrix to shader
+	 * @param entity the entity for which to create the matrix
+	 */
 	private void prepareInstance(Entity entity){
 		Matrix4f transformationMatrix = MatrixMath.createTransMatrix(entity.getPosition(),entity.getRotX(),entity.getRotY(),entity.getRotZ(),entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);

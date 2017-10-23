@@ -10,6 +10,11 @@ import PathFinding.AStar;
 import Map.Map;
 import java.util.Arrays;
 
+/**
+ * represents the enemy spawners
+ * @author Jelle Schukken
+ *
+ */
 public class SpawnPointEntity extends Entity {
 
 	private int spawnTimer = 0;
@@ -21,7 +26,7 @@ public class SpawnPointEntity extends Entity {
 	private TexturedModel enemy;
 	private int[] path;
 	
-	public SpawnPointEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale, TexturedModel enemy, int[] path) {
+	public SpawnPointEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale, TexturedModel enemy) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.enemy = enemy;
 		this.path = CreatePath.createPath(position);
@@ -29,13 +34,16 @@ public class SpawnPointEntity extends Entity {
 		spawnTimer = (int)(Math.random()*spawnRate);
 	}
 	
+	/**
+	 * spawns enemy if a certain time has passed, recalculates path if a certain time has passed
+	 */
 	public void update() {
 		spawnTimer++;
 		pathTimer++;
 		// spawn enemy if sufficient time has passed
 		if (spawnTimer >= spawnRate) {
 			spawnTimer = 0;
-			Vector3f p = new Vector3f(position.x, position.y, position.z);
+			Vector3f p = new Vector3f(position);
 			MainGameLoop.mapManager.addActiveEntity(enemy, p, path);
 		}
 		// update path if sufficient time has passed

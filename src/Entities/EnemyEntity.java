@@ -15,15 +15,15 @@ public class EnemyEntity extends Entity {
 
 	private int[] path;
 	private int pathPosition = 0;
-	private static final float ENEMY_SPEED = .0601f * 60.0f/(float)DisplayManager.FPS_CAP;
+	private static final float ENEMY_SPEED = .0601f * 60.0f / (float) DisplayManager.FPS_CAP;
 	private Vector3f position;
 	private Vector3f direction;
 	private float rotX, rotY, rotZ;
 	private int hp;
 	private boolean turnState = true;
 	private float turnSpeed;
-	private long old = 0; 
-	private int time = 0; 
+	private long old = 0;
+	private int time = 0;
 	private TexturedModel shrapnel = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "black");
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
@@ -44,7 +44,7 @@ public class EnemyEntity extends Entity {
 	 * updates the enemies position and moves it to the next point on its path
 	 */
 	public void update() {
-		
+
 		super.update();
 		if (turnState) {
 			turnState = needTurn();
@@ -76,7 +76,7 @@ public class EnemyEntity extends Entity {
 		lookAt.z = -lookAt.z;
 		direction.normalise();
 		double angle = Vector3f.angle(lookAt, direction);
-		if (angle > Math.toRadians(2 * 60.0f/DisplayManager.FPS_CAP)) {
+		if (angle > Math.toRadians(2 * 60.0f / DisplayManager.FPS_CAP)) {
 			rotY += turnSpeed;
 			return true;
 		}
@@ -99,9 +99,9 @@ public class EnemyEntity extends Entity {
 		lookAt.normalise();
 		direction.normalise();
 		if (lookAt.x * direction.z - lookAt.z * direction.x > 0) {
-			return (float) 0.05 * 60.0f/DisplayManager.FPS_CAP;
+			return (float) 0.05 * 60.0f / DisplayManager.FPS_CAP;
 		} else {
-			return (float) -0.05 * 60.0f/DisplayManager.FPS_CAP;
+			return (float) -0.05 * 60.0f / DisplayManager.FPS_CAP;
 		}
 
 	}
@@ -138,7 +138,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 		}
-		if (position.z - path[pathPosition + 1]<-ENEMY_SPEED) {
+		if (position.z - path[pathPosition + 1] < -ENEMY_SPEED) {
 			position.z += ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z -= ENEMY_SPEED;
@@ -146,7 +146,7 @@ public class EnemyEntity extends Entity {
 				check = true;
 			}
 
-		} else if (position.z - path[pathPosition + 1]>ENEMY_SPEED) {
+		} else if (position.z - path[pathPosition + 1] > ENEMY_SPEED) {
 			position.z -= ENEMY_SPEED;
 			if (CollisionHandler.checkEnemyCollision(this)) {
 				position.z += ENEMY_SPEED;
@@ -163,7 +163,8 @@ public class EnemyEntity extends Entity {
 			}
 		}
 
-		//System.out.println(position.x + " " + path[pathPosition] + " : " + position.z+ " " + path[pathPosition+1]);
+		// System.out.println(position.x + " " + path[pathPosition] + " : " +
+		// position.z+ " " + path[pathPosition+1]);
 		position.y -= ENEMY_SPEED;
 		if (CollisionHandler.checkEnemyCollision(this)) {
 			position.y += ENEMY_SPEED;
@@ -177,8 +178,7 @@ public class EnemyEntity extends Entity {
 	 */
 	public void getHit() {
 		for (int i = 0; i < 5; i++) {
-			MainGameLoop.mapManager.addParticleEntity(shrapnel,
-					new Vector3f(position.x, position.y, position.z));
+			MainGameLoop.mapManager.addParticleEntity(shrapnel, new Vector3f(position.x, position.y, position.z));
 		}
 		hp--;
 		if (hp <= 0) {
@@ -190,9 +190,9 @@ public class EnemyEntity extends Entity {
 	 * removes enemy from the game
 	 */
 	public void destroy() {
-		//saves the position of the enemy for later use in A*
-		AStar.upDeaths((int) position.x/5+1, (int) position.z/5+1);
-		//destroys the enemy
+		// saves the position of the enemy for later use in A*
+		AStar.upDeaths((int) position.x / 5 + 1, (int) position.z / 5 + 1);
+		// destroys the enemy
 		for (int i = 0; i < 100; i++) {
 			MainGameLoop.mapManager.addParticleEntity(TexturedModelMaker.basicCube,
 					new Vector3f(position.x, position.y, position.z));
@@ -205,9 +205,9 @@ public class EnemyEntity extends Entity {
 	 * rounds the position to the 1nd decimal place
 	 */
 	private void roundPosition() {
-		position.x = ((int) (position.x * (100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1)) + 0.5)) / (float)(100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1));
-		position.y = ((int) (position.y * (100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1)) + 0.5)) / (float)(100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1));
-		position.z = ((int) (position.z * (100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1)) + 0.5)) / (float)(100.0/Math.pow(10,60.0f/(float)DisplayManager.FPS_CAP-1));
+		position.x = ((int) (position.x * 100.0 + 0.5)) / (float) (100.0);
+		position.y = ((int) (position.y * 100.0 + 0.5)) / (float) (100.0);
+		position.z = ((int) (position.z * 100.0 + 0.5)) / (float) (100.0);
 
 	}
 
@@ -225,9 +225,11 @@ public class EnemyEntity extends Entity {
 	 */
 	private boolean checkPath() {
 		roundPosition();
-		return Math.abs(position.x - path[pathPosition])<ENEMY_SPEED*2.0 && Math.abs(position.z - path[pathPosition + 1])<ENEMY_SPEED*2.0;
+		return Math.abs(position.x - path[pathPosition]) < ENEMY_SPEED * 2.0
+				&& Math.abs(position.z - path[pathPosition + 1]) < ENEMY_SPEED * 2.0;
 	}
 
+	// _____________BASIC SETTERS AND GETTERS_______________
 	public float getRotX() {
 		return rotX;
 	}
@@ -235,45 +237,49 @@ public class EnemyEntity extends Entity {
 	public float getRotY() {
 		return rotY;
 	}
-	
-	public Vector3f getScale(){
-		return new Vector3f(1f,1f,1f);
+
+	public Vector3f getScale() {
+		return new Vector3f(1f, 1f, 1f);
 	}
 
 	public float getRotZ() {
 		return rotZ;
 	}
-	public Vector3f getCollisionPosition(){
+
+	public Vector3f getCollisionPosition() {
 		return position;
 	}
-	
-	public Vector3f getPosition(){
-		return new Vector3f(position.x,(float)(position.y-.5),position.z);
+
+	public Vector3f getPosition() {
+		return new Vector3f(position.x, (float) (position.y - .5), position.z);
 	}
-	
+
+	// __________END GETTERS AND SETTERS_____________
+	/**
+	 * Berk please add comment
+	 */
 	public void timeUpdate() {
 		long current = System.currentTimeMillis();
 		if (current >= (old + 1000)) {
 			old = current;
 			time++;
 		}
-		if(hp == 20){
-			if(time % 2 == 0){
+		if (hp == 20) {
+			if (time % 2 == 0) {
 				setModel(MapManager.normalModel);
-			}else{
+			} else {
 				setModel(MapManager.runModel);
 			}
-		}else{
-			if(time % 5 == 0){
-			setModel(MapManager.hitNormalModel);
-		}else{
+		} else {
+			if (time % 5 == 0) {
+				setModel(MapManager.hitNormalModel);
+			} else {
 
-			setModel(MapManager.hitRunModel);
-		}
+				setModel(MapManager.hitRunModel);
 			}
-	if(time > 10){
-		time = 0;
-	}
-	//System.out.println("Time is: "+time);
+		}
+		if (time > 10) {
+			time = 0;
+		}
 	}
 }

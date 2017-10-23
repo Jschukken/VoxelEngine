@@ -65,6 +65,7 @@ public class StaticShader extends ShaderProgram {
 		
 	}
 	
+	//_______LOAD LIGHT ATTRIBUTES INTO SHADER____________
 	public void loadSkyColour(float r, float g, float b){
 		super.load3DVector(locationSkyColour, new Vector3f(r,g,b));
 	}

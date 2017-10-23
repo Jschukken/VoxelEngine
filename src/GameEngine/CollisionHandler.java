@@ -69,6 +69,11 @@ public class CollisionHandler {
 		}
 	}
 
+	/**
+	 * checks collision of a flame particle entity with the walls
+	 * @param entity the flame particle
+	 * @return true if there is a collision false otherwise
+	 */
 	public static boolean checkFlameCollision(Entity entity) {
 		try {
 			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x + .5)][(int) (entity
@@ -93,39 +98,31 @@ public class CollisionHandler {
 
 		try {
 			// lower square
-			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1)][(int) (entity.getCollisionPosition().y
-							+ .1)][(int) (entity.getPosition().z + .1)] == 1) {
+			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x + .1)][(int) (entity.getCollisionPosition().y
+					+ .1)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1)][(int) (entity.getCollisionPosition().y
-							+ .1)][(int) (entity.getPosition().z + .9)] == 1) {
+					+ .1)][(int) (entity.getCollisionPosition().y + .1)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9)][(int) (entity.getCollisionPosition().y
-							+ .1)][(int) (entity.getPosition().z + .9)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y + .1)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9)][(int) (entity.getCollisionPosition().y
-							+ .1)][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y + .1)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			}
 			// middle square
 			else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1)][(int) (entity.getCollisionPosition().y
-							+ .9)][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .1)][(int) (entity.getCollisionPosition().y + .9)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .1 * entity.getDirection().x)][(int) (entity.getCollisionPosition().y
-							+ .9 * entity.getDirection().y)][(int) (entity.getPosition().z + .9)] == 1) {
+					+ .1)][(int) (entity.getCollisionPosition().y + .9)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9)][(int) (entity.getCollisionPosition().y
-							+ .9)][(int) (entity.getPosition().z + .9)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y + .9)][(int) (entity.getPosition().z + .9)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
-					+ .9)][(int) (entity.getCollisionPosition().y
-							+ .9 )][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .9)][(int) (entity.getCollisionPosition().y + .9)][(int) (entity.getPosition().z + .1)] == 1) {
 				return true;
 			} else {
 				return false;
@@ -143,9 +140,9 @@ public class CollisionHandler {
 	 */
 	public static Entity hitDetectionSingleEnemy(Vector3f position) {
 		for (Entity entity : MainGameLoop.mapManager.activeEntities) {
-			double dist = Math.sqrt(
-					Math.pow(position.x - entity.getCollisionPosition().x, 2) + Math.pow(position.z - entity.getCollisionPosition().z, 2));
-			if (dist<.8 && entity.getCollisionPosition().y+1>position.y) {
+			double dist = Math.sqrt(Math.pow(position.x - entity.getCollisionPosition().x, 2)
+					+ Math.pow(position.z - entity.getCollisionPosition().z, 2));
+			if (dist < .8 && entity.getCollisionPosition().y + 1 > position.y) {
 				return entity;
 			}
 		}
@@ -153,6 +150,11 @@ public class CollisionHandler {
 
 	}
 
+	/**
+	 * check to see if player collides with a protected zone
+	 * @param position the position of the player
+	 * @return true if it does, false otherwise
+	 */
 	public static boolean protectedZones(Vector3f position) {
 		try {
 			if (Math.sqrt(Math.pow(position.x - MainGameLoop.mapManager.destination.getPosition().x, 2)

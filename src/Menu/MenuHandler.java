@@ -322,6 +322,7 @@ public class MenuHandler {
 		
 	}	
 	
+	//________ADD BUTTON METHODS__________
 	public void addLikeButton(Runnable func, Loader loader) {
 
 		int[] indices = { 0, 1, 3, 3, 2, 1 };
@@ -416,6 +417,12 @@ public class MenuHandler {
 		
 	}
 	
+	//____________END ADD BUTTONS_________
+	
+	/**
+	 * create background for menus
+	 * @param loader the loader to use
+	 */
 	public void createBackground(Loader loader) {
 		
 		float[] vertices = { -1f, 1f, 0f, -1f, -1f, 0f, 1f, -1f, 0f, 1f, 1f, 0f };

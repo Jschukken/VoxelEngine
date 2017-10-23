@@ -130,8 +130,7 @@ public class MapManager {
 	 */
 	public void loadMap() {
 		Lights = new ArrayList<Light>();
-		Lights.add(new Light(new Vector3f((float)(map.length),(float)(map[0].length),(float)(map[0][0].length)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(.45f, 0, 0)));
-		mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), new Vector3f((float)(map.length/2.0),(float)(map[0].length*3.0),(float)(map[0][0].length/2.0)), 0, 0, 0, new Vector3f(1, 1, 1)));
+		Lights.add(new Light(new Vector3f((float)(map.length),(float)(map[0].length*5.0),(float)(map[0][0].length)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(.45f, 0, 0)));
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader, "Tile");
 		TexturedModel tWallMod = TexturedModelMaker.cubeTexturedModel(loader, "wallTile");
@@ -167,10 +166,8 @@ public class MapManager {
 			for (int y = 0; y < map[0].length; y++) {
 				for (int z = 0; z < map[0][0].length; z++) {
 					if (map[x][y][z] == 3) {
-						int[] arr = { 1, map[0][0].length - 2, map.length - 2, map[0][0].length - 2, map.length - 2, 1,
-								1, 1 };
 						activeEntities.add(new SpawnPointEntity(tSpawnMod, new Vector3f(x, y, z), 0, 0, 0,
-								new Vector3f(1, 1, 1), normalModel, arr));
+								new Vector3f(1, 1, 1), normalModel));
 
 					} else if (map[x][y][z] == 4){
 						Vector3f position = new Vector3f(x, y, z);
@@ -195,6 +192,9 @@ public class MapManager {
 		}
 	}
 
+	/**
+	 * renders all visible entities within range
+	 */
 	public void render() {
 		//List<Light> sun = new ArrayList<Light>();
 		//sun.add(new Light(new Vector3f((float)(map.length/2),(float)map[0].length,(float)(map[0][0].length/2)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f)));
@@ -318,6 +318,9 @@ public class MapManager {
 		renderer.render(Lights, camera);
 	}
 
+	/**
+	 * updates all entities
+	 */
 	public void update() {
 		camera.update();
 		try {
@@ -338,6 +341,9 @@ public class MapManager {
 
 	}
 
+	/**
+	 * cleans up data
+	 */
 	public void cleanUp() {
 		try {
 			loader.cleanUp();
@@ -364,25 +370,39 @@ public class MapManager {
 
 	}
 
-	public void addParticleEntity(TexturedModel entity, Vector3f position) {
-		Entity particle = new ParticleEntity(entity, position, 0, 0, 0, new Vector3f(.1f, .1f, .1f));
+	/**
+	 * adds a particle entity to the game
+	 * @param model the appearance of the particle
+	 * @param position the position of the particle
+	 */
+	public void addParticleEntity(TexturedModel model, Vector3f position) {
+		Entity particle = new ParticleEntity(model, position, 0, 0, 0, new Vector3f(.1f, .1f, .1f));
 		particleEntities.add(particle);
 		if (particleEntities.size() > PARTICLE_COUNT) {
 			particleEntities.remove(0);
 		}
 	}
 
-	public void addAttackEntity(TexturedModel entity, Vector3f position, Vector3f rot, Vector3f direction,
+	/**
+	 * adds an attack particle to the game
+	 * @param model the model
+	 * @param position the position
+	 * @param rot the rotation
+	 * @param direction the direction
+	 * @param scale the scale
+	 */
+	public void addAttackEntity(TexturedModel model, Vector3f position, Vector3f rot, Vector3f direction,
 			Vector3f scale) {
-		Entity attack = new PlayerAttack(entity, position, rot, direction, scale);
+		Entity attack = new PlayerAttack(model, position, rot, direction, scale);
 		attackEntities.add(attack);
-		//attackEntities.remove(0);
 		
 	}
 
+	/**
+	 * adds skybox to game
+	 */
 	public void addSkyBoxEntity(TexturedModel entity, Vector3f position) {
-		// skyBox = new Entity(entity, position, 0, 0, 0, new
-		// Vector3f(RENDER_DISTANCE,RENDER_DISTANCE,RENDER_DISTANCE));
+
 		skyBox = new Entity(entity, position, 0, 0, 0, new Vector3f(250, 250, 250));
 	}
 
@@ -409,7 +429,7 @@ public class MapManager {
 	}
 
 	/**
-	 * TEMPORARY, creates a simple map while the map generator is in progress, can
+	 * creates a simple map, can
 	 * be used for debugging
 	 */
 	private void tempMapCreator() {
@@ -449,6 +469,9 @@ public class MapManager {
 		kNearestSave();
 	}
 	
+	/**
+	 * clears the data points for kNearest
+	 */
 	public void clearDataPoints() {
 		kNear.clearPoints();
 	}

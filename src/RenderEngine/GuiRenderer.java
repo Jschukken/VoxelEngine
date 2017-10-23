@@ -78,6 +78,9 @@ public class GuiRenderer {
 		}
 	}
 
+	/**
+	 * Berk Chiel Timo please do comments for the rest of this file
+	 */
 	public void render() {
 		guishader.start();
 		GL30.glBindVertexArray(quad.getVaoID());

@@ -14,7 +14,7 @@ import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
 
 /**
- * The camera object TODO: turn into player
+ * The camera object, acts as player in game
  * 
  * @author Jelle Schukken
  *
@@ -62,6 +62,9 @@ public class Camera {
 		
 	}
 
+	/**
+	 * updates the camera
+	 */
 	public void update() {
 		if (Mouse.isGrabbed()) {
 			checkJump();
@@ -210,7 +213,7 @@ public class Camera {
 	}
 	
 	/**
-	 * checks for and applied health regen
+	 * checks for and applied health regeneration
 	 */
 	private void checkRegen(){
 		if(hp<MAX_HP && System.nanoTime()-lastHit > 5*ONE_SECOND && System.nanoTime()-lastRegen > ONE_SECOND){
@@ -245,6 +248,10 @@ public class Camera {
 		}
 	}
 
+	/**
+	 * returns the direction the camera is looking at as a vector
+	 * @return the direction vector
+	 */
 	public Vector3f getLookAt() {
 		Vector3f lookAt = MatrixMath.rotateVector(new Vector3f(rotX, rotY, rotZ));
 		if (lookAt.length() > 0) {
@@ -254,6 +261,7 @@ public class Camera {
 
 	}
 
+	//______BASIC SETTERS AND GETTERS________
 	public Vector3f getPosition() {
 		return new Vector3f(position.x, position.y + 1f, position.z);
 	}

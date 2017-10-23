@@ -4,6 +4,11 @@ import Models.RawModel;
 import Models.TexturedModel;
 import Textures.ModelTexture;
 
+/**
+ * timo add comment
+ * @author Timo
+ *
+ */
 public class Button extends TexturedModel {
 	
 	// the list of vertices indicating the button's location and size.

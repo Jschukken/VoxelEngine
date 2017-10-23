@@ -7,7 +7,11 @@ import GameEngine.CollisionHandler;
 import Models.TexturedModel;
 import RenderEngine.DisplayManager;
 import ToolBox.TexturedModelMaker;
-
+/**
+ * simulates a particle in a flamethrower
+ * @author Jelle Schukken
+ *
+ */
 public class PlayerAttack extends Entity {
 	private float projectileSpeedX = 0.3f* 60.0f/(float)DisplayManager.FPS_CAP;
 	private float projectileSpeedY = 0.3f* 60.0f/(float)DisplayManager.FPS_CAP;
@@ -28,6 +32,7 @@ public class PlayerAttack extends Entity {
 				(float) (direction.y + Math.random() * ANGLE - ANGLE / 2),
 				(float) (direction.z + Math.random() * ANGLE - ANGLE / 2));
 		int i = 0;
+		//generates a random direction usually within a cone, but a small chance of being outside the cone
 		while(Math.sqrt(Math.pow(newDir.x-direction.x,2)+Math.pow(newDir.y-direction.y,2)+Math.pow(newDir.z-direction.z, 2))>10 && i <10){
 			newDir = new Vector3f((float) (direction.x + Math.random() * ANGLE - ANGLE / 2),
 					(float) (direction.y + Math.random() * ANGLE - ANGLE / 2),
@@ -41,6 +46,9 @@ public class PlayerAttack extends Entity {
 		this.scale = scale;
 	}
 
+	/**
+	 * updates the flame particles position and scale, checks if it hits an enemy, and destroys itself after a certain time
+	 */
 	public void update() {
 		super.update();
 		fade -= 60.0f/(float)DisplayManager.FPS_CAP;
@@ -87,11 +95,12 @@ public class PlayerAttack extends Entity {
 	}
 	
 	public Vector3f getDirection(){
-		//normDir = new Vector3f(direction.x,direction.y,direction.z);
-		//normDir.normalise();
 		return normDir;
 	}
 
+	/**
+	 * removes the particle from the game
+	 */
 	public void destroy() {
 		MainGameLoop.mapManager.removeAttackEntity(this);
 	}

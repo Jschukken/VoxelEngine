@@ -17,8 +17,8 @@ import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 
 /**
- * renders entities
- * @author Jelle Schukken
+ * renders the terrain Lars please add comments
+ * @author Lars Gevers
  *
  */
 public class TerrainRenderer {

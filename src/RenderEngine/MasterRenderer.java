@@ -111,7 +111,7 @@ public class MasterRenderer {
 	}
 
 	/**
-	 * render an entity with a shader
+	 * Lars please update this comment
 	 * @param entity the entity to render
 	 * @param shader the shader that will be used
 	 */

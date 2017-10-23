@@ -15,6 +15,11 @@ import Models.RawModel;
 import Models.TexturedModel;
 import ToolBox.MatrixMath;
 
+/**
+ * renders entities to a shadow map
+ * @author Lars Gevers
+ *
+ */
 public class ShadowMapEntityRenderer {
 
 	private Matrix4f projectionViewMatrix;

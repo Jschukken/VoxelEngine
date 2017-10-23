@@ -63,12 +63,23 @@ public class TexturedModelMaker {
 		return basicCube;
 	}
 	
+	/**
+	 * creates the robot textured model from .obj file
+	 * @param loader the loader which which to load it
+	 * @return the textured model
+	 */
 	public static TexturedModel robotModel(Loader loader) {
 
 		RawModel model =  OBJLoader.loadObjModel("person", loader);
 		ModelTexture texture =  new ModelTexture(loader.loadTexture("Tile"));
 		return new TexturedModel(model, texture);
 	}
+	
+	/**
+	 * creates the running textured robot model
+	 * @param loader the loader which which to load it
+	 * @return the textured model
+	 */
 	public static TexturedModel robotRunModel(Loader loader) {
 
 		RawModel model =  OBJLoader.loadObjModel("torso", loader);
@@ -76,18 +87,33 @@ public class TexturedModelMaker {
 		return new TexturedModel(model, texture);
 	}
 	
+	/**
+	 * creates the running robot textured model after its been hit
+	 * @param loader the loader which which to load it
+	 * @return the textured model
+	 */
 	public static TexturedModel robotHitRunModel(Loader loader) {
 		RawModel model =  OBJLoader.loadObjModel("torso", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("red"));
 		return new TexturedModel(model, texture);
 	}
 	
+	/**
+	 * creates the robot textured model after its been hit
+	 * @param loader the loader which which to load it
+	 * @return the textured model
+	 */
 	public static TexturedModel robotHitNormalModel(Loader loader) {
 		RawModel model =  OBJLoader.loadObjModel("person", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("red"));
 		return new TexturedModel(model, texture);
 	}
 
+	/**
+	 * creates the skybox textured model
+	 * @param loader the loader which which to load it
+	 * @return the textured model
+	 */
 	public static TexturedModel skyBoxModel(Loader loader) {
 
 		float[] vertices = { -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,

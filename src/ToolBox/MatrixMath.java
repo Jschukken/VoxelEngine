@@ -121,6 +121,9 @@ public class MatrixMath {
 		return normals;
 	}
 	
+	/**
+	 * Lars please add comments
+	 */
 	private static Vector3f normal (Vector3f A, Vector3f B, Vector3f C){
 		Vector3f AB = Vector3f.sub(B, A, null);
 		Vector3f AC = Vector3f.sub(C, A, null);

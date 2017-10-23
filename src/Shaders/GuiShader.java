@@ -2,6 +2,7 @@ package Shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
 
+//Add comments Berk
 public class GuiShader extends ShaderProgram{
 	
 	private static final String VERTEX_FILE = "/Shaders/guiVertexShader.txt";
