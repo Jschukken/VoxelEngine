@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import Flashlight.MainGameLoop;
 import Models.TexturedModel;
 import PathFinding.CreatePath;
+import RenderEngine.DisplayManager;
 import PathFinding.AStar;
 import Map.Map;
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 public class SpawnPointEntity extends Entity {
 
 	private int spawnTimer = 0;
-	public static int spawnRate = 240;
+	public static int spawnRate = (int)(240/(60/(float)DisplayManager.FPS_CAP));
 	private int pathTimer = 0;
 	public static int pathRate = 5 * spawnRate;
 	
