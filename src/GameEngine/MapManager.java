@@ -130,7 +130,7 @@ public class MapManager {
 	 */
 	public void loadMap() {
 		Lights = new ArrayList<Light>();
-		Lights.add(new Light(new Vector3f((float)(map.length/2.0),(float)(map[0].length*3.0),(float)(map[0][0].length/2.0)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(.45f, 0, 0)));
+		Lights.add(new Light(new Vector3f((float)(map.length),(float)(map[0].length),(float)(map[0][0].length)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(.45f, 0, 0)));
 		mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), new Vector3f((float)(map.length/2.0),(float)(map[0].length*3.0),(float)(map[0][0].length/2.0)), 0, 0, 0, new Vector3f(1, 1, 1)));
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader, "Tile");

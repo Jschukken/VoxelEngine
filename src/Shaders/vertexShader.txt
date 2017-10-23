@@ -10,7 +10,7 @@ uniform mat4 viewMatrix;
 
 uniform mat4 toShadowMapSpace;
 
-const float density = 0.00;
+const float density = 0.05;
 const float gradient = 3.0;
 const float shadowDistance = 100.0;
 const float transitionDistance = 10.0;
