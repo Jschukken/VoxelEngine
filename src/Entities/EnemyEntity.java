@@ -11,6 +11,11 @@ import RenderEngine.DisplayManager;
 import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
 
+/**
+ * This thing still needs comments, a lot of them, Jelle?
+ * @author ?
+ *
+ */
 public class EnemyEntity extends Entity {
 
 	private int[] path;

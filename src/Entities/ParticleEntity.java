@@ -11,7 +11,6 @@ import RenderEngine.DisplayManager;
  *
  */
 public class ParticleEntity extends Entity {
-
 	private Vector3f speed = new Vector3f(0, 0, 0);
 	private Vector3f position;
 

@@ -33,6 +33,9 @@ import Textures.ModelTexture;
  * @author Jelle Schukken
  *
  */
+/*
+ * cleanup of old comments is still needed and I kind of think every state deserves it's own comment
+ */
 public class MainGameLoop {
 
 	public static StaticShaderMenu menush = null;

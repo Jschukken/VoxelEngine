@@ -1,10 +1,6 @@
 package Map;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
-import KNearest.KNearest;
 
 /**
  * Used to do map generation

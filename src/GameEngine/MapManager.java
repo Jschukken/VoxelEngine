@@ -22,8 +22,6 @@ import Map.MapEvaluation;
 import Models.TexturedModel;
 import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
-import RenderEngine.MasterRenderer;
-import Shaders.StaticShader;
 import ToolBox.TexturedModelMaker;
 
 /**
