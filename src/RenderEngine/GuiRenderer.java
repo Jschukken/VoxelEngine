@@ -37,7 +37,7 @@ public class GuiRenderer {
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
 	private int lvl = 0; // current difficulty level
-	private final int DURATION = 5;
+	private final int DURATION = 90;
 
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
@@ -117,14 +117,21 @@ public class GuiRenderer {
 		guishader.stop();
 	}
 
+	/**
+	 * Creates each element of the HUD and adds it to the "guis" list to make it iterable.
+	 */
 	public void createHUD() {
 
+		// A blue texture serving as a background and border for the End Point's health bar
 		ModelTexture modelTex = new ModelTexture(loader.loadTexture("blue"));
 		GuiTexture gui2 = new GuiTexture(modelTex, new Vector2f(0.6f, 0.950f), new Vector2f (0.4f, 0.050f));
 		guis.add(gui2);
+		
+		// A blue texture serving as a background and border for the player's health bar
 		gui2 = new GuiTexture(modelTex, new Vector2f(-0.6f, -0.950f), new Vector2f(0.4f, 0.050f));
 		guis.add(gui2);
-		// End Point HP HUD
+		
+		// A red texture serving as the health bar for the end point
 		ModelTexture ducker3 = new ModelTexture(loader.loadTexture("red"));
 		GuiTexture gui3 = new GuiTexture(ducker3, new Vector2f(0.6f, 0.950f), new Vector2f(0.399f, 0.049f)) {
 			@Override
@@ -139,13 +146,12 @@ public class GuiRenderer {
 			}
 		};
 
-		// Player HP HUD
+		// A red texture serving as the health bar for the player
 		ModelTexture ducker4 = new ModelTexture(loader.loadTexture("red"));
 		GuiTexture gui4 = new GuiTexture(ducker4, new Vector2f(-0.6f, -0.950f), new Vector2f(0.399f, 0.049f)) {
 			@Override
+			// adjusts scale and repositions to keep right edge in the same position
 			public void update() {
-				// adjusts scale and repositions to keep right edge in the same position
-				// copy from end point HD which is tested, this one is not though
 				float scale = (float) MainGameLoop.mapManager.camera.getHP()
 						/ (float) MainGameLoop.mapManager.camera.getMaxHP();
 				float posX = (float) this.getStartPosition().x - this.getMaxScale().x * (1 - scale);
@@ -156,67 +162,81 @@ public class GuiRenderer {
 			}
 		};
 
+		// The graphic for the first difficulty level
+		// Added to gui to reserve a position in the list and allow gui.set
 		ModelTexture ducker = new ModelTexture(loader.loadTexture("diffLevelOne"));
 		GuiTexture gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
-
 		guis.add(gui);
 		guis.add(gui3);
 		guis.add(gui4);
-		
 		levels.add(gui);
 
+		// The graphic for the second difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelTwo"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 		
+		// The graphic for the third difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelThree"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the fourth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFour"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the fifth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFive"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the sixth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelSix"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the seventh difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelSeven"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the eighth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelEight"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the ninth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelNine"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the tenth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelTen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the eleventh difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelEleven"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the twelfth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelTwelve"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the thirteenth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelThirteen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the fourteenth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFourteen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
+		// The graphic for the fifteenth difficulty level
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFifteen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
@@ -242,10 +262,16 @@ public class GuiRenderer {
 		timer.add(gui);
 	}
 
+	/**
+	 * Handles the updating of the graphics of the timer and the timer itself
+	 * Also increases the difficulty of the game
+	 */
 	public void updateTimer() {
-		//set all variables related to time and difficulty
+		// set all variables related to time and difficulty
 		timeUpdate();
 		String digits = timeConversion();
+		
+		// increase the difficulty if the timer hits 0
 		if (digits.equals("00:00")) {
 			time = 0;
 			lvl++;
@@ -258,11 +284,8 @@ public class GuiRenderer {
 		ModelTexture mTex;
 		GuiTexture gui;
 
+		// Divides the remaining time into digits, assigns each digit a texture and loads it in the proper location
 		for (int i = 0; i < digits.length(); i++) {
-			// TODO: Update pos vector
-			// GuiTexture gui2 = new GuiTexture(ducker2 , new Vector2f(0f, 0.9f), new
-			// Vector2f(0.15f, 0.1f));
-
 			
 			  switch (digits.charAt(i)) {
 			  case '0':
@@ -302,7 +325,6 @@ public class GuiRenderer {
 				  mTex = new ModelTexture(loader.loadTexture("duck"));
 				  break;
 			}
-			//mTex = new ModelTexture(loader.loadTexture("Quit Button"));
 			gui = new GuiTexture(mTex, new Vector2f(-0.120f + (i * 0.06f), 0.95f), new Vector2f(0.03f, 0.05f));
 			timer.set(i, gui);
 			  
