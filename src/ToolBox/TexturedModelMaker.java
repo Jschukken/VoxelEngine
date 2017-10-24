@@ -134,7 +134,7 @@ public class TexturedModelMaker {
 		};
 
 		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
-		ModelTexture texture = new ModelTexture(loader.loadTexture("blue"));
+		ModelTexture texture = new ModelTexture(loader.loadTexture("green skybox"));
 		skyBox = new TexturedModel(model, texture);
 		return skyBox;
 	}

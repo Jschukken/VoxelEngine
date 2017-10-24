@@ -24,8 +24,8 @@ import ToolBox.MatrixMath;
  */
 
 /**
- * This still needs filling in, ??S
- * @author s144459
+ * Handles the creation and displaying of the buttons and non-button objects of the menu
+ * @author Timo
  *
  */
 public class MenuHandler {
@@ -112,14 +112,23 @@ public class MenuHandler {
 		
 		mainMenu.add(tMod);
 		
+		// The title graphic of the main menu. Changes into a duck when clicked
 		vertices = new float[] {-0.38f, 0.77f, -1f, -0.38f, 0.4f, -1f, 0.38f, 0.4f, -1f, 0.38f, 0.77f, -1f};
 		
 		model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
 
 		tex1 = new ModelTexture(loader.loadTexture("Title splash"));
-		tMod = new Button(model, tex1, tex2, vertices);
+		tMod = new Button(model, tex1, tex1, vertices) {
+			@Override
+			public void onClick() {
+				ModelTexture duck = new ModelTexture(MainGameLoop.loader.loadTexture("Duck"));
+
+				this.setActiveTexture(duck);
+				this.setInactiveTexture(duck);
+			}
+		};
 		
-		mainMenuFluff.add(tMod);
+		mainMenu.add(tMod);
 	}	
 	
 	/**

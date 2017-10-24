@@ -5,7 +5,7 @@ import Models.TexturedModel;
 import Textures.ModelTexture;
 
 /**
- * timo add comment
+ * A button object, used to navigate the menus.
  * @author Timo
  *
  */
@@ -17,6 +17,7 @@ public class Button extends TexturedModel {
 	// the two textures of a button. Inactive for when the mouse is not hovering over it. Active for when it is.
 	private ModelTexture inactiveTex;
 	private ModelTexture activeTex;
+	public int state;
 
 	public Button(RawModel model, ModelTexture tex1, ModelTexture tex2, float[] vert) {
 		super(model, tex1);
@@ -62,7 +63,7 @@ public class Button extends TexturedModel {
 	 * Should be overridden per instance of Button to signify what that specific button should do.
 	 */
 	public void onClick() {
-		System.out.println("Ye forgot to override this ya dunce!");
+		System.out.println("OnClick() method not overridden.");
 	}
 	
 	/**
@@ -77,5 +78,29 @@ public class Button extends TexturedModel {
 	 */
 	public void inactiveTexture() {
 		super.setTexture(inactiveTex);
+	}
+	
+	/**
+	 * Retrieves the current active texture
+	 * @return the current texture saved by activeTex
+	 */
+	public ModelTexture getActiveTexture() {
+		return activeTex;
+	}
+	
+	/**
+	 * Sets the current active texture
+	 * @param tex The texture to replace activeTex
+	 */
+	public void setActiveTexture(ModelTexture tex) {
+		this.activeTex = tex;
+	}
+	
+	/**
+	 * Sets the current active texture
+	 * @param tex the Texture to replace inactiveTex
+	 */
+	public void setInactiveTexture(ModelTexture tex) {
+		this.inactiveTex = tex;
 	}
 }
