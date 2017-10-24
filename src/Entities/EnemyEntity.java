@@ -20,7 +20,7 @@ public class EnemyEntity extends Entity {
 
 	private int[] path;
 	private int pathPosition = 0;
-	private static final float ENEMY_SPEED = .0601f * 60.0f / (float) DisplayManager.FPS_CAP;
+	private static float ENEMY_SPEED = .0601f * 60.0f / (float) DisplayManager.FPS_CAP;
 	private Vector3f position;
 	private Vector3f direction;
 	private float rotX, rotY, rotZ;
@@ -29,6 +29,7 @@ public class EnemyEntity extends Entity {
 	private float turnSpeed;
 	private long old = 0;
 	private int time = 0;
+	private int hpcheck;
 	private TexturedModel shrapnel = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "black");
 
 	public EnemyEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale,
@@ -42,7 +43,7 @@ public class EnemyEntity extends Entity {
 		direction = super.getDirection();
 		direction.normalise();
 		turnSpeed = getTurnDir();
-		hp = 20;
+		//hp = 20;
 	}
 
 	/**
@@ -269,7 +270,7 @@ public class EnemyEntity extends Entity {
 			old = current;
 			time++;
 		}
-		if (hp == 20) {
+		if (hp == hpcheck) {
 			if (time % 2 == 0) {
 				setModel(MapManager.normalModel);
 			} else {
@@ -286,5 +287,13 @@ public class EnemyEntity extends Entity {
 		if (time > 10) {
 			time = 0;
 		}
+	}
+	public void setHp(int a){
+		hp = a;
+		hpcheck = a;
+	}
+	
+	public void setSpeed(int a){
+		ENEMY_SPEED = ENEMY_SPEED + a;
 	}
 }

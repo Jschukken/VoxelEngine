@@ -36,7 +36,7 @@ public class GuiRenderer {
 
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
-	private int lvl = 0; // current difficulty level
+	private static int lvl = 0; // current difficulty level
 	private final int DURATION = 90;
 
 	public GuiRenderer(Loader load) {
@@ -333,5 +333,9 @@ public class GuiRenderer {
 
 	public void cleanUp() {
 		guishader.cleanUp();
+	}
+	
+	public static int getLevel(){
+		return lvl;
 	}
 }

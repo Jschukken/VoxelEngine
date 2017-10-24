@@ -20,6 +20,7 @@ import KNearest.Point;
 import Map.Map;
 import Map.MapEvaluation;
 import Models.TexturedModel;
+import RenderEngine.GuiRenderer;
 import RenderEngine.Loader;
 import RenderEngine.MasterRenderer;
 import ToolBox.TexturedModelMaker;
@@ -364,6 +365,9 @@ public class MapManager {
 	 */
 	public void addActiveEntity(TexturedModel entity, Vector3f position, int[] path) {
 		Entity enemy = new EnemyEntity(entity, position, 0, 0, 0, new Vector3f(1, 1, 1), path);
+		int lvlhp = GuiRenderer.getLevel();
+		((EnemyEntity) enemy).setHp(lvlhp*2 + 20);
+		((EnemyEntity) enemy).setSpeed(lvlhp/100);
 		activeEntities.add(enemy);
 
 	}

@@ -65,7 +65,7 @@ public class TexturedModelMaker {
 	 */
 	public static TexturedModel robotModel(Loader loader) {
 
-		RawModel model =  OBJLoader.loadObjModel("person", loader);
+		RawModel model =  OBJLoader.loadObjModel("narutorunright", loader);
 		ModelTexture texture =  new ModelTexture(loader.loadTexture("Tile"));
 		return new TexturedModel(model, texture);
 	}
@@ -77,7 +77,7 @@ public class TexturedModelMaker {
 	 */
 	public static TexturedModel robotRunModel(Loader loader) {
 
-		RawModel model =  OBJLoader.loadObjModel("torso", loader);
+		RawModel model =  OBJLoader.loadObjModel("narutorunleft", loader);
 		ModelTexture texture =  new ModelTexture(loader.loadTexture("Tile"));
 		return new TexturedModel(model, texture);
 	}
@@ -88,7 +88,7 @@ public class TexturedModelMaker {
 	 * @return the textured model
 	 */
 	public static TexturedModel robotHitRunModel(Loader loader) {
-		RawModel model =  OBJLoader.loadObjModel("torso", loader);
+		RawModel model =  OBJLoader.loadObjModel("narutorunleft", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("red"));
 		return new TexturedModel(model, texture);
 	}
@@ -99,7 +99,7 @@ public class TexturedModelMaker {
 	 * @return the textured model
 	 */
 	public static TexturedModel robotHitNormalModel(Loader loader) {
-		RawModel model =  OBJLoader.loadObjModel("person", loader);
+		RawModel model =  OBJLoader.loadObjModel("narutorunright", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("red"));
 		return new TexturedModel(model, texture);
 	}
