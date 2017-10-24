@@ -37,7 +37,7 @@ public class GuiRenderer {
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
 	private int lvl = 0; // current difficulty level
-	private final int DURATION = 5;
+	private final int DURATION = 90;
 
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
@@ -145,7 +145,6 @@ public class GuiRenderer {
 				this.setScale(new Vector2f(this.getMaxScale().x * scale, this.getScale().y));
 			}
 		};
-		guis.add(gui3);
 
 		// A red texture serving as the health bar for the player
 		ModelTexture ducker4 = new ModelTexture(loader.loadTexture("red"));
@@ -162,13 +161,14 @@ public class GuiRenderer {
 
 			}
 		};
-		guis.add(gui4);
 
 		// The graphic for the first difficulty level
 		// Added to gui to reserve a position in the list and allow gui.set
 		ModelTexture ducker = new ModelTexture(loader.loadTexture("diffLevelOne"));
 		GuiTexture gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		guis.add(gui);
+		guis.add(gui3);
+		guis.add(gui4);
 		levels.add(gui);
 
 		// The graphic for the second difficulty level
