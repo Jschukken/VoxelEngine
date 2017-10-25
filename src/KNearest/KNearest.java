@@ -187,6 +187,15 @@ public class KNearest {
 		
 		return allPoints;
 	}
+	
+	/**
+	 * Set the k of this knearest to a given value 
+	 * 
+	 * @param K  the new value for k
+	 */
+	public void setK(int K) {
+		this.k = K;
+	}
 
 	/**
 	 * Get the K nearest points to the given point p.
