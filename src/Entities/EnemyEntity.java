@@ -20,7 +20,8 @@ public class EnemyEntity extends Entity {
 
 	private int[] path;
 	private int pathPosition = 0;
-	private static float ENEMY_SPEED = .0601f * 60.0f / (float) DisplayManager.FPS_CAP;
+	private float ENEMY_SPEED = .0601f * 60.0f / (float) DisplayManager.FPS_CAP;
+	private float TURN_SPEED = 0.07f;
 	private Vector3f position;
 	private Vector3f direction;
 	private float rotX, rotY, rotZ;
@@ -82,7 +83,7 @@ public class EnemyEntity extends Entity {
 		lookAt.z = -lookAt.z;
 		direction.normalise();
 		double angle = Vector3f.angle(lookAt, direction);
-		if (angle > Math.toRadians(2 * 60.0f / DisplayManager.FPS_CAP)) {
+		if (angle > Math.toRadians(5 * 60.0f / DisplayManager.FPS_CAP)) {
 			rotY += turnSpeed;
 			return true;
 		}
@@ -105,9 +106,9 @@ public class EnemyEntity extends Entity {
 		lookAt.normalise();
 		direction.normalise();
 		if (lookAt.x * direction.z - lookAt.z * direction.x > 0) {
-			return (float) 0.05 * 60.0f / DisplayManager.FPS_CAP;
+			return (float) TURN_SPEED * 60.0f / DisplayManager.FPS_CAP;
 		} else {
-			return (float) -0.05 * 60.0f / DisplayManager.FPS_CAP;
+			return (float) -TURN_SPEED * 60.0f / DisplayManager.FPS_CAP;
 		}
 
 	}
@@ -293,7 +294,7 @@ public class EnemyEntity extends Entity {
 		hpcheck = a;
 	}
 	
-	public void setSpeed(int a){
+	public void setSpeed(float a){
 		ENEMY_SPEED = ENEMY_SPEED + a;
 	}
 }

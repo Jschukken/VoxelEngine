@@ -53,7 +53,7 @@ public class TerrainRenderer {
 		GL20.glEnableVertexAttribArray(2);// enable normal array
 		ModelTexture texture = model.getModel().getTexture();
 		texture.setShineDamper(100f);
-		texture.setReflectivity(0.1f);
+		texture.setReflectivity(.2f);
 		shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getModel().getTexture().getTextureID());

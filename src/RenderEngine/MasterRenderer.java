@@ -70,7 +70,7 @@ public class MasterRenderer {
 		particleRenderer = new ParticleRenderer(particleShader, projectionMatrix);
 		//Day - Night random generator
 		Random r = new Random();
-		ambient = r.nextFloat() * (0.3f - 0.01f) + 0.01f;
+		ambient = r.nextFloat() * (0.3f - 0.01f) + 0.02f;
 		if (ambient < 0.15f){
 			RED = 0;
 			GREEN = 0;

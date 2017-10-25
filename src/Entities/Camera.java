@@ -21,7 +21,7 @@ import ToolBox.TexturedModelMaker;
  */
 public class Camera {
 
-	private static float FRICTION = 4* 60.0f/DisplayManager.FPS_CAP;
+	private static float FRICTION = 4/ (60.0f/DisplayManager.FPS_CAP);
 	public static int MAX_HP = 5;
 	public static final boolean GRAVITY = true;
 	private static final long ONE_SECOND = 1000000000;
@@ -30,7 +30,7 @@ public class Camera {
 	private float rotX, rotY, rotZ;
 	private float dx = 0, dy = 0, dz = 0;
 
-	private float acceleration = 0.01f * 60.0f/DisplayManager.FPS_CAP;
+	private float acceleration = 0.02f * 60.0f/DisplayManager.FPS_CAP;
 	private float maxSpeed = 0.12f * 60.0f/DisplayManager.FPS_CAP;
 	private float jumpHeight = 0.15f * 60.0f/DisplayManager.FPS_CAP;
 	private float turnSpeed = 0.1f * 60.0f/DisplayManager.FPS_CAP;
