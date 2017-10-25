@@ -22,6 +22,7 @@ public class DisplayManager {
 	public static final int WIDTH = 1920;
 	public static final int HEIGHT = 1080;
 	public static final int FPS_CAP = 40;
+	private static boolean windowed = false;
 
 	/**
 	 * creates a display
@@ -31,12 +32,15 @@ public class DisplayManager {
 		ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
 
 		try {
-			// Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
-			// //uncomment for windowed version
+			if(windowed){
+				Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
+			}else{
+				Display.setFullscreen(true);
+			}
 			Display.setVSyncEnabled(true);
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("Flashlight");
-			Display.setFullscreen(true);
+
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		} catch (LWJGLException e) {
 			e.printStackTrace();
