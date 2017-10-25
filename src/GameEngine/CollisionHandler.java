@@ -7,6 +7,8 @@ import Entities.SpawnPointEntity;
 import Flashlight.MainGameLoop;
 
 public class CollisionHandler {
+	
+	private static boolean protectedZones = false;
 
 	/**
 	 * checks to see if the player collides with anything given the players
@@ -71,7 +73,9 @@ public class CollisionHandler {
 
 	/**
 	 * checks collision of a flame particle entity with the walls
-	 * @param entity the flame particle
+	 * 
+	 * @param entity
+	 *            the flame particle
 	 * @return true if there is a collision false otherwise
 	 */
 	public static boolean checkFlameCollision(Entity entity) {
@@ -152,27 +156,33 @@ public class CollisionHandler {
 
 	/**
 	 * check to see if player collides with a protected zone
-	 * @param position the position of the player
+	 * 
+	 * @param position
+	 *            the position of the player
 	 * @return true if it does, false otherwise
 	 */
 	public static boolean protectedZones(Vector3f position) {
-		try {
-			if (Math.sqrt(Math.pow(position.x - MainGameLoop.mapManager.destination.getPosition().x, 2)
-					+ Math.pow(position.z - MainGameLoop.mapManager.destination.getPosition().z, 2)) < 3
-					&& position.y - MainGameLoop.mapManager.destination.getPosition().y < 3) {
-				return true;
-			}
-		} catch (NullPointerException e) {
-
-		}
-		for (Entity entity : MainGameLoop.mapManager.activeEntities) {
-			if (entity.getClass() == SpawnPointEntity.class) {
-				if (Math.sqrt(Math.pow(position.x - entity.getPosition().x, 2)
-						+ Math.pow(position.z - entity.getPosition().z, 2)) < 2) {
+		if (protectedZones) {
+			try {
+				if (Math.sqrt(Math.pow(position.x - MainGameLoop.mapManager.destination.getPosition().x, 2)
+						+ Math.pow(position.z - MainGameLoop.mapManager.destination.getPosition().z, 2)) < 3
+						&& position.y - MainGameLoop.mapManager.destination.getPosition().y < 3) {
 					return true;
 				}
+			} catch (NullPointerException e) {
+
 			}
+			for (Entity entity : MainGameLoop.mapManager.activeEntities) {
+				if (entity.getClass() == SpawnPointEntity.class) {
+					if (Math.sqrt(Math.pow(position.x - entity.getPosition().x, 2)
+							+ Math.pow(position.z - entity.getPosition().z, 2)) < 2) {
+						return true;
+					}
+				}
+			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
 	}
 }

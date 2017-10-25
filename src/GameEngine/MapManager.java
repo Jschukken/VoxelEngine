@@ -39,10 +39,11 @@ public class MapManager {
 	private static final int MIN_RENDER_DISTANCE = 3;
 	private static final int PARTICLE_COUNT = 1000;
 	private static final int GENERATE_LIMIT = 50;
+	private static final float RENDER_CONE = MasterRenderer.FOV + 5;
 
 	private Loader loader;
 	private MasterRenderer renderer;
-	//private StaticShader shader;
+	// private StaticShader shader;
 	private KNearest kNear;
 	public int[][][] map;
 
@@ -90,7 +91,7 @@ public class MapManager {
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				MainGameLoop.setState("loadMapMenu");
-				//System.exit(-1);
+				// System.exit(-1);
 			}
 
 			valid = false;
@@ -101,7 +102,11 @@ public class MapManager {
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
 			currentAttributes.clear();
-			if (characteristics.get(characteristics.size() - 1) == 1.0) {// check if map is valid
+			if (characteristics.get(characteristics.size() - 1) == 1.0) {// check
+																			// if
+																			// map
+																			// is
+																			// valid
 				characteristics.remove(characteristics.size() - 1);
 				valid = true;
 				good = kNear.classify(characteristics); // use k-nearest
@@ -111,7 +116,9 @@ public class MapManager {
 		}
 		map = Map.mapTo3D();
 		int[][][] backUp = map; // backup for editing
-		map = new int[map.length][map[0][0].length][map[0].length]; // empty and start over;
+		map = new int[map.length][map[0][0].length][map[0].length]; // empty and
+																	// start
+																	// over;
 
 		// fix coordinates
 		for (int x = 0; x < backUp.length; x++) {
@@ -129,7 +136,9 @@ public class MapManager {
 	 */
 	public void loadMap() {
 		Lights = new ArrayList<Light>();
-		Lights.add(new Light(new Vector3f((float)(map.length),(float)(map[0].length*5.0),(float)(map[0][0].length)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(.45f, 0, 0)));
+		Lights.add(
+				new Light(new Vector3f((float) (map.length), (float) (map[0].length * 5.0), (float) (map[0][0].length)),
+						new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(.45f, 0, 0)));
 		camera = new Camera(new Vector3f(map.length / 2, map[0].length, map[0][0].length / 2), 0, 0, 0);
 		TexturedModel tMod = TexturedModelMaker.cubeTexturedModel(loader, "Tile");
 		TexturedModel tWallMod = TexturedModelMaker.cubeTexturedModel(loader, "wallTile");
@@ -145,7 +154,8 @@ public class MapManager {
 				for (int z = 0; z < map[0][0].length; z++) {
 					if (map[x][y][z] == 1) {
 						if (y > 1)
-							wallEntities.add(new Entity(tWallMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
+							wallEntities
+									.add(new Entity(tWallMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 						else
 							mapEntities.add(new Entity(tMod, new Vector3f(x, y, z), 0, 0, 0, new Vector3f(1, 1, 1)));
 					} else if (map[x][y][z] == 2) {
@@ -168,23 +178,27 @@ public class MapManager {
 						activeEntities.add(new SpawnPointEntity(tSpawnMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1), normalModel));
 
-					} else if (map[x][y][z] == 4){
+					} else if (map[x][y][z] == 4) {
 						Vector3f position = new Vector3f(x, y, z);
 						boolean toClose = false;
-						for (Light light : Lights){
+						for (Light light : Lights) {
 							double dist = Math.sqrt(Math.pow((position).x - light.getPosition().x, 2)
 									+ Math.pow(position.y - light.getPosition().y, 2)
 									+ Math.pow(position.z - light.getPosition().z, 2));
-							if (dist < 10){
+							if (dist < 10) {
 								toClose = true;
 								break;
 							}
 						}
 						if (toClose)
 							continue;
-						//Light light = new Light(position, new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f));
-						//Lights.add(light);
-						//mapEntities.add(new Entity(TexturedModelMaker.cubeTexturedModel(loader, "Tile"), light.getPosition(), 0, 0, 0, new Vector3f(1, 1, 1)));
+						// Light light = new Light(position, new Vector3f(1.0f,
+						// 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f));
+						// Lights.add(light);
+						// mapEntities.add(new
+						// Entity(TexturedModelMaker.cubeTexturedModel(loader,
+						// "Tile"), light.getPosition(), 0, 0, 0, new
+						// Vector3f(1, 1, 1)));
 					}
 				}
 			}
@@ -195,8 +209,10 @@ public class MapManager {
 	 * renders all visible entities within range
 	 */
 	public void render() {
-		//List<Light> sun = new ArrayList<Light>();
-		//sun.add(new Light(new Vector3f((float)(map.length/2),(float)map[0].length,(float)(map[0][0].length/2)), new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f)));
+		// List<Light> sun = new ArrayList<Light>();
+		// sun.add(new Light(new
+		// Vector3f((float)(map.length/2),(float)map[0].length,(float)(map[0][0].length/2)),
+		// new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f)));
 		List<Entity> total = new ArrayList<Entity>(activeEntities);
 		total.addAll(wallEntities);
 		total.addAll(mapEntities);
@@ -223,12 +239,12 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV  + 5) 
-					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(RENDER_CONE) || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
 				renderer.processMapEntity(entity);
 			}
 		}
-		
+
 		for (Entity entity : mapEntities) {
 
 			// vector from the entity to the camera
@@ -242,8 +258,8 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
-					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(RENDER_CONE) || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
 				renderer.processMapEntity(entity);
 			}
 
@@ -262,8 +278,8 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
-					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(RENDER_CONE) || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
 				renderer.processEntity(entity);
 			}
 
@@ -281,8 +297,8 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
-					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(RENDER_CONE) || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
 				renderer.processParticle(entity);
 			}
 		}
@@ -299,8 +315,8 @@ public class MapManager {
 					+ Math.pow(camera.getPosition().y - entity.getPosition().y, 2)
 					+ Math.pow(camera.getPosition().z - entity.getPosition().z, 2));
 
-			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(MasterRenderer.FOV + 5)
-					|| dist < MIN_RENDER_DISTANCE) && dist < RENDER_DISTANCE) {
+			if ((Math.acos(Vector3f.dot(toCamera, lookAt)) < Math.toRadians(RENDER_CONE) || dist < MIN_RENDER_DISTANCE)
+					&& dist < RENDER_DISTANCE) {
 				renderer.processEntity(entity);
 			}
 		}
@@ -363,21 +379,25 @@ public class MapManager {
 	 * @param position
 	 *            the position of the entity
 	 * @param path
-	 *            the path the entity follows :TODO, make this better. it is silly
+	 *            the path the entity follows :TODO, make this better. it is
+	 *            silly
 	 */
 	public void addActiveEntity(TexturedModel entity, Vector3f position, int[] path) {
 		Entity enemy = new EnemyEntity(entity, position, 0, 0, 0, new Vector3f(1, 1, 1), path);
-		int lvlhp = GuiRenderer.getLevel();
-		((EnemyEntity) enemy).setHp(lvlhp*2 + 20);
-		((EnemyEntity) enemy).setSpeed(lvlhp/100);
+		int lvl = GuiRenderer.getLevel();
+		((EnemyEntity) enemy).setHp(lvl * 10 + 20);
+		((EnemyEntity) enemy).setSpeed((float)(lvl / 200.0));
 		activeEntities.add(enemy);
 
 	}
 
 	/**
 	 * adds a particle entity to the game
-	 * @param model the appearance of the particle
-	 * @param position the position of the particle
+	 * 
+	 * @param model
+	 *            the appearance of the particle
+	 * @param position
+	 *            the position of the particle
 	 */
 	public void addParticleEntity(TexturedModel model, Vector3f position) {
 		Entity particle = new ParticleEntity(model, position, 0, 0, 0, new Vector3f(.1f, .1f, .1f));
@@ -389,17 +409,23 @@ public class MapManager {
 
 	/**
 	 * adds an attack particle to the game
-	 * @param model the model
-	 * @param position the position
-	 * @param rot the rotation
-	 * @param direction the direction
-	 * @param scale the scale
+	 * 
+	 * @param model
+	 *            the model
+	 * @param position
+	 *            the position
+	 * @param rot
+	 *            the rotation
+	 * @param direction
+	 *            the direction
+	 * @param scale
+	 *            the scale
 	 */
 	public void addAttackEntity(TexturedModel model, Vector3f position, Vector3f rot, Vector3f direction,
 			Vector3f scale) {
 		Entity attack = new PlayerAttack(model, position, rot, direction, scale);
 		attackEntities.add(attack);
-		
+
 	}
 
 	/**
@@ -433,8 +459,7 @@ public class MapManager {
 	}
 
 	/**
-	 * creates a simple map, can
-	 * be used for debugging
+	 * creates a simple map, can be used for debugging
 	 */
 	private void tempMapCreator() {
 		map[18][1][10] = 2;
@@ -452,27 +477,31 @@ public class MapManager {
 		map[10][2][10] = 1;
 
 	}
-	
+
 	/**
-	 * Lets the kNearest this mapmanager has store its training data, used after a map
-	 * is completed/failed so the new data point is stored
+	 * Lets the kNearest this mapmanager has store its training data, used after
+	 * a map is completed/failed so the new data point is stored
 	 */
 	public void kNearestSave() {
 		try {
 			kNear.writeDataToFile();
-		} catch (IOException e) {};
+		} catch (IOException e) {
+		}
+		;
 	}
-	
+
 	/**
-	 * Adds a given point to the knearest object and saves the data in the process
+	 * Adds a given point to the knearest object and saves the data in the
+	 * process
 	 * 
-	 * @param c  the class of the point
+	 * @param c
+	 *            the class of the point
 	 */
 	public void addPointToKNearest(boolean c) {
 		kNear.addDataPoint(new Point(currentAttributes, c));
 		kNearestSave();
 	}
-	
+
 	/**
 	 * clears the data points for kNearest
 	 */
