@@ -22,7 +22,8 @@ import java.util.Scanner;
 public class KNearest {
 
 	/* The lists of good and bad points, the current data */
-	List<Point> points;
+	List<Point> storedPoints;
+	List<Point> trainingPoints;
 
 	/* The k of this KNearest implementation */
 	int k;
@@ -40,7 +41,8 @@ public class KNearest {
 	
 	public KNearest(int K, String training, String stored) {
 		this.k = K;
-		this.points = new ArrayList<Point>();
+		this.storedPoints = new ArrayList<Point>();
+		this.trainingPoints = new ArrayList<Point>();
 		this.trainingName = training;
 		this.storedName = stored;
 		try {
@@ -118,7 +120,7 @@ public class KNearest {
 	 */
 	public boolean classifyAndAdd(Point p) {
 		classify(p);
-		points.add(p);
+		storedPoints.add(p);
 		return p.getClassification();
 	}
 
@@ -133,7 +135,7 @@ public class KNearest {
 	 */
 	public void addDataPoint(Point p) {
 
-		points.add(p);
+		storedPoints.add(p);
 
 	}
 
@@ -148,7 +150,7 @@ public class KNearest {
 	public void removePoint(Point p) {
 
 		/* Get the iterator */
-		Iterator it = points.iterator();
+		Iterator it = storedPoints.iterator();
 
 		/**
 		 * Find the point in the list and remove if it is found
@@ -166,7 +168,7 @@ public class KNearest {
 	 * Removes all points from the points list
 	 */
 	public void clearPoints() {
-		points = new ArrayList<Point>();
+		storedPoints = new ArrayList<Point>();
 		try {
 			writeDataToFile();
 		} catch (IOException e) {};
@@ -178,7 +180,12 @@ public class KNearest {
 	 * @return this.points
 	 */
 	public List<Point> getAllPoints() {
-		return this.points;
+		
+		List<Point> allPoints = new ArrayList<Point>();
+		allPoints.addAll(storedPoints);
+		allPoints.addAll(trainingPoints);
+		
+		return allPoints;
 	}
 
 	/**
@@ -189,12 +196,17 @@ public class KNearest {
 	 */
 	private List<Point> getKNearestPoints(Point p) {
 
+		/* Combine training points and stored points */
+		List<Point> allPoints = new ArrayList<Point>();
+		allPoints.addAll(storedPoints);
+		allPoints.addAll(trainingPoints);
+		
 		/**
 		 * Store all the distances to the other points in an array.
 		 */
 		Map<Integer, Double> distances = new HashMap<Integer, Double>();
-		for (int i = 0; i < points.size(); i++) {
-			distances.put(i, Point.getDistance(p, points.get(i)));
+		for (int i = 0; i < allPoints.size(); i++) {
+			distances.put(i, Point.getDistance(p, allPoints.get(i)));
 		}
 
 		/* Store the result */
@@ -217,7 +229,7 @@ public class KNearest {
 			}
 
 			distances.remove(indexOfSmallest);
-			result.add(points.get(indexOfSmallest));
+			result.add(allPoints.get(indexOfSmallest));
 
 		}
 
@@ -241,7 +253,7 @@ public class KNearest {
 	    	 * For each point, write down all its coordinates in
 	    	 * one line, separated by a space
 	    	 */
-		    for (Point p : points){
+		    for (Point p : storedPoints){
 		    	writer.write("" + p.getClassification() + " ");
 		    	for (double s : p.getCoordinates()) {
 			        writer.write("" + s + " ");
@@ -270,7 +282,7 @@ public class KNearest {
 		
 		/* Use standard file name */
 		Path path = Paths.get(trainingName);
-		readDataFromFile(path);		
+		trainingPoints.addAll(readDataFromFile(path));		
 		
 	}
 	
@@ -284,16 +296,19 @@ public class KNearest {
 		
 		/* Use standard file name */
 		Path path = Paths.get(storedName);
-		readDataFromFile(path);		
+		storedPoints.addAll(readDataFromFile(path));		
 		
 	}
 	
 	/**
-	 * Reads data from a file represented with the given path
+	 * Reads data from a file represented with the given path and stores them in the
+	 * given list.
 	 */
-	public void readDataFromFile(Path p) {
+	public List<Point> readDataFromFile(Path p) {
 		
 		try (Scanner scanner = new Scanner(p)) {
+			
+			List<Point> result = new ArrayList<Point>();
 			
 			/**
 			 * For each line, separate the numbers by spaces and
@@ -315,7 +330,7 @@ public class KNearest {
 				}
 				
 				/* Add point to points list */
-				points.add(new Point(pointCoords, c));
+				result.add(new Point(pointCoords, c));
 				
 			}
 			
@@ -323,10 +338,13 @@ public class KNearest {
 			
 			/* Log succesful */
 		    System.out.println("Reading training data was succesful!");
+		    return result;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return new ArrayList<Point>();
 
 	}
 }
