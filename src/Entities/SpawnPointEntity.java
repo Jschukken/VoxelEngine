@@ -43,7 +43,7 @@ public class SpawnPointEntity extends Entity {
 		// spawn enemy if sufficient time has passed
 		if (spawnTimer >= spawnRate) {
 			spawnTimer = 0;
-			Vector3f p = new Vector3f(position);
+			Vector3f p = new Vector3f(position.x,position.y+0.1f,position.z);
 			MainGameLoop.mapManager.addActiveEntity(enemy, p, path);
 		}
 		// update path if sufficient time has passed
