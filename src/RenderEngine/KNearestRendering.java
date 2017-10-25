@@ -35,13 +35,12 @@ public class KNearestRendering {
 	List<TexturedModel> DBPoints;
 	boolean DBEnabled;
 	static int DBStepSize = 4;
-	static boolean DBBORDERENABLED = false;
 	
 	// Value representing the editing state
 	int editState;
 	
 	static float pointSize = 0.01f;
-	static float dbpointSize = 0.004f;
+	static float dbpointSize = 0.01f;
 	
 	/**
 	 * Constructor
@@ -132,29 +131,6 @@ public class KNearestRendering {
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_3)) { // class unknown
 			this.editState = 3;
 		} 
-		
-		/**
-		 * Change value of k
-		 */
-		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1)) {
-			setKAndClearBoundary(1);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)) {
-			setKAndClearBoundary(2);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD3)) {
-			setKAndClearBoundary(3);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)) {
-			setKAndClearBoundary(4);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
-			setKAndClearBoundary(5);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)) {
-			setKAndClearBoundary(6);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD7)) {
-			setKAndClearBoundary(7);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
-			setKAndClearBoundary(8);
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)) {
-			setKAndClearBoundary(9);
-		}
 		
 		/* Removal of points */
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
@@ -306,33 +282,28 @@ public class KNearestRendering {
 					TexturedModel pnt = createRectangle(normX - 0.5f * dbpointSize, normY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.5f, "black");
 					DBPoints.add(pnt);
 					
-					/* Check if we draw class (colored) border */
-					if (DBBORDERENABLED) {
-						
-						/* Find x coordinates of the border points */
-						float nextX = curX + 1f;
-						float prevX = curX - 1f;
-						float normNextX = (float) ((nextX / w) * 2 - 1);
-						float normPrevX = (float) ((prevX / w) * 2 - 1);
-						
-						/* Find color of the border points */
-						String nextColor;
-						String prevColor;
-						if (curClass) {
-							nextColor = "lightred";
-							prevColor = "lightblue";
-						} else {
-							nextColor = "lightblue";
-							prevColor = "lightred";
-						}
-						
-						/* Create models and add them to the list */
-						TexturedModel nextPnt = createRectangle(normNextX - 0.5f * dbpointSize, normY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.25f, nextColor);
-						TexturedModel prevPnt = createRectangle(normPrevX - 0.5f * dbpointSize, normY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.25f, prevColor);
-						DBPoints.add(nextPnt);
-						DBPoints.add(prevPnt);
-						
+					/* Find x coordinates of the border points */
+					float nextX = curX + 1f;
+					float prevX = curX - 1f;
+					float normNextX = (float) ((nextX / w) * 2 - 1);
+					float normPrevX = (float) ((prevX / w) * 2 - 1);
+					
+					/* Find color of the border points */
+					String nextColor;
+					String prevColor;
+					if (curClass) {
+						nextColor = "lightred";
+						prevColor = "lightblue";
+					} else {
+						nextColor = "lightblue";
+						prevColor = "lightred";
 					}
+					
+					/* Create models and add them to the list */
+					TexturedModel nextPnt = createRectangle(normNextX - 0.5f * dbpointSize, normY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.5f, nextColor);
+					TexturedModel prevPnt = createRectangle(normPrevX - 0.5f * dbpointSize, normY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.5f, prevColor);
+					DBPoints.add(nextPnt);
+					DBPoints.add(prevPnt);
 					
 				}
 				
@@ -382,34 +353,28 @@ public class KNearestRendering {
 					TexturedModel pnt = createRectangle(normX - 0.5f * dbpointSize, normY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.5f, "black");
 					DBPoints.add(pnt);
 					
-					/* Check if we draw class (colored) border */
-					if (DBBORDERENABLED) {
+					/* Find y coordinates of the border points */
+					float nextY = curY + 1f;
+					float prevY = curY - 1f;
+					float normNextY = (float) ((nextY / h) * 2 - 1);
+					float normPrevY = (float) ((prevY / h) * 2 - 1);
 					
-						/* Find y coordinates of the border points */
-						float nextY = curY + 1f;
-						float prevY = curY - 1f;
-						float normNextY = (float) ((nextY / h) * 2 - 1);
-						float normPrevY = (float) ((prevY / h) * 2 - 1);
-						
-						/* Find color of the border points */
-						String nextColor;
-						String prevColor;
-						if (curClass) {
-							nextColor = "lightred";
-							prevColor = "lightblue";
-						} else {
-							nextColor = "lightblue";
-							prevColor = "lightred";
-						}
-						
-						/* Create models and add them to the list */
-						TexturedModel nextPnt = createRectangle(normX - 0.5f * dbpointSize, normNextY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.25f, nextColor);
-						TexturedModel prevPnt = createRectangle(normX - 0.5f * dbpointSize, normPrevY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.25f, prevColor);
-						DBPoints.add(nextPnt);
-						DBPoints.add(prevPnt);
-						
+					/* Find color of the border points */
+					String nextColor;
+					String prevColor;
+					if (curClass) {
+						nextColor = "lightred";
+						prevColor = "lightblue";
+					} else {
+						nextColor = "lightblue";
+						prevColor = "lightred";
 					}
 					
+					/* Create models and add them to the list */
+					TexturedModel nextPnt = createRectangle(normX - 0.5f * dbpointSize, normNextY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.5f, nextColor);
+					TexturedModel prevPnt = createRectangle(normX - 0.5f * dbpointSize, normPrevY + 0.5f * dbpointSize, dbpointSize, (h / w) * dbpointSize, -0.5f, prevColor);
+					DBPoints.add(nextPnt);
+					DBPoints.add(prevPnt);
 				}
 				
 			}
@@ -431,14 +396,4 @@ public class KNearestRendering {
 		return new Point(coords);
 	}
 	
-	/**
-	 * Sets k of knearest to given value and resets decision boundary
-	 * 
-	 * @param k  the new value for k
-	 */
-	private void setKAndClearBoundary(int k) {
-		kn.setK(k);
-		DBPoints.clear();
-		DBEnabled = false;
-	}
 }
