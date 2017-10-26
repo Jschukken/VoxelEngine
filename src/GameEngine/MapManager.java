@@ -217,7 +217,7 @@ public class MapManager {
 		total.addAll(wallEntities);
 		total.addAll(mapEntities);
 		total.addAll(particleEntities);
-		total.addAll(attackEntities);
+		//total.addAll(attackEntities);
 		renderer.renderShadowMap(total, Lights);
 
 		// vector the camera is looking at
