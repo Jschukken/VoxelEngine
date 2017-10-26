@@ -275,10 +275,10 @@ public class GuiRenderer {
 		if (digits.equals("00:00")) {
 			time = 0;
 			lvl++;
-			if (lvl < levels.size()-1) {
-				//System.out.println(lvl);
-				guis.set(2, levels.get(lvl));
-			}
+		}
+		if (lvl < levels.size()-1) {
+			//System.out.println(lvl);
+			guis.set(2, levels.get(lvl));
 		}
 		
 		ModelTexture mTex;
@@ -337,5 +337,13 @@ public class GuiRenderer {
 	
 	public static int getLevel(){
 		return lvl;
+	}
+	
+	public void setLevel(int level) {
+		lvl = level;
+	}
+	
+	public void setTimer(int timer) {
+		time = timer;
 	}
 }
