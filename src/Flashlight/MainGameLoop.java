@@ -170,8 +170,6 @@ public class MainGameLoop {
 				mapManager = new MapManager();
 				mapManager.loadMap();
 				menuh.add2DMapToMapMenu(mapManager.twoDMap);
-				guiRenderer.setLevel(0);
-				guiRenderer.setTimer(0);
 				state = "mapMenu";
 				break;
 				
@@ -185,6 +183,8 @@ public class MainGameLoop {
 //				mapManager = new MapManager();
 //				mapManager.loadMap();
 				menuh.remove2DMapFromMapMenu();
+				guiRenderer.setLevel(0);
+				guiRenderer.setTimer(0);
 				state = "game";
 				break;
 				

@@ -37,7 +37,7 @@ public class GuiRenderer {
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
 	private static int lvl = 0; // current difficulty level
-	private final int DURATION = 90;
+	private final int DURATION = 5;
 
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
@@ -275,10 +275,10 @@ public class GuiRenderer {
 		if (digits.equals("00:00")) {
 			time = 0;
 			lvl++;
-		}
-		if (lvl < levels.size()-1) {
-			//System.out.println(lvl);
-			guis.set(2, levels.get(lvl));
+			if (lvl < levels.size()-1) {
+				//System.out.println(lvl);
+				guis.set(2, levels.get(lvl));
+			}
 		}
 		
 		ModelTexture mTex;
@@ -341,6 +341,7 @@ public class GuiRenderer {
 	
 	public void setLevel(int level) {
 		lvl = level;
+		guis.set(2, levels.get(lvl));
 	}
 	
 	public void setTimer(int timer) {
