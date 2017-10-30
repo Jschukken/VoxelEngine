@@ -37,7 +37,7 @@ public class GuiRenderer {
 	private long old = 0; // timestamp in ms for comparison with current time
 	private int time = 0; // time that has passed in the current level
 	private static int lvl = 0; // current difficulty level
-	private final int DURATION = 5;
+	private final int DURATION = 60;
 
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
