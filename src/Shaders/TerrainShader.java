@@ -10,6 +10,10 @@ import Entities.Light;
 import ToolBox.MatrixMath;
 
 public class TerrainShader extends ShaderProgram {
+	/**
+	 * Shader to process the terrain and prepare it for rendering
+	 * @author Lars Gevers
+	 */
 
 	
 	private static final String vertexFile = "/Shaders/terrainVertexShader.txt";
@@ -32,7 +36,10 @@ public class TerrainShader extends ShaderProgram {
 	public TerrainShader(){
 		super(vertexFile, fragmentFile);
 	}
-	
+
+	/**
+	 * Bind the attributes (position, textureCoords and normal) to the Vertex and Fragment shader
+	 */
 	@Override
 	protected void bindAttributes(){
 		//variable, vao attribute
@@ -40,7 +47,10 @@ public class TerrainShader extends ShaderProgram {
 		super.bindAttribute("textureCoords",1);
 		super.bindAttribute("normal", 2);
 	}
-	
+
+	/**
+	 * Bind the variables from the Vertex and Fragment shader to Java variables
+	 */
 	protected void getAllUniformLocations(){
 		
 		locationTransformationMatrix = super.getUniformLocation("transformationMatrix");
@@ -63,7 +73,8 @@ public class TerrainShader extends ShaderProgram {
 			locationAttenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
 		}
 	}
-	
+
+	//_______LOAD LIGHT ATTRIBUTES INTO SHADER____________
 	public void loadSkyColour(float r, float g, float b){
 		super.load3DVector(locationSkyColour, new Vector3f(r,g,b));
 	}

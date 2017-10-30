@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 /**
  * shader for shadows
- * @author Jelle Schukken
+ * @author Lars Gevers
  *
  */
 public class ShadowShader extends ShaderProgram {
@@ -17,7 +17,10 @@ public class ShadowShader extends ShaderProgram {
 	public ShadowShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
-
+	
+	/**
+	 * Bind the variables from the Vertex and Fragment shader to Java variables
+	 */
 	@Override
 	protected void getAllUniformLocations() {
 		location_mvpMatrix = super.getUniformLocation("mvpMatrix");

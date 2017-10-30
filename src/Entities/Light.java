@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 /**
  * simulates a light object
- * @author Jelle Schukken
+ * @author Lars Gevers
  *
  */
 public class Light {
@@ -13,12 +13,24 @@ public class Light {
 	private Vector3f colour;
 	private Vector3f attenuation = new Vector3f(1, 0, 0);
 	
+	/**
+	 * Constructor to create a light based on position and colour
+	 * @param position
+	 * @param colour
+	 */
 	public Light(Vector3f position, Vector3f colour) {
 		this.position = position;
 		this.colour = colour;
 		direction = new Vector3f((float)Math.random()*2f-2f,-1,(float)Math.random()*2f-2f);
 	}
 	
+	/**
+	 * Constructor to create a light based on position, colour and attenuation
+	 * Creating point lights using attenuation
+	 * @param position
+	 * @param colour
+	 * @param attenuation
+	 */
 	public Light(Vector3f position, Vector3f colour, Vector3f attenuation) {
 		this.position = position;
 		this.colour = colour;

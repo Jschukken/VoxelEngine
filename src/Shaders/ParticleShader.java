@@ -6,7 +6,10 @@ import Entities.Camera;
 import ToolBox.MatrixMath;
 
 public class ParticleShader extends ShaderProgram {
-
+	/**
+	 * Shader to process the particles and prepare them for rendering
+	 * @author Lars Gevers
+	 */
 	
 	private static final String vertexFile = "/Shaders/particleVertexShader.txt";
 	private static final String fragmentFile = "/Shaders/particleFragmentShader.txt";
@@ -19,6 +22,9 @@ public class ParticleShader extends ShaderProgram {
 		super(vertexFile, fragmentFile);
 	}
 	
+	/**
+	 * Bind the attributes (position, textureCoords and normal) to the Vertex and Fragment shader
+	 */
 	@Override
 	protected void bindAttributes(){
 		//variable, vao attribute
@@ -27,6 +33,9 @@ public class ParticleShader extends ShaderProgram {
 		super.bindAttribute("normal", 2);
 	}
 	
+	/**
+	 * Bind the variables from the Vertex and Fragment shader to Java variables
+	 */
 	protected void getAllUniformLocations(){
 		
 		locationTransformationMatrix = super.getUniformLocation("transformationMatrix");

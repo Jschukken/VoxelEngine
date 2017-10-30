@@ -10,6 +10,10 @@ import Entities.Light;
 import ToolBox.MatrixMath;
 
 public class SkyboxShader extends ShaderProgram {
+	/**
+	 * Shader to process the skybox and prepare it for rendering
+	 * @author Lars Gevers
+	 */
 
 	
 	private static final String vertexFile = "/Shaders/skyBoxVertexShader.txt";
@@ -24,6 +28,9 @@ public class SkyboxShader extends ShaderProgram {
 		super(vertexFile, fragmentFile);
 	}
 	
+	/**
+	 * Bind the attributes (position, textureCoords and normal) to the Vertex and Fragment shader
+	 */
 	@Override
 	protected void bindAttributes(){
 		//variable, vao attribute
@@ -31,7 +38,10 @@ public class SkyboxShader extends ShaderProgram {
 		super.bindAttribute("textureCoords",1);
 		super.bindAttribute("normal", 2);
 	}
-	
+
+	/**
+	 * Bind the variables from the Vertex and Fragment shader to Java variables
+	 */
 	protected void getAllUniformLocations(){
 		
 		locationTransformationMatrix = super.getUniformLocation("transformationMatrix");

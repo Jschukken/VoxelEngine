@@ -10,7 +10,10 @@ import Entities.Light;
 import ToolBox.MatrixMath;
 
 public class StaticShader extends ShaderProgram {
-
+	/**
+	 * Shader to process the normal entities and prepare them for rendering
+	 * @author Lars Gevers
+	 */
 	
 	private static final String vertexFile = "/Shaders/vertexShader.txt";
 	private static final String fragmentFile = "/Shaders/fragmentShader.txt";
@@ -32,7 +35,10 @@ public class StaticShader extends ShaderProgram {
 	public StaticShader(){
 		super(vertexFile, fragmentFile);
 	}
-	
+
+	/**
+	 * Bind the attributes (position, textureCoords and normal) to the Vertex and Fragment shader
+	 */
 	@Override
 	protected void bindAttributes(){
 		//variable, vao attribute
@@ -41,6 +47,9 @@ public class StaticShader extends ShaderProgram {
 		super.bindAttribute("normal", 2);
 	}
 	
+	/**
+	 * Bind the variables from the Vertex and Fragment shader to Java variables
+	 */
 	protected void getAllUniformLocations(){
 		
 		locationTransformationMatrix = super.getUniformLocation("transformationMatrix");

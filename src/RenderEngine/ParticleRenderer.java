@@ -16,8 +16,8 @@ import Shaders.ParticleShader;
 import ToolBox.MatrixMath;
 
 /**
- * renders entities
- * @author Jelle Schukken
+ * renders particles
+ * @author Lars Gevers
  *
  */
 public class ParticleRenderer {

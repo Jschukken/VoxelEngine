@@ -31,6 +31,7 @@ import ToolBox.TexturedModelMaker;
  * @author Jelle Schukken
  * @edited Chiel Ton
  * @edited Frouke Hekker
+ * @edited Lars Gevers
  *
  */
 public class MapManager {

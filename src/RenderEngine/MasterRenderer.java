@@ -117,7 +117,10 @@ public class MasterRenderer {
 	}
 
 	/**
-	 * Lars please update this comment
+	 * The render class will call all shaders to process the entities and lights, based on the camera position
+	 * Things that are not visible to the camera will not be rendered
+	 * There are 4 shaders for 4 kinds of entities
+	 * Each shader renders an object differently so that the world looks more diverse
 	 * @param entity the entity to render
 	 * @param shader the shader that will be used
 	 */
@@ -150,6 +153,9 @@ public class MasterRenderer {
 		particleEntities.clear();
 	}
 	
+	/*
+	 * All normal visible entities will be added to a batch to make them easier to render
+	 */
 	public void processEntity(Entity entity){
 		TexturedModel entityModel = entity.getModel();
 		List<Entity> batch = entities.get(entityModel);
@@ -162,10 +168,16 @@ public class MasterRenderer {
 		}
 	}
 	
+	/*
+	 * All visible map entities will be added to a list for rendering
+	 */
 	public void processMapEntity(Entity entity){
 		mapEntities.add(entity);
 	}
 	
+	/*
+	 * All visible particles will be added to a batch to make them easier to render and remove from the scene
+	 */
 	public void processParticle(Entity entity){
 		TexturedModel entityModel = entity.getModel();
 		List<Entity> batch = particleEntities.get(entityModel);
@@ -178,9 +190,18 @@ public class MasterRenderer {
 		}
 	}
 	
+	/*
+	 * Enables the skybox to be rendered
+	 */
 	public void processSkyBox(Entity skyBox){
 		this.skyBox = skyBox;
 	}
+	
+	/**
+	 * A shadowmap overlay will be rendered on the screen
+	 * @param entityList all entities
+	 * @param lights the list of lights used to create the shadowmap
+	 */
 	public void renderShadowMap(List<Entity> entityList, List<Light> lights){
 		for (Entity entity : entityList){
 			processMapEntity(entity);
@@ -189,6 +210,9 @@ public class MasterRenderer {
 		mapEntities.clear();
 	}
 	
+	/*
+	 * Gets the 2D shadowmap as a texture, which contains the depth value of each visible entity to the light
+	 */
 	public int getShadowMapTexture(){
 		return shadowMapRenderer.getShadowMap();
 	}
