@@ -13,6 +13,7 @@ import ToolBox.TexturedModelMaker;
 
 /**
  * This thing still needs comments, a lot of them, Jelle?
+ * 
  * @author ?
  *
  */
@@ -44,7 +45,7 @@ public class EnemyEntity extends Entity {
 		direction = super.getDirection();
 		direction.normalise();
 		turnSpeed = getTurnDir();
-		//hp = 20;
+		// hp = 20;
 	}
 
 	/**
@@ -177,7 +178,7 @@ public class EnemyEntity extends Entity {
 			position.y += ENEMY_SPEED;
 		}
 
-		roundPosition();
+		//roundPosition();
 	}
 
 	/**
@@ -188,6 +189,7 @@ public class EnemyEntity extends Entity {
 			MainGameLoop.mapManager.addParticleEntity(shrapnel, new Vector3f(position.x, position.y, position.z));
 		}
 		hp--;
+		setModel(MapManager.hitNormalModel);
 		if (hp <= 0) {
 			destroy();
 		}
@@ -212,9 +214,9 @@ public class EnemyEntity extends Entity {
 	 * rounds the position to the 1nd decimal place
 	 */
 	private void roundPosition() {
-		position.x = ((int) (position.x * 100.0 + 0.5)) / (float) (100.0);
-		position.y = ((int) (position.y * 100.0 + 0.5)) / (float) (100.0);
-		position.z = ((int) (position.z * 100.0 + 0.5)) / (float) (100.0);
+		position.x = ((int) (position.x * 1000.0 + 0.5)) / (float) (1000.0);
+		position.y = ((int) (position.y * 1000.0 + 0.5)) / (float) (1000.0);
+		position.z = ((int) (position.z * 1000.0 + 0.5)) / (float) (1000.0);
 
 	}
 
@@ -270,31 +272,33 @@ public class EnemyEntity extends Entity {
 		if (current >= (old + 1000)) {
 			old = current;
 			time++;
-		}
-		if (hp == hpcheck) {
-			if (time % 2 == 0) {
-				setModel(MapManager.normalModel);
-			} else {
-				setModel(MapManager.runModel);
-			}
-		} else {
-			if (time % 5 == 0) {
-				setModel(MapManager.hitNormalModel);
-			} else {
 
-				setModel(MapManager.hitRunModel);
+			if (hp == hpcheck) {
+				if (time % 2 == 0) {
+					setModel(MapManager.normalModel);
+				} else {
+					setModel(MapManager.runModel);
+				}
+			} else {
+				if (time % 5 == 0) {
+					setModel(MapManager.hitNormalModel);
+				} else {
+
+					setModel(MapManager.hitRunModel);
+				}
 			}
-		}
-		if (time > 10) {
-			time = 0;
+			if (time > 10) {
+				time = 0;
+			}
 		}
 	}
-	public void setHp(int a){
+
+	public void setHp(int a) {
 		hp = a;
 		hpcheck = a;
 	}
-	
-	public void setSpeed(float a){
+
+	public void setSpeed(float a) {
 		ENEMY_SPEED = ENEMY_SPEED + a;
 	}
 }

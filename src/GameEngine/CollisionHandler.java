@@ -103,7 +103,7 @@ public class CollisionHandler {
 		try {
 			// lower square
 			if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x + .1)][(int) (entity.getCollisionPosition().y
-					+ .1)][(int) (entity.getPosition().z + .1)] == 1) {
+					+ .1)][(int) (entity.getCollisionPosition().z + .1)] == 1) {
 				return true;
 			} else if (MainGameLoop.mapManager.map[(int) (entity.getPosition().x
 					+ .1)][(int) (entity.getCollisionPosition().y + .1)][(int) (entity.getPosition().z + .9)] == 1) {
