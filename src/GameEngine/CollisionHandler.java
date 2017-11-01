@@ -8,7 +8,8 @@ import Flashlight.MainGameLoop;
 
 public class CollisionHandler {
 	
-	private static boolean protectedZones = false;
+	private static 
+	boolean protectedZones = false;
 
 	/**
 	 * checks to see if the player collides with anything given the players

@@ -21,7 +21,7 @@ public class DisplayManager {
 
 	public static final int WIDTH = 1920;
 	public static final int HEIGHT = 1080;
-	public static final int FPS_CAP = 40;
+	public static final int FPS_CAP = 60;
 	private static boolean windowed = false;
 
 	/**
@@ -83,6 +83,7 @@ public class DisplayManager {
 
 		}
 		Display.destroy();
+		System.out.println("closed");
 		System.exit(0);
 	}
 }

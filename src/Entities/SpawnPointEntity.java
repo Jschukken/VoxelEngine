@@ -17,7 +17,7 @@ public class SpawnPointEntity extends Entity {
 	private int spawnTimer = 0;
 	public static int spawnRate = (int)(240/(60/(float)DisplayManager.FPS_CAP));
 	private int pathTimer = 0;
-	public static int pathRate = 5 * spawnRate;
+	public static int pathRate = 1 * spawnRate;
 	
 	private Vector3f position;
 	private TexturedModel enemy;
