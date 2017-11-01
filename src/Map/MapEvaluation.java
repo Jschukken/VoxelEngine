@@ -32,9 +32,6 @@ public class MapEvaluation {
 	 *            x coordinate from the current point
 	 * @param y
 	 *            y coordinate from the current point
-	 * @param map
-	 *            map being evaluated
-	 * @return reached end 0 if not reached 1 if reached
 	 */
 	private static void lee(int x, int y) {
 		if (found) {

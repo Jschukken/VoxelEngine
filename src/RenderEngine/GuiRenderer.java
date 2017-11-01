@@ -39,6 +39,9 @@ public class GuiRenderer {
 	private static int lvl = 0; // current difficulty level
 	private final int DURATION = 60;
 
+	/**
+	 * Berk or Timo please do comments for the rest of this function
+	 */
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
 		quad = load.loadToVao(pos);
@@ -79,17 +82,13 @@ public class GuiRenderer {
 	}
 
 	/**
-	 * Berk Chiel Timo please do comments for the rest of this file
+	 * Berk or Timo please do comments for the rest of this function
 	 */
 	public void render() {
 		guishader.start();
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 
-		// alpha blending
-		// GL11.glEnable(GL11.GL_BLEND);
-		// GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		//
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		for (GuiTexture gui : guis) {
 			gui.update();
@@ -109,8 +108,7 @@ public class GuiRenderer {
 			guishader.loadTransformation(matrix);
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
 		}
-		// disable alphablending
-		// GL11.glDisable(GL11.GL_BLEND);
+
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
@@ -240,19 +238,6 @@ public class GuiRenderer {
 		ducker = new ModelTexture(loader.loadTexture("diffLevelFifteen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
-/*
-		ducker = new ModelTexture(loader.loadTexture("diffLevelSixteen"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
-		levels.add(gui);
-
-		ducker = new ModelTexture(loader.loadTexture("diffLevelSeventeen"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
-		levels.add(gui);
-
-		ducker = new ModelTexture(loader.loadTexture("diffLevelEighteen"));
-		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.9f), new Vector2f(0.4f, 0.1f));
-		levels.add(gui);*/
-
 		
 		// create 5 slots in the timer list to be overwritten by the proper textures.
 		timer.add(gui);

@@ -44,7 +44,6 @@ public class MapManager {
 
 	private Loader loader;
 	private MasterRenderer renderer;
-	// private StaticShader shader;
 	private KNearest kNear;
 	public int[][][] map;
 
@@ -103,11 +102,7 @@ public class MapManager {
 			List<Double> characteristics = new ArrayList<>();
 			characteristics = MapEvaluation.characteristics(Map.m);
 			currentAttributes.clear();
-			if (characteristics.get(characteristics.size() - 1) == 1.0) {// check
-																			// if
-																			// map
-																			// is
-																			// valid
+			if (characteristics.get(characteristics.size() - 1) == 1.0) {// check if map is valid
 				characteristics.remove(characteristics.size() - 1);
 				valid = true;
 				good = kNear.classify(characteristics); // use k-nearest
@@ -117,9 +112,7 @@ public class MapManager {
 		}
 		map = Map.mapTo3D();
 		int[][][] backUp = map; // backup for editing
-		map = new int[map.length][map[0][0].length][map[0].length]; // empty and
-																	// start
-																	// over;
+		map = new int[map.length][map[0][0].length][map[0].length]; // empty and start over;
 
 		// fix coordinates
 		for (int x = 0; x < backUp.length; x++) {
@@ -163,11 +156,6 @@ public class MapManager {
 						destination = new DestinationEntity(tDestMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1));
 						camera.setPosition(new Vector3f(x, y + 6, z));
-						// } else if (x == 0 || y == 0 || z == 0 || z ==
-						// map[0][0].length - 1 || x == map.length - 1) {
-						// mapEntities.add(new Entity(tMod, new Vector3f(x, y,
-						// z), 0, 0, 0, new Vector3f(1, 1, 1)));
-						// map[x][y][z] = 1;
 					}
 				}
 			}
@@ -193,13 +181,6 @@ public class MapManager {
 						}
 						if (toClose)
 							continue;
-						// Light light = new Light(position, new Vector3f(1.0f,
-						// 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f));
-						// Lights.add(light);
-						// mapEntities.add(new
-						// Entity(TexturedModelMaker.cubeTexturedModel(loader,
-						// "Tile"), light.getPosition(), 0, 0, 0, new
-						// Vector3f(1, 1, 1)));
 					}
 				}
 			}
@@ -210,10 +191,6 @@ public class MapManager {
 	 * renders all visible entities within range
 	 */
 	public void render() {
-		// List<Light> sun = new ArrayList<Light>();
-		// sun.add(new Light(new
-		// Vector3f((float)(map.length/2),(float)map[0].length,(float)(map[0][0].length/2)),
-		// new Vector3f(1.0f, 1.0f, 1.2f), new Vector3f(1f, 0.01f, 0.002f)));
 		List<Entity> total = new ArrayList<Entity>(activeEntities);
 		total.addAll(wallEntities);
 		total.addAll(mapEntities);
@@ -457,26 +434,6 @@ public class MapManager {
 	public void removeActiveEntity(Entity entity) {
 
 		activeEntities.remove(entity);
-	}
-
-	/**
-	 * creates a simple map, can be used for debugging
-	 */
-	private void tempMapCreator() {
-		map[18][1][10] = 2;
-		map[2][1][10] = 2;
-		map[10][3][10] = 3;
-		map[10][1][10] = 1;
-		map[9][1][10] = 1;
-		map[9][1][9] = 1;
-		map[10][1][9] = 1;
-		map[11][1][10] = 1;
-		map[11][1][11] = 1;
-		map[10][1][11] = 1;
-		map[9][1][11] = 1;
-		map[11][1][9] = 1;
-		map[10][2][10] = 1;
-
 	}
 
 	/**
