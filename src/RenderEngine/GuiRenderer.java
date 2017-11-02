@@ -162,7 +162,7 @@ public class GuiRenderer {
 
 		// The graphic for the first difficulty level
 		// Added to gui to reserve a position in the list and allow gui.set
-		ModelTexture ducker = new ModelTexture(loader.loadTexture("diffLevelOne"));
+		ModelTexture ducker = new ModelTexture(loader.loadTexture("DiffLevelOne"));
 		GuiTexture gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		guis.add(gui);
 		guis.add(gui3);
@@ -170,72 +170,72 @@ public class GuiRenderer {
 		levels.add(gui);
 
 		// The graphic for the second difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelTwo"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelTwo"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 		
 		// The graphic for the third difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelThree"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelThree"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the fourth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelFour"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelFour"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the fifth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelFive"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelFive"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the sixth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelSix"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelSix"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the seventh difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelSeven"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelSeven"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the eighth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelEight"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelEight"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the ninth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelNine"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelNine"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the tenth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelTen"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelTen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the eleventh difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelEleven"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelEleven"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the twelfth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelTwelve"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelTwelve"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the thirteenth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelThirteen"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelThirteen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the fourteenth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelFourteen"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelFourteen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 
 		// The graphic for the fifteenth difficulty level
-		ducker = new ModelTexture(loader.loadTexture("diffLevelFifteen"));
+		ducker = new ModelTexture(loader.loadTexture("DiffLevelFifteen"));
 		gui = new GuiTexture(ducker, new Vector2f(-0.6f, 0.95f), new Vector2f(0.4f, 0.05f));
 		levels.add(gui);
 		
@@ -274,37 +274,37 @@ public class GuiRenderer {
 			
 			  switch (digits.charAt(i)) {
 			  case '0':
-				  mTex = new ModelTexture(loader.loadTexture("nrZero"));
+				  mTex = new ModelTexture(loader.loadTexture("NrZero"));
 				  break;
 			  case '1':
-				  mTex = new ModelTexture(loader.loadTexture("nrOne"));
+				  mTex = new ModelTexture(loader.loadTexture("NrOne"));
 				  break;
 			  case '2':
-				  mTex = new ModelTexture(loader.loadTexture("nrTwo"));
+				  mTex = new ModelTexture(loader.loadTexture("NrTwo"));
 				  break;
 			  case '3':
-				  mTex = new ModelTexture(loader.loadTexture("nrThree"));
+				  mTex = new ModelTexture(loader.loadTexture("NrThree"));
 				  break;
 			  case '4':
-				  mTex = new ModelTexture(loader.loadTexture("nrFour"));
+				  mTex = new ModelTexture(loader.loadTexture("NrFour"));
 				  break;
 			  case '5':
-				  mTex = new ModelTexture(loader.loadTexture("nrFive"));
+				  mTex = new ModelTexture(loader.loadTexture("NrFive"));
 				  break;
 			  case '6':
-				  mTex = new ModelTexture(loader.loadTexture("nrSix"));
+				  mTex = new ModelTexture(loader.loadTexture("NrSix"));
 				  break;
 			  case '7':
-				  mTex = new ModelTexture(loader.loadTexture("nrSeven"));
+				  mTex = new ModelTexture(loader.loadTexture("NrSeven"));
 				  break;
 			  case '8':
-				  mTex = new ModelTexture(loader.loadTexture("nrEight"));
+				  mTex = new ModelTexture(loader.loadTexture("NrEight"));
 				  break;
 			  case '9':
-				  mTex = new ModelTexture(loader.loadTexture("nrNine"));
+				  mTex = new ModelTexture(loader.loadTexture("NrNine"));
 				  break;
 			  case ':': 
-				  mTex = new ModelTexture(loader.loadTexture("symColon"));
+				  mTex = new ModelTexture(loader.loadTexture("SymColon"));
 				  break;
 			  default:
 				  mTex = new ModelTexture(loader.loadTexture("duck"));

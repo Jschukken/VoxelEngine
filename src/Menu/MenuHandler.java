@@ -121,7 +121,7 @@ public class MenuHandler {
 		tMod = new Button(model, tex1, tex1, vertices) {
 			@Override
 			public void onClick() {
-				ModelTexture duck = new ModelTexture(MainGameLoop.loader.loadTexture("Duck"));
+				ModelTexture duck = new ModelTexture(MainGameLoop.loader.loadTexture("duck"));
 
 				this.setActiveTexture(duck);
 				this.setInactiveTexture(duck);

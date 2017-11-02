@@ -62,7 +62,7 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		StaticShaderMenu menuShader = null;
 		MasterMenuRenderer menuRenderer = null;
-		kn = new KNearest(5, "resources\\res\\2DknTrainingData.txt", "resources\\res\\2DknStoredData.txt");
+		kn = new KNearest(5, "/res/2DknTrainingData.txt", "/res/2DknStoredData.txt");
 		KNearestRendering knr = new KNearestRendering(kn);
 		MapMenuRenderer mmr = new MapMenuRenderer();
 		AudioHandler ah = null;
@@ -89,8 +89,10 @@ public class MainGameLoop {
 				}
 				
 				ah = new AudioHandler();
+				System.out.println("AudioHandler Added");
 				audH = ah;
 				songID = ah.createSound("song");
+				System.out.println("Starting Song");
 				ah.startSong(songID);
 				loader = new Loader();
 				menuShader = new StaticShaderMenu();

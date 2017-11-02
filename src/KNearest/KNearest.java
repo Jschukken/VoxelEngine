@@ -36,7 +36,7 @@ public class KNearest {
 	 * Constructor given a value for k
 	 */
 	public KNearest(int K) {
-		this(K, "resources\\res\\knTrainingData.txt", "resources\\res\\knStoredData.txt");
+		this(K, "/res/knTrainingData.txt", "/res/knStoredData.txt");
 	}
 	
 	public KNearest(int K, String training, String stored) {
