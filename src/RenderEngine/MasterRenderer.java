@@ -21,7 +21,7 @@ import Shaders.StaticShader;
 import Shaders.TerrainShader;
 
 /**
- * work in progress, the master renderer
+ * 
  * @author Jelle Schukken
  *
  */
@@ -153,7 +153,7 @@ public class MasterRenderer {
 		particleEntities.clear();
 	}
 	
-	/*
+	/**
 	 * All normal visible entities will be added to a batch to make them easier to render
 	 */
 	public void processEntity(Entity entity){

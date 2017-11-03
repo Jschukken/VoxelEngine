@@ -20,8 +20,6 @@ public class Node {
 	 *            x coordinate
 	 * @param startY
 	 *            y coordinate
-	 * @param startG
-	 *            current distance to the node
 	 */
 	public Node(int startX, int startY) {
 		x = startX;
@@ -39,8 +37,6 @@ public class Node {
 	 *            x coordinate
 	 * @param startY
 	 *            y coordinate
-	 * @param startG
-	 *            current distance to the node
 	 * @param parent
 	 *            the parent node from this node
 	 */

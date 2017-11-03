@@ -16,7 +16,6 @@ import ToolBox.MatrixMath;
  */
 public class MapMenuRenderer {
 
-	// A loader for... uhm... loading?
 	private static Loader loader = new Loader();
 			
 	/**

@@ -26,7 +26,7 @@ public class CreatePath {
 	 *            starting vector
 	 * @param d
 	 *            destination vector
-	 * @return the path between spawn and end point given as xyxyxyxy
+	 * @return the path between spawn and end point given in format xyxyxyxy
 	 */
 	public static int[] createPath(Vector3f s) {
 		List<Integer> path = new ArrayList<>(); // holds the final path
