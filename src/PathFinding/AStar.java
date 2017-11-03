@@ -28,7 +28,6 @@ public class AStar {
 	 * @return h estimated 'distance' to the end point
 	 */
 	public static double calculateH(int x, int y) {
-		// calculate Manhattan distance
 		return Math.abs(x - DX) + Math.abs(y - DY);
 	}
 

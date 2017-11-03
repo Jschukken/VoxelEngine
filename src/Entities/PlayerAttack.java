@@ -24,9 +24,8 @@ public class PlayerAttack extends Entity {
 	private Vector3f scale;
 	private float scaler = (float)(0.009- Math.random()*0.003);
 
-
 	/**
-	 * creates a new player attack entity
+	 * generates a new particle in the flame thrower with a random position with certain specified bounds
 	 */
 	public PlayerAttack(TexturedModel model, Vector3f position, Vector3f rot, Vector3f direction, Vector3f scale) {
 		super(model, position, 0, (float) Math.toRadians(-direction.y), 0, scale);

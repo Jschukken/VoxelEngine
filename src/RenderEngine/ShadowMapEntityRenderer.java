@@ -1,7 +1,6 @@
 package RenderEngine;
 
 import java.util.List;
-import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -12,7 +11,6 @@ import org.lwjgl.util.vector.Matrix4f;
 import Shaders.ShadowShader;
 import Entities.Entity;
 import Models.RawModel;
-import Models.TexturedModel;
 import ToolBox.MatrixMath;
 
 /**

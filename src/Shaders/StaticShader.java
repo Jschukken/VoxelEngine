@@ -9,11 +9,11 @@ import Entities.Camera;
 import Entities.Light;
 import ToolBox.MatrixMath;
 
+/**
+ * Shader to process the normal entities and prepare them for rendering
+ * @author Lars Gevers
+ */
 public class StaticShader extends ShaderProgram {
-	/**
-	 * Shader to process the normal entities and prepare them for rendering
-	 * @author Lars Gevers
-	 */
 	
 	private static final String vertexFile = "/Shaders/vertexShader.txt";
 	private static final String fragmentFile = "/Shaders/fragmentShader.txt";
@@ -41,7 +41,6 @@ public class StaticShader extends ShaderProgram {
 	 */
 	@Override
 	protected void bindAttributes(){
-		//variable, vao attribute
 		super.bindAttribute("position", 0);
 		super.bindAttribute("textureCoords",1);
 		super.bindAttribute("normal", 2);

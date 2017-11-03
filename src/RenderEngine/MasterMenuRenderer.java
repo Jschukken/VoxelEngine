@@ -11,9 +11,6 @@ import Shaders.StaticShaderMenu;
  *
  */
 public class MasterMenuRenderer {
-
-
-
 	public static final float FOV = 70;// 70 degrees
 	
 	public MasterMenuRenderer(){

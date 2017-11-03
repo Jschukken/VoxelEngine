@@ -10,13 +10,11 @@ import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 
 /**
- * This still needs filling in, ??S
- * @author s144459
+ * Renders the 2D map
+ * @author Jorik Mols
  *
  */
 public class MapMenuRenderer {
-
-	// A loader for... uhm... loading?
 	private static Loader loader = new Loader();
 			
 	/**
@@ -61,7 +59,7 @@ public class MapMenuRenderer {
 					tileTexture = "Antagonist Cube";
 				}
 				
-				/* Create the texturedModel for this tile and render the tile */
+				/* Create the TexturedModel for this tile and render the tile */
 				TexturedModel tile = createRectangle(curX, curY, hPerTile, wPerTile, -1f, tileTexture);
 				result.add(tile);
 				
@@ -74,14 +72,14 @@ public class MapMenuRenderer {
 	
 	
 	/**
-	 * Creates a rectangle and returns a texturedmodel object of it.
+	 * Creates a rectangle and returns a TexturedModel object of it.
 	 * 
 	 * @param x  the x coordinate of the lower left corner
 	 * @param y  the y coordinate of the lower left corner
 	 * @param h  the height of the rectangle
 	 * @param w  the width of the rectangle
 	 * @param texture  a string representing the color
-	 * @return  a texturedmodel of a rectangle at (x,y) with height h, width w and texture
+	 * @return  a TexturedModel of a rectangle at (x,y) with height h, width w and texture
 	 */
 	public static TexturedModel createRectangle(float x, float y, float h, float w, float z, String texture) {
 		

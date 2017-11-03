@@ -13,7 +13,9 @@ import ToolBox.TexturedModelMaker;
 
 /**
  * simulates an enemy robot
- * @author Jelle Schukken, Berk Aksakal
+ * 
+ * @author Jelle Schukken
+ * @edited Berk Aksakal
  *
  */
 public class EnemyEntity extends Entity {
@@ -44,7 +46,6 @@ public class EnemyEntity extends Entity {
 		direction = super.getDirection();
 		direction.normalise();
 		turnSpeed = getTurnDir();
-		// hp = 20;
 	}
 
 	/**
@@ -88,7 +89,6 @@ public class EnemyEntity extends Entity {
 			return true;
 		}
 		return false;
-
 	}
 
 	/**
@@ -168,20 +168,12 @@ public class EnemyEntity extends Entity {
 		if (!check) {
 			if (!checkPath()) {
 				position.y += ENEMY_SPEED * 2;
-				// System.out.println(position.y +" "+path[pathPosition+1] +
-				// checkPath());
-
 			}
 		}
-
-		// System.out.println(position.x + " " + path[pathPosition] + " : " +
-		// position.z+ " " + path[pathPosition+1]);
 		position.y -= ENEMY_SPEED;
 		if (CollisionHandler.checkEnemyCollision(this)) {
 			position.y += ENEMY_SPEED;
 		}
-
-		//roundPosition();
 	}
 
 	/**
@@ -243,35 +235,9 @@ public class EnemyEntity extends Entity {
 		return Math.abs(position.x - path[pathPosition]) < ENEMY_SPEED * 2.0
 				&& Math.abs(position.z - path[pathPosition + 1]) < ENEMY_SPEED * 2.0;
 	}
-
-	// _____________BASIC SETTERS AND GETTERS_______________
-	public float getRotX() {
-		return rotX;
-	}
-
-	public float getRotY() {
-		return rotY;
-	}
-
-	public Vector3f getScale() {
-		return new Vector3f(1f, 1f, 1f);
-	}
-
-	public float getRotZ() {
-		return rotZ;
-	}
-
-	public Vector3f getCollisionPosition() {
-		return position;
-	}
-
-	public Vector3f getPosition() {
-		return new Vector3f(position.x, (float) (position.y - .5), position.z);
-	}
-
-	// __________END GETTERS AND SETTERS_____________
+	
 	/**
-	 * Berk please add comment
+	 * depending on time robot legs are updated
 	 */
 	public void timeUpdate() {
 		long current = System.currentTimeMillis();
@@ -299,6 +265,31 @@ public class EnemyEntity extends Entity {
 		}
 	}
 
+	// _____________BASIC SETTERS AND GETTERS_______________
+	public float getRotX() {
+		return rotX;
+	}
+
+	public float getRotY() {
+		return rotY;
+	}
+
+	public Vector3f getScale() {
+		return new Vector3f(1f, 1f, 1f);
+	}
+
+	public float getRotZ() {
+		return rotZ;
+	}
+
+	public Vector3f getCollisionPosition() {
+		return position;
+	}
+
+	public Vector3f getPosition() {
+		return new Vector3f(position.x, (float) (position.y - .5), position.z);
+	}
+	
 	public void setHp(int a) {
 		hp = a;
 		hpcheck = a;

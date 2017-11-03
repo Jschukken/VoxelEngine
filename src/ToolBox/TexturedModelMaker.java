@@ -13,12 +13,9 @@ import Textures.ModelTexture;
  *
  */
 public class TexturedModelMaker {
-
 	public static TexturedModel basicCube;
 	public static TexturedModel skyBox;
-
-	// note: may want to remove the texturing here and do that in the map
-	// loading, so the cube becomes more general
+	
 	/**
 	 * creates a basic 1 by 1 cube
 	 * 

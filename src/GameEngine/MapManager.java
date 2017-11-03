@@ -91,7 +91,6 @@ public class MapManager {
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				MainGameLoop.setState("loadMapMenu");
-				// System.exit(-1);
 			}
 
 			valid = false;
@@ -166,8 +165,7 @@ public class MapManager {
 					if (map[x][y][z] == 3) {
 						activeEntities.add(new SpawnPointEntity(tSpawnMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1), normalModel));
-
-					} 
+					}
 				}
 			}
 		}
