@@ -215,7 +215,7 @@ public class MapEvaluation {
 	 * 
 	 * @param map
 	 *            the map passed to the class
-	 * @return an array of normalised values, in order: 
+	 * @return an array of normalized values, in order: 
 	 * 		    the amount of path tiles the map contains 
 	 * 			the amount of spawns there are 
 	 * 			the average manhattan distance between the spawn and and point 
