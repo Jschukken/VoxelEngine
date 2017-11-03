@@ -76,7 +76,6 @@ public class ShadowMapMasterRenderer {
 			shadowBox.update(sun);
 			Vector3f sunPosition = sun.getPosition();
 			Vector3f lightDirection = new Vector3f(-sunPosition.x,-sunPosition.y,-sunPosition.z);
-			//Vector3f lightDirection = sun.getDirection();
 			prepare(lightDirection, shadowBox);
 			entityRenderer.render(entities);
 		}

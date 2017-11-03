@@ -219,7 +219,6 @@ public class Camera {
 		if(hp<MAX_HP && System.nanoTime()-lastHit > 5*ONE_SECOND && System.nanoTime()-lastRegen > ONE_SECOND){
 			hp++;
 			lastRegen = System.nanoTime();
-			//maybe play a sound
 		}
 	}
 
@@ -242,7 +241,6 @@ public class Camera {
 	 */
 	private void fallCheck() {
 		// if you fall out of the map, game over
-
 		if (position.y < -50) {
 			MainGameLoop.setState("gameover");
 		}

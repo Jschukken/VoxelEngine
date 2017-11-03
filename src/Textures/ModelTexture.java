@@ -1,7 +1,7 @@
 package Textures;
 
 /**
- * texture object, basic building block might do more later
+ * texture object, basic building block 
  * @author Jelle Schukken
  *
  */

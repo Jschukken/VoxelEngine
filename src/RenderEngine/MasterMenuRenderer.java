@@ -1,10 +1,8 @@
 package RenderEngine;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
 
 import Models.TexturedModel;
-import Shaders.StaticShader;
 import Shaders.StaticShaderMenu;
 
 /**
@@ -13,13 +11,7 @@ import Shaders.StaticShaderMenu;
  *
  */
 public class MasterMenuRenderer {
-
-
-	private Matrix4f projectionMatrix;
-
 	public static final float FOV = 70;// 70 degrees
-	private static final float NEAR_PLANE = -.25f;// closest rendered object
-	private static final float FAR_PLANE = 100f;// farthest rendered object
 	
 	public MasterMenuRenderer(){
 

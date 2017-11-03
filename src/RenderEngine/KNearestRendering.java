@@ -16,13 +16,17 @@ import Shaders.StaticShaderMenu;
 import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 
+/**
+ * Renders the KNearest visualization
+ * 
+ * @author Jorik Mols
+ *
+ */
 public class KNearestRendering {
+	Loader loader;
 	
 	// The knearest object used for computation
 	KNearest kn;
-	
-	// A loader for... uhm... loading?
-	Loader loader;
 	
 	// Flags for registering mouse clicks/button presses correctly
 	boolean wasDown;
@@ -68,14 +72,6 @@ public class KNearestRendering {
 		// Prepare renderer and start shader
 		renderer.prepare();
 		shader.start();
-		
-		/**
-		 * Render the axes of the graph
-		 */
-		/*TexturedModel xAxis = createRectangle(-0.95f, -0.95f, 0.02f, 1.9f, "black");
-		TexturedModel yAxis = createRectangle(-0.95f, -0.95f, 1.9f, 0.02f, "black");
-		renderer.render(xAxis, shader);
-		renderer.render(yAxis, shader);*/
 		
 		/**
 		 * Create background

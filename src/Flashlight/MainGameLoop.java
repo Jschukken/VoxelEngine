@@ -1,6 +1,5 @@
 package Flashlight;
 
-import java.io.IOException;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +7,6 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector2f;
 
 import Entities.Button;
 import GameEngine.AudioHandler;
@@ -25,16 +22,12 @@ import RenderEngine.Loader;
 import RenderEngine.MasterMenuRenderer;
 import Shaders.StaticShader;
 import Shaders.StaticShaderMenu;
-import Textures.ModelTexture;
 
 /**
  * The main game manager
  * 
  * @author Jelle Schukken
  *
- */
-/*
- * cleanup of old comments is still needed and I kind of think every state deserves it's own comment
  */
 public class MainGameLoop {
 
@@ -53,7 +46,7 @@ public class MainGameLoop {
 	private static String state = "startup";
 
 	private static IntBuffer[] songID = null;
-	
+
 	public static MapManager mapManager;
 
 	private static boolean pauseCheck = false;
@@ -64,12 +57,9 @@ public class MainGameLoop {
 		MasterMenuRenderer menuRenderer = null;
 		kn = new KNearest(5, "resources\\res\\2DknTrainingData.txt", "resources\\res\\2DknStoredData.txt");
 		KNearestRendering knr = new KNearestRendering(kn);
-		MapMenuRenderer mmr = new MapMenuRenderer();
 		AudioHandler ah = null;
-		List<GuiTexture> guis = new ArrayList<GuiTexture>();
 		GuiRenderer guiRenderer = null;
 		mapManager = null;
-		//map = Map.createGoodMap();
 
 		while (!Display.isCloseRequested()) {
 
@@ -87,7 +77,7 @@ public class MainGameLoop {
 				} catch (NullPointerException e) {
 					System.out.println("CleanUp error: its cool yo");
 				}
-				
+
 				ah = new AudioHandler();
 				System.out.println("AudioHandler Added");
 				audH = ah;
@@ -98,11 +88,11 @@ public class MainGameLoop {
 				menuShader = new StaticShaderMenu();
 				menush = menuShader;
 				menuRenderer = new MasterMenuRenderer();
-				
+
 				menuh = new MenuHandler();
 				menuh.createMenus(loader);
 				mapManager = new MapManager();
-				
+
 				/**
 				 * Add clear saved maps button
 				 */
@@ -111,10 +101,10 @@ public class MainGameLoop {
 						clearDataPoints();
 					}
 				};
-				menuh.addClearMapsButton(clearMaps, loader);				
+				menuh.addClearMapsButton(clearMaps, loader);
 				/**
-				 * Add like and dislike buttons to the game over screen
-				 * with callable functions here
+				 * Add like and dislike buttons to the game over screen with callable functions
+				 * here
 				 */
 				Runnable likeMap = new Runnable() {
 					public void run() {
@@ -128,10 +118,9 @@ public class MainGameLoop {
 				};
 				menuh.addLikeButton(likeMap, loader);
 				menuh.addDislikeButton(dislikeMap, loader);
-				
+
 				/**
-				 * Add like and dislike buttons to the mapmenu
-				 * with callable functions here.
+				 * Add like and dislike buttons to the mapmenu with callable functions here.
 				 * Used for quicker testing.
 				 */
 				Runnable likeMapMenu = new Runnable() {
@@ -150,9 +139,7 @@ public class MainGameLoop {
 				};
 				menuh.addLikeButtonMapMenu(likeMapMenu, loader);
 				menuh.addDislikeButtonMapMenu(dislikeMapMenu, loader);
-				
-				
-				
+
 				state = "mainMenu";
 				guiRenderer = new GuiRenderer(loader);
 				guiRenderer.createHUD();
@@ -167,14 +154,14 @@ public class MainGameLoop {
 					state = "knearest";
 				}
 				break;
-				
+
 			case "loadMapMenu":
 				mapManager = new MapManager();
 				mapManager.loadMap();
 				menuh.add2DMapToMapMenu(mapManager.twoDMap);
 				state = "mapMenu";
 				break;
-				
+
 			case "mapMenu":
 				menuh.setState(state);
 				menuh.updateButtons(loader);
@@ -182,14 +169,12 @@ public class MainGameLoop {
 				break;
 
 			case "loadmap":
-//				mapManager = new MapManager();
-//				mapManager.loadMap();
 				menuh.remove2DMapFromMapMenu();
 				guiRenderer.setLevel(0);
 				guiRenderer.setTimer(0);
 				state = "game";
 				break;
-				
+
 			case "knearest":
 				knr.renderKNearestGraph(menuShader, menuRenderer);
 				knr.registerClicksButtons();
@@ -222,7 +207,7 @@ public class MainGameLoop {
 				menuh.renderMenu(menuShader, menuRenderer);
 				mapManager.update();
 				break;
-				
+
 			default:
 				System.out.println("state error: " + state + " is an invalid state");
 				System.exit(-1);
@@ -234,11 +219,10 @@ public class MainGameLoop {
 		DisplayManager.closeDisplay();
 	}
 
-
 	/**
 	 * checks if the game should be paused
 	 */
-	private static void checkPause(){
+	private static void checkPause() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_E) && !pauseCheck) {
 			pauseCheck = true;
 		} else if (!Keyboard.isKeyDown(Keyboard.KEY_E) && pauseCheck) {
@@ -248,14 +232,13 @@ public class MainGameLoop {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			state = "startup";
-			//apManager.cleanUp();
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
 			state = "gameover";
 		}
 
 	}
-	
+
 	/**
 	 * mutes the music
 	 */
@@ -274,22 +257,22 @@ public class MainGameLoop {
 	public static void setState(String newState) {
 		state = newState;
 	}
-	
+
 	/**
 	 * Adds the current map to the knearest object with the given class
 	 * 
-	 * @param c  the class of this map, chosen by the player
+	 * @param c
+	 *            the class of this map, chosen by the player
 	 */
 	public static void addCurrentMapToKNearest(boolean c) {
 		mapManager.addPointToKNearest(c);
 	}
-	
+
 	/**
 	 * clears the data points in map manager
 	 */
 	public static void clearDataPoints() {
 		mapManager.clearDataPoints();
 	}
-
 
 }

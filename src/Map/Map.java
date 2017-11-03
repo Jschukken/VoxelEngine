@@ -68,7 +68,7 @@ public class Map {
 	}
 
 	/**
-	 * Backtrack through the filled matrix to find the shortest path
+	 * backtrack through the filled matrix to find the shortest path
 	 * 
 	 * @param k
 	 *            current step of the function
@@ -81,28 +81,28 @@ public class Map {
 		// set current point as part of the path
 		m[x][y] = -5;
 
-		// Check for edge, go down
+		// check for edge, go down
 		if (x + 1 < SIZE) {
 			if (m[x + 1][y] == k - 1) {
 				leeBack(k - 1, x + 1, y);
 				return;
 			}
 		}
-		// Check for edge, go up
+		// check for edge, go up
 		if (x - 1 > 0) {
 			if (m[x - 1][y] == k - 1) {
 				leeBack(k - 1, x - 1, y);
 				return;
 			}
 		}
-		// Check for edge, go right
+		// check for edge, go right
 		if (y + 1 < SIZE) {
 			if (m[x][y + 1] == k - 1) {
 				leeBack(k - 1, x, y + 1);
 				return;
 			}
 		}
-		// Check for edge, go left
+		// check for edge, go left
 		if (y - 1 > 0) {
 			if (m[x][y - 1] == k - 1) {
 				leeBack(k - 1, x, y - 1);
@@ -121,28 +121,28 @@ public class Map {
 	 *            y coordinate from the potential loose end
 	 */
 	public static void leeIsland(int x, int y) {
-		// Check for edge, go down
+		// check for edge, go down
 		if (x + 1 < SIZE) {
 			if (m[x + 1][y] == -1) {
 				m[x + 1][y] = -10;
 				leeIsland(x + 1, y);
 			}
 		}
-		// Check for edge, go up
+		// check for edge, go up
 		if (x - 1 >= 0) {
 			if (m[x - 1][y] == -1) {
 				m[x - 1][y] = -10;
 				leeIsland(x - 1, y);
 			}
 		}
-		// Check for edge, go right
+		// check for edge, go right
 		if (y + 1 < SIZE) {
 			if (m[x][y + 1] == -1) {
 				m[x][y + 1] = -10;
 				leeIsland(x, y + 1);
 			}
 		}
-		// Check for edge, go left
+		// check for edge, go left
 		if (y - 1 >= 0) {
 			if (m[x][y - 1] == -1) {
 				m[x][y - 1] = -10;
@@ -318,15 +318,13 @@ public class Map {
 	}
 
 	/**
-	 * Turn the map into it's 3D form includes: scaling, walls, lights and height
+	 * turn the map into it's 3D form includes: scaling, walls, lights and height
 	 * map
 	 * 
 	 * @param return
 	 *            returns the finished 3D map
 	 */
 	public static int[][][] mapTo3D() {
-		// initialize the 3D map
-		// +2's are for the walls surrounding the map
 		int[][][] map = new int[SIZE * SCALE + 2][SIZE * SCALE + 2][HEIGHT];
 
 		// scaling
@@ -385,32 +383,8 @@ public class Map {
 						}
 					}
 				}
-		// lights
-		// distributed completely random over the map, slightly smaller change on being
-		// in the exact corners
-		int l = 0;
-		while (l <= LIGHTS) {
-			int x = ThreadLocalRandom.current().nextInt(1, SIZE * SCALE);
-			int z = ThreadLocalRandom.current().nextInt(1, SIZE * SCALE);
-			// check if random position is a wall
-			if (map[x][z][4] == 1) {
-				// search piece of path next to the wall and place light above it
-				if (map[x + 1][z][0] == 1) {
-					map[x + 1][z][HEIGHT - 2] = 4;
-				} else if (map[x - 1][z][0] == 1) {
-					map[x - 1][z][HEIGHT - 2] = 4;
-				} else if (map[x][z + 1][0] == 1) {
-					map[x][z + 1][HEIGHT - 2] = 4;
-				} else if (map[x][z - 1][0] == 1) {
-					map[x][z - 1][HEIGHT - 2] = 4;
-				}
-				// update number of lamps placed
-				l++;
-			}
-		}
 
 		// height
-		// with currently only one possible height map
 		for (int i = 0; i < map.length - 10; i += 10) {
 			for (int j = 0; j < 4; j++) {
 				for (int k = 0; k < map[0].length; k++) {

@@ -91,7 +91,6 @@ public class MapManager {
 				System.out.println("cannot generate a good map");
 				cleanUp();
 				MainGameLoop.setState("loadMapMenu");
-				// System.exit(-1);
 			}
 
 			valid = false;
@@ -166,21 +165,6 @@ public class MapManager {
 					if (map[x][y][z] == 3) {
 						activeEntities.add(new SpawnPointEntity(tSpawnMod, new Vector3f(x, y, z), 0, 0, 0,
 								new Vector3f(1, 1, 1), normalModel));
-
-					} else if (map[x][y][z] == 4) {
-						Vector3f position = new Vector3f(x, y, z);
-						boolean toClose = false;
-						for (Light light : Lights) {
-							double dist = Math.sqrt(Math.pow((position).x - light.getPosition().x, 2)
-									+ Math.pow(position.y - light.getPosition().y, 2)
-									+ Math.pow(position.z - light.getPosition().z, 2));
-							if (dist < 10) {
-								toClose = true;
-								break;
-							}
-						}
-						if (toClose)
-							continue;
 					}
 				}
 			}
@@ -195,7 +179,6 @@ public class MapManager {
 		total.addAll(wallEntities);
 		total.addAll(mapEntities);
 		total.addAll(particleEntities);
-		//total.addAll(attackEntities);
 		renderer.renderShadowMap(total, Lights);
 
 		// vector the camera is looking at

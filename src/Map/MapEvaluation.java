@@ -26,7 +26,7 @@ public class MapEvaluation {
 	private static List<Double> characteristics = new ArrayList<>(); // return list
 
 	/**
-	 * Runs lee to check if all spawns can reach the end point
+	 * runs lee to check if all spawns can reach the end point
 	 * 
 	 * @param x
 	 *            x coordinate from the current point
@@ -41,7 +41,7 @@ public class MapEvaluation {
 			map[x][y] = 4;
 		}
 
-		// Check for edge, go down
+		// check for edge, go down
 		if (x + 1 < map.length) {
 			if (map[x + 1][y] == 2) {
 				found = true;
@@ -50,7 +50,7 @@ public class MapEvaluation {
 				lee(x + 1, y);
 			}
 		}
-		// Check for edge, go up
+		// check for edge, go up
 		if (x - 1 >= 0) {
 			if (map[x - 1][y] == 2) {
 				found = true;
@@ -59,7 +59,7 @@ public class MapEvaluation {
 				lee(x - 1, y);
 			}
 		}
-		// Check for edge, go right
+		// check for edge, go right
 		if (y + 1 < map.length) {
 			if (map[x][y + 1] == 2) {
 				found = true;
@@ -69,7 +69,7 @@ public class MapEvaluation {
 			}
 
 		}
-		// Check for edge, go left
+		// check for edge, go left
 		if (y - 1 >= 0) {
 			if (map[x][y - 1] == 2) {
 				found = true;
@@ -192,7 +192,7 @@ public class MapEvaluation {
 	}
 
 	/**
-	 * Count the number of pathTiles
+	 * count the number of pathTiles
 	 */
 	private static void pathTiles() {
 		double pathtile = 0; // amount of path tiles
@@ -211,7 +211,7 @@ public class MapEvaluation {
 	}
 
 	/**
-	 * Fills in the characteristics list
+	 * fills in the characteristics list
 	 * 
 	 * @param map
 	 *            the map passed to the class

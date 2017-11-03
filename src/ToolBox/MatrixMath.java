@@ -31,7 +31,7 @@ public class MatrixMath {
 		
 		Matrix4f.translate(translation,matrix,matrix);
 		
-		Matrix4f.rotate(rotX, new Vector3f(1,0,0), matrix, matrix);//amount, axis, source, dest
+		Matrix4f.rotate(rotX, new Vector3f(1,0,0), matrix, matrix);
 		Matrix4f.rotate(rotY, new Vector3f(0,1,0), matrix, matrix);
 		Matrix4f.rotate(rotZ, new Vector3f(0,0,1), matrix, matrix);
 		
@@ -60,10 +60,9 @@ public class MatrixMath {
 		
 		Matrix4f.translate(new Vector3f(0,0,1),matrix,matrix);
 		
-		Matrix4f.rotate((float)Math.toRadians(camera.getRotX()), new Vector3f(1,0,0), matrix, matrix);//amount, axis, source, dest
-		Matrix4f.rotate((float)Math.toRadians(camera.getRotY()), new Vector3f(0,1,0), matrix, matrix);// may need to turn angles into radians, we'll see
+		Matrix4f.rotate((float)Math.toRadians(camera.getRotX()), new Vector3f(1,0,0), matrix, matrix);
+		Matrix4f.rotate((float)Math.toRadians(camera.getRotY()), new Vector3f(0,1,0), matrix, matrix);
 		Matrix4f.rotate((float)Math.toRadians(camera.getRotZ()), new Vector3f(0,0,1), matrix, matrix);
-		//Matrix4f.translate(new Vector3f(0,0,-1),matrix,matrix);
 		
 		Matrix4f.translate(new Vector3f(-camera.getPosition().x,-camera.getPosition().y,-camera.getPosition().z),matrix,matrix);
 		

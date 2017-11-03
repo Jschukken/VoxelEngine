@@ -21,7 +21,7 @@ import Shaders.StaticShader;
 import Shaders.TerrainShader;
 
 /**
- * work in progress, the master renderer
+ * Renders all entities
  * @author Jelle Schukken
  *
  */
@@ -68,7 +68,6 @@ public class MasterRenderer {
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyBoxRenderer = new SkyboxRenderer(skyBoxShader, projectionMatrix);
 		particleRenderer = new ParticleRenderer(particleShader, projectionMatrix);
-		//Day - Night random generator
 		Random r = new Random();
 		ambient = r.nextFloat() * (0.3f - 0.01f) + 0.02f;
 		if (ambient < 0.15f){
@@ -153,7 +152,7 @@ public class MasterRenderer {
 		particleEntities.clear();
 	}
 	
-	/*
+	/**
 	 * All normal visible entities will be added to a batch to make them easier to render
 	 */
 	public void processEntity(Entity entity){
@@ -168,14 +167,14 @@ public class MasterRenderer {
 		}
 	}
 	
-	/*
+	/**
 	 * All visible map entities will be added to a list for rendering
 	 */
 	public void processMapEntity(Entity entity){
 		mapEntities.add(entity);
 	}
 	
-	/*
+	/**
 	 * All visible particles will be added to a batch to make them easier to render and remove from the scene
 	 */
 	public void processParticle(Entity entity){
@@ -190,7 +189,7 @@ public class MasterRenderer {
 		}
 	}
 	
-	/*
+	/**
 	 * Enables the skybox to be rendered
 	 */
 	public void processSkyBox(Entity skyBox){
@@ -210,13 +209,16 @@ public class MasterRenderer {
 		mapEntities.clear();
 	}
 	
-	/*
+	/**
 	 * Gets the 2D shadowmap as a texture, which contains the depth value of each visible entity to the light
 	 */
 	public int getShadowMapTexture(){
 		return shadowMapRenderer.getShadowMap();
 	}
 	
+	/**
+	 * cleans up memory
+	 */
 	public void cleanUp(){
 		shader.cleanUp();
 		terrainShader.cleanUp();

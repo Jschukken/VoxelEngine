@@ -23,9 +23,6 @@ public class SpawnPointEntity extends Entity {
 	private TexturedModel enemy;
 	private int[] path;
 	
-	/*
-	 * this function could use a comment
-	 */
 	public SpawnPointEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale, TexturedModel enemy) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.enemy = enemy;

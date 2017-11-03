@@ -150,7 +150,7 @@ public class KNearest {
 	public void removePoint(Point p) {
 
 		/* Get the iterator */
-		Iterator it = storedPoints.iterator();
+		Iterator<Point> it = storedPoints.iterator();
 
 		/**
 		 * Find the point in the list and remove if it is found

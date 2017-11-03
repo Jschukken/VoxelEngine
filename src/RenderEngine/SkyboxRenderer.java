@@ -10,12 +10,11 @@ import Entities.Entity;
 import Models.RawModel;
 import Models.TexturedModel;
 import Shaders.SkyboxShader;
-import Textures.ModelTexture;
 import ToolBox.MatrixMath;
 
 /**
  * renders the skybox Lars please add comments
- * @author Lars
+ * @author Lars Gevers
  *
  */
 public class SkyboxRenderer {
@@ -43,7 +42,6 @@ public class SkyboxRenderer {
 		GL20.glEnableVertexAttribArray(0);// enable position array
 		GL20.glEnableVertexAttribArray(1);// enable texture array
 		GL20.glEnableVertexAttribArray(2);// enable normal array
-		ModelTexture texture = model.getTexture();
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getTextureID());
 		
