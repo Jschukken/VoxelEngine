@@ -24,8 +24,9 @@ public class PlayerAttack extends Entity {
 	private Vector3f scale;
 	private float scaler = (float)(0.009- Math.random()*0.003);
 
-	/*
-	 * comment here would be nice
+
+	/**
+	 * creates a new player attack entity
 	 */
 	public PlayerAttack(TexturedModel model, Vector3f position, Vector3f rot, Vector3f direction, Vector3f scale) {
 		super(model, position, 0, (float) Math.toRadians(-direction.y), 0, scale);
@@ -50,9 +51,6 @@ public class PlayerAttack extends Entity {
 
 	/**
 	 * updates the flame particles position and scale, checks if it hits an enemy, and destroys itself after a certain time
-	 */
-	/*
-	 * function could still use a bit more comments on the inside
 	 */
 	public void update() {
 		super.update();

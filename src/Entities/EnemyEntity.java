@@ -13,7 +13,6 @@ import ToolBox.TexturedModelMaker;
 
 /**
  * simulates an enemy robot
- * 
  * @author Jelle Schukken, Berk Aksakal
  *
  */

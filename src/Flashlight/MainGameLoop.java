@@ -1,22 +1,15 @@
 package Flashlight;
 
-import java.io.IOException;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector2f;
 
 import Entities.Button;
 import GameEngine.AudioHandler;
 import GameEngine.MapManager;
-import Guis.GuiTexture;
 import KNearest.KNearest;
-import Menu.MapMenuRenderer;
 import Menu.MenuHandler;
 import RenderEngine.DisplayManager;
 import RenderEngine.GuiRenderer;
@@ -25,7 +18,6 @@ import RenderEngine.Loader;
 import RenderEngine.MasterMenuRenderer;
 import Shaders.StaticShader;
 import Shaders.StaticShaderMenu;
-import Textures.ModelTexture;
 
 /**
  * The main game manager
@@ -44,10 +36,8 @@ public class MainGameLoop {
 	public static StaticShader sh = null;
 	public static AudioHandler audH = null;
 	public static MenuHandler menuh;
-	public static MapMenuRenderer mmr;
 	public static KNearest kn;
 	public static int[][][] map;
-	List<GuiTexture> guis = new ArrayList<GuiTexture>();
 	GuiRenderer guiRenderer = null;
 
 	private static String state = "startup";
@@ -64,9 +54,7 @@ public class MainGameLoop {
 		MasterMenuRenderer menuRenderer = null;
 		kn = new KNearest(5, "resources\\res\\2DknTrainingData.txt", "resources\\res\\2DknStoredData.txt");
 		KNearestRendering knr = new KNearestRendering(kn);
-		MapMenuRenderer mmr = new MapMenuRenderer();
 		AudioHandler ah = null;
-		List<GuiTexture> guis = new ArrayList<GuiTexture>();
 		GuiRenderer guiRenderer = null;
 		mapManager = null;
 		//map = Map.createGoodMap();

@@ -57,7 +57,7 @@ public class MenuHandler {
 	}
 	
 	/**
-	 * creates all buttons and (TODO: fluff) for the game.
+	 * creates all buttons for the game.
 	 * @param loader
 	 * 			The loader required to load textures.
 	 */
@@ -70,7 +70,7 @@ public class MenuHandler {
 	}
 	
 	/**
-	 * creates all buttons and (TODO: fluff) for the main menu
+	 * creates all buttons for the main menu
 	 * @param loader
 	 * 			The loader required to load textures.
 	 *
@@ -164,7 +164,7 @@ public class MenuHandler {
 	}
 	
 	/**
-	 * creates all buttons and (TODO: fluff) for the map selection menu
+	 * creates all buttons and for the map selection menu
 	 * @param loader
 	 * 			The loader required to load textures.
 	 */
@@ -225,7 +225,7 @@ public class MenuHandler {
 	}	
 	
 	/**
-	 * Adds the tiles of the 2D map to the list of texturedmodels for the mapmenufluff
+	 * Adds the tiles of the 2D map to the list of TexturedModels for the mapMenuFluff
 	 * 
 	 * @param map  the map to add to the menu
 	 */
@@ -237,7 +237,7 @@ public class MenuHandler {
 	}
 	
 	/**
-	 * Removes the texturedmodel objects of the tiles that were added to the mapmenufluff
+	 * Removes the TexturedModel objects of the tiles that were added to the mapMenuFluff
 	 */
 	public void remove2DMapFromMapMenu() {
 		
@@ -248,7 +248,7 @@ public class MenuHandler {
 	}
 	
 	/**
-	 * creates all buttons and (TODO: fluff) for the pause menu
+	 * creates all buttons for the pause menu
 	 * @param loader
 	 * 			The loader required to load textures.
 	 */
@@ -291,7 +291,7 @@ public class MenuHandler {
 	}	
 	
 	/**
-	 * creates all buttons and (TODO: fluff) for the game over menu
+	 * creates all buttons for the game over menu
 	 * @param loader
 	 * 			The loader required to load textures.
 	 */
