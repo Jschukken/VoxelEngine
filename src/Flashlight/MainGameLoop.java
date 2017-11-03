@@ -89,8 +89,10 @@ public class MainGameLoop {
 				}
 				
 				ah = new AudioHandler();
+				System.out.println("AudioHandler Added");
 				audH = ah;
 				songID = ah.createSound("song");
+				System.out.println("Starting Song");
 				ah.startSong(songID);
 				loader = new Loader();
 				menuShader = new StaticShaderMenu();

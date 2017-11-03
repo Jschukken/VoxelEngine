@@ -1,4 +1,4 @@
-package ToolBox;
+	package ToolBox;
 
 import Models.RawModel;
 import Models.TexturedModel;
@@ -134,7 +134,7 @@ public class TexturedModelMaker {
 		};
 
 		RawModel model = loader.loadToVao(vertices, indices, uv, MatrixMath.CreateNormals(vertices, indices));
-		ModelTexture texture = new ModelTexture(loader.loadTexture("green skybox"));
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Green Skybox"));
 		skyBox = new TexturedModel(model, texture);
 		return skyBox;
 	}

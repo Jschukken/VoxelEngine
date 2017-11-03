@@ -255,8 +255,10 @@ public class KNearestRendering {
 			String color;
 			if (p.getClassification()) {
 				color = "red";
+				System.out.println("Set to red");
 			} else {
 				color = "blue";
+				System.out.println("Set to blue");
 			}
 			
 			TexturedModel pnt = createRectangle(normX - 0.5f * pointSize, normY - 0.5f * pointSize, pointSize, (h / w) * pointSize, -1f, color);

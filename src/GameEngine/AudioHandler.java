@@ -53,13 +53,16 @@ public class AudioHandler {
 		buffers.add(buffer);
 		WaveData waveFile = null;
 		try {
-			waveFile = WaveData.create(Class.class.getResourceAsStream("/res/" + file + ".wav"));
+			waveFile = WaveData.create(this.getClass().getClassLoader().getResource("res/" + file + ".wav"));
+			System.out.println("I found the thingy");
 		} catch (Exception e) {
+			System.out.println("I might give up!");
 			e.printStackTrace();
 			System.exit(-1);
 		}
 		
 		if (waveFile == null) {
+			System.out.println("I give up!");
 			System.exit(-1);
 		}
 		AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);

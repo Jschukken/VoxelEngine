@@ -42,7 +42,7 @@ public class Camera {
 	private TexturedModel fire1 = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "red");
 	private TexturedModel fire2 = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader,"orange");
 	private TexturedModel fire3 = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "yellow");
-	private TexturedModel blood = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "bloodred");
+	private TexturedModel blood = TexturedModelMaker.cubeTexturedModel(MainGameLoop.loader, "bloodRed");
 
 	private int hp;
 

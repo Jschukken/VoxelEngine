@@ -58,7 +58,7 @@ public class MapMenuRenderer {
 				} else if (tileType == 2) { // Destination
 					tileTexture = "Companion Cube";
 				} else if (tileType == 3) { // Spawn
-					tileTexture = "red";
+					tileTexture = "Antagonist Cube";
 				}
 				
 				/* Create the texturedModel for this tile and render the tile */

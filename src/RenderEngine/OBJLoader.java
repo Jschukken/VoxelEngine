@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.newdawn.slick.opengl.TextureLoader;
 
 import Models.RawModel;
 
@@ -23,6 +24,7 @@ public class OBJLoader {
 		FileReader fr = null;
 		try{
 		fr = new FileReader(new File("resources/res/" + fileName + ".obj"));
+		//fr = new FileReader(new File(fileName + ".obj"));
 		
 		}catch (FileNotFoundException e){
 			System.err.println("Couldn't load file!");

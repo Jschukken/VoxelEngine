@@ -73,7 +73,7 @@ public class Loader {
 		public int loadTexture(String file){
 			Texture texture = null;
 			try {
-				texture = TextureLoader.getTexture("PNG", Class.class.getResourceAsStream("/res/" + file + ".PNG"));
+				texture = TextureLoader.getTexture("PNG", Class.class.getResource("/res/" + file + ".png").openStream());
 				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 			} catch (IOException e) {
