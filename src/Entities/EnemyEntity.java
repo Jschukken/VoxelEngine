@@ -12,9 +12,9 @@ import ToolBox.MatrixMath;
 import ToolBox.TexturedModelMaker;
 
 /**
- * This thing still needs comments, a lot of them, Jelle?
+ * simulates an enemy robot
  * 
- * @author ?
+ * @author Jelle Schukken, Berk Aksakal
  *
  */
 public class EnemyEntity extends Entity {
@@ -92,6 +92,10 @@ public class EnemyEntity extends Entity {
 
 	}
 
+	/**
+	 * returns the speed and direction the robot should turn
+	 * @return the speed and direction the robot should turn
+	 */
 	private float getTurnDir() {
 		Vector3f direction;
 		if (pathPosition == 0) {
@@ -220,6 +224,9 @@ public class EnemyEntity extends Entity {
 
 	}
 
+	/**
+	 * returns the robots current direction
+	 */
 	public Vector3f getDirection() {
 		direction = MatrixMath
 				.rotateVector(new Vector3f((float) Math.toDegrees(rotX), (float) Math.toDegrees(-rotY), 0));
