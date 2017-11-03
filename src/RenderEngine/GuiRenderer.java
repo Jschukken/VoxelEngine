@@ -38,9 +38,7 @@ public class GuiRenderer {
 	private static int lvl = 0; // current difficulty level
 	private final int DURATION = 60;
 
-	/**
-	 * Berk or Timo please do comments for the rest of this function
-	 */
+	
 	public GuiRenderer(Loader load) {
 		float[] pos = { -1, 1, -1, -1, 1, 1, 1, -1 };
 		quad = load.loadToVao(pos);
@@ -85,16 +83,21 @@ public class GuiRenderer {
 	 */
 	public void render() {
 		guishader.start();
+		//Bind the model of the quad since we want to render all of our guis on to the same quad
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
-
+		//Disables the depth test so that guis overlap correctly
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		// Loop for each gui
 		for (GuiTexture gui : guis) {
 			gui.update();
+			//Bind the texture to be used
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, gui.getTexture());
+			//Transformation matrix for each gui
 			Matrix4f matrix = MatrixMath.createTransformationMatrix(gui.getPosition(), gui.getScale());
 			guishader.loadTransformation(matrix);
+			//Draw the quad on the screen
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
 		}
 
@@ -110,6 +113,7 @@ public class GuiRenderer {
 
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL20.glDisableVertexAttribArray(0);
+		//Unbind the Vao
 		GL30.glBindVertexArray(0);
 		guishader.stop();
 	}
