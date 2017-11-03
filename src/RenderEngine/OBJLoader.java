@@ -9,12 +9,11 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import org.newdawn.slick.opengl.TextureLoader;
 
 import Models.RawModel;
 
 /**
- * Berk please comment this
+ * Takes in obj file and return it as a RawModel
  * @author Berk A.
  *
  */
@@ -25,7 +24,6 @@ public class OBJLoader {
 	 * 
 	 * @return RawModel of the obj file.
 	 */
-	
 	public static RawModel loadObjModel(String fileName, Loader loader){
 		/*
 		 * Get file information, read the file
@@ -33,7 +31,6 @@ public class OBJLoader {
 		FileReader fr = null;
 		try{
 		fr = new FileReader(new File("resources/res/" + fileName + ".obj"));
-		//fr = new FileReader(new File(fileName + ".obj"));
 		
 		}catch (FileNotFoundException e){
 			System.err.println("Couldn't load file!");

@@ -2,6 +2,12 @@ package Shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
 
+/**
+ * Shader for the GUI renderer
+ * 
+ * @author Berk Aksakal
+ *
+ */
 public class GuiShader extends ShaderProgram{
 	
 	//Specify the location of the shader files
