@@ -51,7 +51,7 @@ public class ShadowMapMasterRenderer {
 	 */
 	public ShadowMapMasterRenderer(Camera camera) {
 		shader = new ShadowShader();
-		shadowBox = new ShadowBox(lightViewMatrix, camera);
+		shadowBox = new ShadowBox(lightViewMatrix);
 		shadowFbo = new ShadowFrameBuffer(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE);
 		entityRenderer = new ShadowMapEntityRenderer(shader, projectionViewMatrix);
 	}

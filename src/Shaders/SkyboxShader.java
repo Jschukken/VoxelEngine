@@ -1,19 +1,16 @@
 package Shaders;
 
-import java.util.List;
-
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import Entities.Camera;
-import Entities.Light;
 import ToolBox.MatrixMath;
 
+/**
+ * Shader to process the skybox and prepare it for rendering
+ * @author Lars Gevers
+ */
 public class SkyboxShader extends ShaderProgram {
-	/**
-	 * Shader to process the skybox and prepare it for rendering
-	 * @author Lars Gevers
-	 */
 
 	
 	private static final String vertexFile = "/Shaders/skyBoxVertexShader.txt";
@@ -33,7 +30,6 @@ public class SkyboxShader extends ShaderProgram {
 	 */
 	@Override
 	protected void bindAttributes(){
-		//variable, vao attribute
 		super.bindAttribute("position", 0);
 		super.bindAttribute("textureCoords",1);
 		super.bindAttribute("normal", 2);

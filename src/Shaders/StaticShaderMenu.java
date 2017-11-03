@@ -2,7 +2,13 @@ package Shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
 
-
+/**
+ * prepares textured models for rendering,
+ * work similarly to static shader
+ * 
+ * @author Timo Aerts
+ *
+ */
 public class StaticShaderMenu extends ShaderProgram {
 
 	
@@ -18,7 +24,6 @@ public class StaticShaderMenu extends ShaderProgram {
 	
 	@Override
 	protected void bindAttributes(){
-		//variable, vao attribute
 		super.bindAttribute("position", 0);
 		super.bindAttribute("textureCoords",1);
 	}

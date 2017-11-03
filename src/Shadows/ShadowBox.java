@@ -5,7 +5,6 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import Entities.Camera;
 import Entities.Light;
 import RenderEngine.MasterRenderer;
 
@@ -26,15 +25,12 @@ public class ShadowBox {
 
 	private static final float OFFSET = 15;
 	private static final Vector4f UP = new Vector4f(0, 1, 0, 0);
-	private static final Vector4f FORWARD = new Vector4f(0, 0, -1, 0);
 	private static final float SHADOW_DISTANCE = 100;
 
 	private float minX, maxX;
 	private float minY, maxY;
 	private float minZ, maxZ;
 	private Matrix4f lightViewMatrix;
-	private Light light;
-	private Camera cam;
 
 	private float farHeight, farWidth, nearHeight, nearWidth;
 
@@ -48,12 +44,9 @@ public class ShadowBox {
 	 *            transform a point from world space into "light" space (i.e.
 	 *            changes a point's coordinates from being in relation to the
 	 *            world's axis to being in terms of the light's local axis).
-	 * @param camera
-	 *            - the in-game camera.
 	 */
-	public ShadowBox(Matrix4f lightViewMatrix, Camera cam) {
+	public ShadowBox(Matrix4f lightViewMatrix) {
 		this.lightViewMatrix = lightViewMatrix;
-		this.cam = cam;
 		calculateWidthsAndHeights();
 	}
 

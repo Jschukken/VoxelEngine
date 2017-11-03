@@ -9,11 +9,11 @@ import Entities.Camera;
 import Entities.Light;
 import ToolBox.MatrixMath;
 
+/**
+ * Shader to process the terrain and prepare it for rendering
+ * @author Lars Gevers
+ */
 public class TerrainShader extends ShaderProgram {
-	/**
-	 * Shader to process the terrain and prepare it for rendering
-	 * @author Lars Gevers
-	 */
 
 	
 	private static final String vertexFile = "/Shaders/terrainVertexShader.txt";
@@ -42,7 +42,6 @@ public class TerrainShader extends ShaderProgram {
 	 */
 	@Override
 	protected void bindAttributes(){
-		//variable, vao attribute
 		super.bindAttribute("position", 0);
 		super.bindAttribute("textureCoords",1);
 		super.bindAttribute("normal", 2);

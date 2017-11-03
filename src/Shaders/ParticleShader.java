@@ -5,11 +5,11 @@ import org.lwjgl.util.vector.Matrix4f;
 import Entities.Camera;
 import ToolBox.MatrixMath;
 
+/**
+ * Shader to process the particles and prepare them for rendering
+ * @author Lars Gevers
+ */
 public class ParticleShader extends ShaderProgram {
-	/**
-	 * Shader to process the particles and prepare them for rendering
-	 * @author Lars Gevers
-	 */
 	
 	private static final String vertexFile = "/Shaders/particleVertexShader.txt";
 	private static final String fragmentFile = "/Shaders/particleFragmentShader.txt";
